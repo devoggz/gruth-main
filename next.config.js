@@ -11,6 +11,7 @@ const nextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "l954sx9dfs.ufs.sh" },
+      { protocol: "https", hostname: "*.googleusercontent.com" },
       { protocol: "https", hostname: "utfs.io" },
     ],
     deviceSizes: [390, 640, 750, 828, 1080, 1200, 1920],

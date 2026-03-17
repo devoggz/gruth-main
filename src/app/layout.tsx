@@ -7,6 +7,7 @@ import PWAInstallBanner from "@/components/shared/PWAInstallBanner";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
+import { Analytics } from "@vercel/analytics/next";
 
 export const viewport: Viewport = {
   // Prevents iOS from zooming on input focus
@@ -95,6 +96,8 @@ export default function RootLayout({
       </head>
       <AuthSessionProvider>
         <body className="antialiased">
+          <Analytics />
+
           <PWAInstallBanner />
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           {children}

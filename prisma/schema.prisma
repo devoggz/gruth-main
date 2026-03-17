@@ -394,6 +394,8 @@ model CountyMaterialPrice {
   sourceId   String?
   source     MarketPriceSource? @relation(fields: [sourceId], references: [id])
   priceKes   Float
+  priceLow   Float?
+  priceHigh  Float?
   trend      PriceTrend @default(STABLE)
   notes      String?
   scrapedUrl String?

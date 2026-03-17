@@ -14,6 +14,8 @@ export interface MarketPriceRow {
   category: string;
   unit: string;
   priceKes: number;
+  priceLow: number | null;
+  priceHigh: number | null;
   sourceName: string;
   sourceUrl: string | null;
   updatedAt: Date;
@@ -56,6 +58,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     category: p.material.category,
     unit: p.material.unit,
     priceKes: p.priceKes,
+    priceLow: p.priceLow ?? null,
+    priceHigh: p.priceHigh ?? null,
     sourceName: p.source?.name ?? "GRUTH Field Survey",
     sourceUrl: p.source?.url ?? null,
     updatedAt: p.updatedAt,

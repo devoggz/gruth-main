@@ -259,6 +259,11 @@ export default function RegisterPage() {
             Sign in
           </Link>
         </p>
+        <Link href="/" className="flex justify-center items-center gap-2.5">
+          <p className="text-center text-sm text-charcoal-500 mt-6">
+            Back to homepage
+          </p>
+        </Link>
       </div>
     </div>
   );
