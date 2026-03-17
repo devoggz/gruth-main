@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 50">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: BelyDisplay-Regular, 'Bely Display';
+        font-size: 34.93px;
+      }
+
+      .cls-2 {
+        letter-spacing: -.01em;
+      }
+    </style>
+  </defs>
+  <text class="cls-1" transform="translate(27.08 39.21)"><tspan x="0" y="0">gr</tspan><tspan class="cls-2" x="36.78" y="0">u</tspan><tspan x="58.71" y="0">th.</tspan></text>
+</svg>

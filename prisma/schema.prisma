@@ -1,0 +1,408 @@
+// prisma/schema.prisma — GRUTH v2
+// Changes: inspector assignment, file uploads on requests, report PDF, detailed inspection fields
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CLIENT
+  INSPECTOR
+  ADMIN
+}
+
+enum ProjectStatus {
+  PENDING
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+enum ProjectType {
+  CONSTRUCTION
+  LAND_PROPERTY
+  WEDDING_EVENT
+  FUNERAL_EVENT
+  BUSINESS_INVESTMENT
+  MATERIAL_PRICING
+}
+
+enum InspectionStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum MediaType {
+  PHOTO
+  VIDEO
+  DOCUMENT
+}
+
+enum VerifiedStatus {
+  PENDING
+  VERIFIED
+  FLAGGED
+  UNVERIFIED
+}
+
+enum PriceStatus {
+  FAIR
+  OVERPRICED
+  GOOD_DEAL
+  UNVERIFIED
+}
+
+enum AlertSeverity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+enum PriceTrend {
+  UP
+  DOWN
+  STABLE
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  passwordHash  String?
+  phone         String?
+  whatsapp      String?
+  country       String?
+  bio           String?
+  role          UserRole  @default(CLIENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  projects           Project[]
+  assignedProjects   Project[]           @relation("InspectorProjects")
+  messages           Message[]
+  sentMessages       Message[]           @relation("MessageSender")
+  accounts           Account[]
+  sessions           Session[]
+  verificationTokens VerificationToken[]
+  inspections        Inspection[]        @relation("InspectorUser")
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("sessions")
+}
+
+model VerificationToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([token])
+  @@map("verification_tokens")
+}
+
+model Project {
+  id                String        @id @default(cuid())
+  name              String
+  type              ProjectType
+  location          String
+  county            String?
+  latitude          Float?
+  longitude         Float?
+  status            ProjectStatus @default(PENDING)
+  description       String?       @db.Text
+  clientNotes       String?       @db.Text
+  startDate         DateTime?
+  endDate           DateTime?
+  estimatedBudget   Float?
+  amountSpent       Float?
+  currency          String        @default("KES")
+  inspectorId       String?
+  inspectorStatus   String        @default("PENDING") // PENDING | ACCEPTED | DECLINED
+  reportFileUrl     String?
+  reportPublishedAt DateTime?
+  clientId          String
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  client         User            @relation(fields: [clientId], references: [id])
+  inspector      User?           @relation("InspectorProjects", fields: [inspectorId], references: [id])
+  inspections    Inspection[]
+  materialPrices MaterialPrice[]
+  vendors        Vendor[]
+  alerts         Alert[]
+  messages       Message[]
+  progressStages ProgressStage[]
+
+  @@index([clientId, status])
+  @@index([inspectorId])
+  @@map("projects")
+}
+
+model Inspection {
+  id               String           @id @default(cuid())
+  projectId        String
+  inspectorId      String?
+  inspectorName    String
+  scheduledDate    DateTime
+  completedDate    DateTime?
+  status           InspectionStatus @default(SCHEDULED)
+  summary          String?          @db.Text
+  observations     String?          @db.Text
+  recommendations  String?          @db.Text
+  overallRating    Int?
+  workQuality      String?
+  safetyCompliance Boolean?
+  nextSteps        String?          @db.Text
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  project   Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  inspector User?             @relation("InspectorUser", fields: [inspectorId], references: [id])
+  media     InspectionMedia[]
+  report    Report?
+
+  @@index([projectId, scheduledDate])
+  @@index([inspectorId])
+  @@map("inspections")
+}
+
+model InspectionMedia {
+  id           String    @id @default(cuid())
+  inspectionId String
+  type         MediaType
+  url          String
+  filename     String
+  caption      String?
+  sortOrder    Int       @default(0)
+  timestamp    DateTime  @default(now())
+  createdAt    DateTime  @default(now())
+  inspection Inspection @relation(fields: [inspectionId], references: [id], onDelete: Cascade)
+  @@map("inspection_media")
+}
+
+model Report {
+  id           String    @id @default(cuid())
+  inspectionId String    @unique
+  title        String
+  content      String    @db.Text
+  summary      String?   @db.Text
+  fileUrl      String?
+  publishedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  inspection Inspection @relation(fields: [inspectionId], references: [id], onDelete: Cascade)
+  @@map("reports")
+}
+
+model MaterialPrice {
+  id              String      @id @default(cuid())
+  projectId       String
+  materialName    String
+  unit            String
+  marketPriceLow  Float
+  marketPriceHigh Float
+  quotedPrice     Float?
+  verifiedPrice   Float?
+  status          PriceStatus @default(UNVERIFIED)
+  supplierId      String?
+  notes           String?
+  verifiedAt      DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  project  Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  supplier Supplier? @relation(fields: [supplierId], references: [id])
+  @@map("material_prices")
+}
+
+model Supplier {
+  id             String         @id @default(cuid())
+  name           String
+  contact        String?
+  location       String?
+  verifiedStatus VerifiedStatus @default(PENDING)
+  notes          String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  materialPrices MaterialPrice[]
+  @@map("suppliers")
+}
+
+model Vendor {
+  id               String         @id @default(cuid())
+  projectId        String
+  name             String
+  role             String
+  phone            String?
+  email            String?
+  verifiedStatus   VerifiedStatus @default(PENDING)
+  performanceNotes String?
+  contractValue    Float?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  @@map("vendors")
+}
+
+model ProgressStage {
+  id          String    @id @default(cuid())
+  projectId   String
+  stageName   String
+  order       Int
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  notes       String?
+  createdAt   DateTime  @default(now())
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  @@map("progress_stages")
+}
+
+model Alert {
+  id         String        @id @default(cuid())
+  projectId  String
+  title      String
+  message    String        @db.Text
+  severity   AlertSeverity @default(INFO)
+  isRead     Boolean       @default(false)
+  readAt     DateTime?
+  actionUrl  String?
+  resolvedAt DateTime?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  @@index([projectId, isRead])
+  @@index([createdAt])
+  @@map("alerts")
+}
+
+model Message {
+  id           String    @id @default(cuid())
+  projectId    String?
+  userId       String
+  senderId     String?
+  content      String    @db.Text
+  isFromClient Boolean   @default(true)
+  readAt       DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  project Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User     @relation(fields: [userId], references: [id])
+  sender  User?    @relation("MessageSender", fields: [senderId], references: [id])
+  @@index([projectId, createdAt])
+  @@index([userId, isFromClient, readAt])
+  @@map("messages")
+}
+
+model VerificationRequest {
+  id               String   @id @default(cuid())
+  name             String
+  email            String
+  phone            String?
+  country          String
+  projectLocation  String
+  county           String?
+  serviceType      String
+  description      String   @db.Text
+  filesJson        String?  @db.Text
+  urgency          String   @default("standard")
+  budgetRange      String?
+  specificConcerns String?  @db.Text
+  onGroundContact  String?
+  status           String   @default("NEW")
+  createdAt        DateTime @default(now())
+  @@map("verification_requests")
+}
+
+model County {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  code      String?  @unique
+  region    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  marketPrices CountyMaterialPrice[]
+  @@index([name])
+  @@map("counties")
+}
+
+model MarketMaterial {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  category    String
+  unit        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  prices CountyMaterialPrice[]
+  @@index([category])
+  @@map("market_materials")
+}
+
+model MarketPriceSource {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  url       String?
+  county    String?
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  prices CountyMaterialPrice[]
+  @@map("market_price_sources")
+}
+
+model CountyMaterialPrice {
+  id         String   @id @default(cuid())
+  materialId String
+  material   MarketMaterial     @relation(fields: [materialId], references: [id])
+  countyId   String
+  county     County             @relation(fields: [countyId], references: [id])
+  sourceId   String?
+  source     MarketPriceSource? @relation(fields: [sourceId], references: [id])
+  priceKes   Float
+  trend      PriceTrend @default(STABLE)
+  notes      String?
+  scrapedUrl String?
+  scrapedAt  DateTime?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  @@unique([materialId, countyId, sourceId])
+  @@index([countyId])
+  @@index([materialId])
+  @@index([updatedAt])
+  @@map("county_material_prices")
+}
