@@ -41,8 +41,8 @@ const painPoints = [
         <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
       </svg>
     ),
-    title: "Relatives mean well",
-    desc: "Family on the ground want to protect your feelings — not give you the full picture.",
+    title: "Relatives mean well...too well",
+    desc: " 'the foundation is almost done, bro, just waiting for cement prices to drop.' Six months later? Still waiting...",
   },
   {
     icon: (
@@ -119,14 +119,19 @@ export default function ProblemSection() {
             The Problem
           </span>
 
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-charcoal-950 mb-5 leading-tight tracking-tight">
-            Distance shouldn&rsquo;t mean{" "}
-            <span className="text-orange-500 italic">blind trust.</span>
+          <h2 className="font-display text-4xl  sm:text-5xl font-bold text-orange-500  mb-5 leading-tight tracking-tight">
+            "It's Almost done"
+            <br />
+            <span className="text-charcoal-950 font-display text-3xl  sm:text-3xl ">
+              Plot twist nobody ordered, but every diaspora project delivers.
+            </span>
           </h2>
 
-          <p className="text-charcoal-600 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
-            Relatives try their best. Contractors promise progress. But without clear, independent evidence from the ground, it’s hard to feel truly at ease.
-            GRUTH gives you the full picture — so you can support your family, invest confidently, and finally let go of the uncertainty
+          <p className="text-charcoal-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            You send money with care. Updates arrive full of promise… and
+            sometimes creative optimism. From building sites to land boundaries,
+            pricing to events — distance quietly breeds doubt. GRUTH gently
+            clears it: independent eyes, clear evidence, real peace.
           </p>
         </div>
 

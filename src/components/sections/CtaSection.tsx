@@ -15,7 +15,7 @@ function useFadeIn(threshold = 0.12) {
           obs.disconnect();
         }
       },
-      { threshold }
+      { threshold },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -52,22 +52,21 @@ export default function CtaSection() {
       >
         <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white text-[10px] font-bold px-3 py-1.5 rounded-full mb-6 uppercase tracking-widest">
           <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-          Get started today
+          Get eyes on the ground today
         </div>
 
         <h2 className="font-display text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight tracking-tight">
-          Don&rsquo;t send money blind.
+          Get Eyes You Can Actually Trust
         </h2>
         <p className="text-orange-100 text-base sm:text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-          For a fraction of what you&rsquo;re sending, GRUTH gives you eyes on
-          the ground — so you can support your family and invest with confidence.
+          Family love is real. Family updates? Let's get a second opinion.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Link
             href="/request-verification"
             className="group inline-flex items-center justify-center gap-2 bg-white text-orange-600 font-semibold px-8 py-4 rounded-xl hover:bg-orange-50 transition-all duration-200 hover:shadow-xl hover:shadow-orange-700/20 hover:-translate-y-0.5 active:translate-y-0"
           >
-            Get Started Today
+            Get Started
             <svg
               width="14"
               height="14"

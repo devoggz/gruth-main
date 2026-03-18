@@ -8,25 +8,6 @@ function TrustBadge() {
   return (
     <div className="hidden lg:block absolute bottom-8 right-8 sm:bottom-10 sm:right-10 z-20 pointer-events-none">
       <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3.5 shadow-2xl min-w-[160px]">
-        <div className="flex items-center mb-2.5">
-          {[
-            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face",
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face",
-            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=40&h=40&fit=crop&crop=face",
-          ].map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt=""
-              className="w-7 h-7 rounded-full border-2 border-white/80 object-cover"
-              style={{ marginLeft: i === 0 ? 0 : "-8px", zIndex: 3 - i }}
-            />
-          ))}
-          <div className="w-7 h-7 rounded-full bg-orange-500 border-2 border-white/80 flex items-center justify-center -ml-2 z-0">
-            <span className="text-white text-[9px] font-bold">+</span>
-          </div>
-        </div>
-
         <div className="font-display text-2xl font-bold text-white leading-none mb-0.5">
           150+
         </div>
@@ -56,7 +37,7 @@ export default function HeroSectionAlter() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div
           className="relative w-full rounded-2xl overflow-hidden"
-          style={{ minHeight: "min(96vh, 728px)" }}
+          style={{ minHeight: "min(96vh, 800px)" }}
         >
           {/* Background */}
           <img
@@ -88,10 +69,10 @@ export default function HeroSectionAlter() {
 
           {/* ── Centered hero content ───────────────────────────────────────── */}
           <div
-            className="relative z-10 flex flex-col justify-center h-full p-7 sm:p-10 lg:p-14"
-            style={{ minHeight: "min(88vh, 640px)" }}
+            className="relative z-10 flex flex-col  justify-center h-full p-7 sm:p-10 lg:p-14"
+            style={{ minHeight: "min(88vh, 660px)" }}
           >
-            <div className="max-w-xl">
+            <div className="max-w-xl ">
               <div
                 className="inline-flex items-center gap-2 bg-orange-500/15 border border-orange-500/25 text-orange-300 text-[10px] font-bold px-3 py-1.5 rounded-full mb-6 uppercase tracking-widest"
                 style={{ animation: "hero-fade-up 0.65s ease both" }}
@@ -115,8 +96,8 @@ export default function HeroSectionAlter() {
                 className="text-white/60 text-base sm:text-lg leading-relaxed mb-8 max-w-md"
                 style={{ animation: "hero-fade-up 0.65s 0.16s ease both" }}
               >
-                Clear photos, videos, measurements and reports — delivered to
-                your secure dashboard in 48 hours. So distance never means doubt
+                Clear photos, videos, measurements and reports delivered to your
+                secure dashboard in 48 hours. So distance never means doubt
                 again.
               </p>
 

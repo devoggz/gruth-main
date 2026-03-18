@@ -22,22 +22,22 @@ const SERVICE_TYPES = [
   {
     value: "construction",
     label: "Construction Verification",
-    base: [150, 400] as [number, number],
+    base: [120, 300] as [number, number],
   },
   {
     value: "land",
     label: "Land & Property",
-    base: [120, 280] as [number, number],
+    base: [120, 250] as [number, number],
   },
   {
     value: "wedding",
     label: "Wedding & Events",
-    base: [100, 220] as [number, number],
+    base: [100, 200] as [number, number],
   },
   {
     value: "business",
     label: "Business Investment",
-    base: [160, 400] as [number, number],
+    base: [120, 300] as [number, number],
   },
   {
     value: "materials",
@@ -52,14 +52,14 @@ type ServiceValue = (typeof SERVICE_TYPES)[number]["value"];
 
 const COUNTIES = [
   { value: "nairobi", label: "Nairobi", travel: 0 },
-  { value: "mombasa", label: "Mombasa", travel: 30 },
-  { value: "kisumu", label: "Kisumu", travel: 35 },
-  { value: "nakuru", label: "Nakuru", travel: 20 },
-  { value: "eldoret", label: "Eldoret", travel: 28 },
-  { value: "nyeri", label: "Nyeri", travel: 24 },
-  { value: "machakos", label: "Machakos", travel: 16 },
-  { value: "kisii", label: "Kisii", travel: 32 },
-  { value: "other", label: "Remote / Other", travel: 50 },
+  { value: "mombasa", label: "Mombasa", travel: 50 },
+  { value: "kisumu", label: "Kisumu", travel: 50 },
+  { value: "nakuru", label: "Nakuru", travel: 30 },
+  { value: "eldoret", label: "Eldoret", travel: 50 },
+  { value: "nyeri", label: "Nyeri", travel: 30 },
+  { value: "machakos", label: "Machakos", travel: 30 },
+  { value: "kisii", label: "Kisii", travel: 50 },
+  { value: "other", label: "Remote / Other", travel: 65 },
 ] as const;
 
 type CountyValue = (typeof COUNTIES)[number]["value"];
@@ -77,7 +77,7 @@ const URGENCY = [
     value: "priority",
     label: "Priority",
     sub: "24-hour turnaround",
-    surcharge: 40,
+    surcharge: 50,
   },
 ] as const;
 
@@ -172,10 +172,10 @@ function getSizeLabel(service: ServiceValue) {
 // ─── Add-ons ──────────────────────────────────────────────────────────────────
 
 const ADDONS = [
-  { value: "drone", label: "Drone Footage", price: 45 },
+  { value: "drone", label: "Drone Footage", price: 75 },
   { value: "lab", label: "Material Lab Testing", price: 80 },
   { value: "extra", label: "Extra Site Visit", price: 60 },
-  { value: "video", label: "Video Evidence Package", price: 35 },
+  { value: "video", label: "Video Evidence Package", price: 50 },
 ] as const;
 
 type AddonValue = (typeof ADDONS)[number]["value"];
@@ -554,7 +554,7 @@ export default function QuoteCalculator() {
                       <path d="M9 12l2 2 4-4" />
                     </svg>
                   ),
-                  text: "No upfront payment — invoiced only after your report is delivered",
+                  text: "Secure Payment",
                 },
                 {
                   icon: (
