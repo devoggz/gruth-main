@@ -11,6 +11,7 @@ const schema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
   phone: z.string().optional(),
+  country: z.string().optional(),
   projectLocation: z.string().min(3),
   serviceType: z.string().min(2),
   description: z.string().min(20),
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
     // Notify admin — non-blocking
     try {
       await resend.emails.send({
-        from: "GRUTH <no-reply@gruth.ke>",
+        from: "GRUTH <no-reply@gruth.it.com>",
         to: ADMIN_EMAIL,
         subject: `New verification request — ${parsed.data.serviceType} · ${parsed.data.projectLocation}`,
         html: adminNotificationHtml(parsed.data, request.id),
@@ -92,6 +93,7 @@ function adminNotificationHtml(data: z.infer<typeof schema>, id: string) {
                 ["Name", data.name],
                 ["Email", data.email],
                 ["Phone", data.phone ?? "—"],
+                ["Country", data.country ?? "—"],
                 ["Location", data.projectLocation],
                 ["Service", data.serviceType],
               ]

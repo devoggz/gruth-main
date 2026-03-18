@@ -1,9 +1,6 @@
 "use client";
-// src/components/home/HeroSection.tsx
 
 import Link from "next/link";
-
-// ─── Trust badge (floating card — bottom right) ───────────────────────────────
 function TrustBadge() {
   return (
     <div className="hidden lg:block absolute bottom-8 right-8 sm:bottom-10 sm:right-10 z-20 pointer-events-none">
@@ -22,7 +19,6 @@ function TrustBadge() {
   );
 }
 
-// ─── Trust badges row ─────────────────────────────────────────────────────────
 const trustBadges = [
   "Photo + Video Evidence",
   "Written Reports",
@@ -30,7 +26,6 @@ const trustBadges = [
   "Verified Inspectors",
 ];
 
-// ─── Hero ─────────────────────────────────────────────────────────────────────
 export default function HeroSectionAlter() {
   return (
     <section className="relative  overflow-hidden">

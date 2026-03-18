@@ -128,10 +128,11 @@ export default function ProblemSection() {
           </h2>
 
           <p className="text-charcoal-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-            You send money with care. Updates arrive full of promise… and
-            sometimes creative optimism. From building sites to land boundaries,
-            pricing to events — distance quietly breeds doubt. GRUTH gently
-            clears it: independent eyes, clear evidence, real peace.
+            You send money with care and hope. Updates come back with
+            enthusiasm… and sometimes a little creative editing. Whether it’s a
+            half-finished house, a questionable land boundary, inflated material
+            prices, or an event that’s “almost ready,” the distance can quietly
+            turn confidence into quiet doubt.
           </p>
         </div>
 

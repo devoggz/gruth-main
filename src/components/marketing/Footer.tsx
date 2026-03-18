@@ -20,7 +20,9 @@ export default function Footer() {
               </Link>
             </div>
             <p className="text-charcoal-300 text-sm leading-relaxed mb-6">
-              Reality, confirmed before you send the money.
+              We provide independent, on-the-ground verification — evidence you
+              can trust — so doubt fades, decisions feel solid, and you can
+              focus on what really matters instead of wondering.
             </p>
             <p className="text-charcoal-400 text-xs">
               hello@gruth.it.com

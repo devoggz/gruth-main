@@ -333,7 +333,7 @@ model VerificationRequest {
   name             String
   email            String
   phone            String?
-  country          String
+  country          String?
   projectLocation  String
   county           String?
   serviceType      String
