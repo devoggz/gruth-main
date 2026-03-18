@@ -70,7 +70,7 @@ export default async function MarketPricesPage() {
   }
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-6 pb-12 overflow-hidden">
       {/* Header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
@@ -95,27 +95,44 @@ export default async function MarketPricesPage() {
 
       {/* Info banner */}
       <div className="rounded-xl border border-blue-100 bg-blue-50/70 px-4 py-3.5 flex gap-3 items-start">
-        <svg className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg
+          className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
           <circle cx="12" cy="12" r="10" />
           <line x1="12" y1="8" x2="12" y2="12" />
           <line x1="12" y1="16" x2="12.01" y2="16" />
         </svg>
         <p className="text-xs text-blue-700 leading-relaxed">
-          <strong className="font-semibold">How to use this:</strong> Compare these market rates against contractor invoices.
-          A markup of <strong>30%+</strong> above these figures is a red flag worth querying.
-          Hover any row to see the full price range and source.
+          <strong className="font-semibold">How to use this:</strong> Compare
+          these market rates against contractor invoices. A markup of{" "}
+          <strong>30%+</strong> above these figures is a red flag worth
+          querying. Hover any row to see the full price range and source.
         </p>
       </div>
 
       {counties.length === 0 ? (
         <div className="card p-16 text-center">
-          <div className="w-14 h-14 bg-charcoal-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <svg className="w-7 h-7 text-charcoal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <div className="w-14 h-14 bg-charcoal-100 rounded-2xl flex items-center justify-center mx-auto mb-8">
+            <svg
+              className="w-7 h-7 text-charcoal-400"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+            >
               <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" />
             </svg>
           </div>
-          <h3 className="font-display font-semibold text-charcoal-900 mb-2">Price data coming soon</h3>
-          <p className="text-charcoal-500 text-sm">Our team is compiling verified prices across all 47 counties.</p>
+          <h3 className="font-display font-semibold text-charcoal-900 mb-2">
+            Price data coming soon
+          </h3>
+          <p className="text-charcoal-500 text-sm">
+            Our team is compiling verified prices across all 47 counties.
+          </p>
         </div>
       ) : (
         <MarketPricesClient

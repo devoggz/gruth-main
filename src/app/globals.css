@@ -145,7 +145,7 @@
 
   /* Cards */
   .card {
-    @apply bg-white rounded-2xl border border-charcoal-100 shadow-sm;
+    @apply bg-white rounded-2xl border border-charcoal-100;
   }
 
   /* Form inputs — sized firmly so they don't shift on focus */
@@ -157,7 +157,7 @@
     placeholder:text-charcoal-400 placeholder:text-xs
     bg-white
     transition-colors duration-150
-    focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-400
+    focus:outline-none focus:ring-1 focus:ring-orange-400/40 focus:border-orange-400
       /* Fixed height prevents iOS zoom-induced layout shift */
     h-11;
   }
@@ -284,34 +284,61 @@
 :root {
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-out:    cubic-bezier(0, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
 }
 
 /* ─── Keyframes ──────────────────────────────────────────────────────────────── */
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 @keyframes pulseRing {
-  0%   { transform: scale(1);   opacity: 0.7; }
-  100% { transform: scale(1.6); opacity: 0;   }
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
 }
 
 @keyframes floatUp {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-6px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 /* ─── Page enter animation ───────────────────────────────────────────────────── */
@@ -326,7 +353,7 @@
   background: linear-gradient(
     90deg,
     theme("colors.charcoal.100") 25%,
-    theme("colors.charcoal.50")  50%,
+    theme("colors.charcoal.50") 50%,
     theme("colors.charcoal.100") 75%
   );
   background-size: 200% 100%;
@@ -337,7 +364,10 @@
 /* ─── Card hover lift — used on dashboard/project cards ─────────────────────── */
 
 .card-hover {
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 .card-hover:hover {
   transform: translateY(-2px);

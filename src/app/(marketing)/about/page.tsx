@@ -4,27 +4,6 @@ import Link from "next/link";
 
 export const metadata: Metadata = { title: "About GroundTruth" };
 
-const team = [
-  {
-    name: "Amara Osei",
-    role: "CEO & Co-Founder",
-    bio: "Born in Nairobi, built a career in financial services in London. After being defrauded in a land deal while abroad, Amara founded GroundTruth to solve the problem she lived.",
-    initials: "AO",
-  },
-  {
-    name: "Kevin Kariuki",
-    role: "Head of Operations",
-    bio: "Former civil engineer with 12 years on major construction projects across East Africa. Leads our inspector network and quality standards.",
-    initials: "KK",
-  },
-  {
-    name: "Priya Nair",
-    role: "Head of Technology",
-    bio: "SaaS engineer with a background in trust and safety platforms. Builds the tools that keep client data secure and reports accurate.",
-    initials: "PN",
-  },
-];
-
 export default function AboutPage() {
   return (
     <div className="pt-16">
@@ -37,7 +16,7 @@ export default function AboutPage() {
             Built by diaspora, for diaspora.
           </h1>
           <p className="text-charcoal-300 text-lg leading-relaxed max-w-2xl mx-auto">
-            GroundTruth was founded because our team experienced firsthand what
+            GRUTH was founded because our team experienced firsthand what
             happens when you send money home and have no way to verify it's
             being used honestly.
           </p>
