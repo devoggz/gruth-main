@@ -11,8 +11,7 @@ const schema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
   phone: z.string().optional(),
-  country: z.string().min(2),
-  projectLocation: z.string().min(5),
+  projectLocation: z.string().min(3),
   serviceType: z.string().min(2),
   description: z.string().min(20),
 });
@@ -93,7 +92,6 @@ function adminNotificationHtml(data: z.infer<typeof schema>, id: string) {
                 ["Name", data.name],
                 ["Email", data.email],
                 ["Phone", data.phone ?? "—"],
-                ["Country", data.country],
                 ["Location", data.projectLocation],
                 ["Service", data.serviceType],
               ]
