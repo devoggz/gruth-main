@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_GB",
-    url: "https://gruth.ke",
+    url: "https://gruth.it.com",
     title: "GRUTH — Diaspora property & investment verification",
     description:
       "Trusted on-the-ground verification for diaspora-funded projects in Kenya.",
