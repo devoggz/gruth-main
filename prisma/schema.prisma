@@ -168,6 +168,7 @@ model Project {
   alerts         Alert[]
   messages       Message[]
   progressStages ProgressStage[]
+  budgetEntries  BudgetEntry[]
 
   @@index([clientId, status])
   @@index([inspectorId])
@@ -333,7 +334,7 @@ model VerificationRequest {
   name             String
   email            String
   phone            String?
-  country          String?
+  country          String
   projectLocation  String
   county           String?
   serviceType      String
@@ -394,8 +395,6 @@ model CountyMaterialPrice {
   sourceId   String?
   source     MarketPriceSource? @relation(fields: [sourceId], references: [id])
   priceKes   Float
-  priceLow   Float?
-  priceHigh  Float?
   trend      PriceTrend @default(STABLE)
   notes      String?
   scrapedUrl String?
@@ -407,4 +406,23 @@ model CountyMaterialPrice {
   @@index([materialId])
   @@index([updatedAt])
   @@map("county_material_prices")
+}
+
+// ─── Budget tracking ──────────────────────────────────────────────────────────
+
+model BudgetEntry {
+  id          String   @id @default(cuid())
+  projectId   String
+  amount      Float
+  category    String   // e.g. "Labour", "Materials", "Inspector Fee", "Transport", "Other"
+  description String?
+  entryDate   DateTime // The month this entry applies to (use 1st of month)
+  currency    String   @default("KES")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, entryDate])
+  @@map("budget_entries")
 }

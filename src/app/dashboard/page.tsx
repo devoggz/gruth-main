@@ -58,7 +58,6 @@ export default async function DashboardPage() {
     (s, p) => s + (p.estimatedBudget ?? 0),
     0,
   );
-  const totalSpent = projects.reduce((s, p) => s + (p.amountSpent ?? 0), 0);
   const totalInspections = await prisma.inspection.count({
     where: { project: { clientId: userId } },
   });
@@ -68,16 +67,55 @@ export default async function DashboardPage() {
     hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
   const name = session?.user?.name?.split(" ")[0] ?? "there";
 
-  // Chart data
+  // ── Real spend data from BudgetEntry ──────────────────────────────────────
+  // Last 12 months of entries across all of this client's projects
+  const MONTHS_LABELS = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   const now = new Date();
-  const spendingHistory = Array.from({ length: 6 }, (_, i) => {
-    const d = new Date(now.getFullYear(), now.getMonth() - 5 + i, 1);
-    return {
-      month: d.toLocaleString("default", { month: "short" }),
-      budget: Math.round(totalBudget / 6),
-      spent: Math.round((totalSpent / 6) * (0.7 + Math.random() * 0.6)),
-    };
+
+  const budgetEntries = await prisma.budgetEntry.findMany({
+    where: {
+      project: { clientId: userId },
+      entryDate: { gte: new Date(now.getFullYear(), now.getMonth() - 11, 1) },
+    },
+    select: { amount: true, entryDate: true },
   });
+
+  // Build monthly buckets for last 12 months
+  const monthBuckets: Record<
+    string,
+    { month: string; budget: number; spent: number }
+  > = {};
+  for (let i = 11; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    monthBuckets[key] = {
+      month: `${MONTHS_LABELS[d.getMonth()]} ${String(d.getFullYear()).slice(2)}`,
+      budget: totalBudget > 0 ? Math.round(totalBudget / 12) : 0,
+      spent: 0,
+    };
+  }
+
+  budgetEntries.forEach((e) => {
+    const d = new Date(e.entryDate);
+    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    if (monthBuckets[key]) monthBuckets[key].spent += e.amount;
+  });
+
+  const spendingHistory = Object.values(monthBuckets);
+  const hasRealSpendData = budgetEntries.length > 0;
 
   const typeMap: Record<string, number> = {};
   projects.forEach((p) => {
@@ -233,6 +271,8 @@ export default async function DashboardPage() {
         spendingHistory={spendingHistory}
         projectsByType={projectsByType}
         inspectionTimeline={inspectionTimeline}
+        currency="KES"
+        hasRealSpendData={hasRealSpendData}
       />
 
       {/* ── Projects + Sidebar ─────────────────────────────────────────────── */}
