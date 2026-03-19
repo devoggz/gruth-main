@@ -67,13 +67,13 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
+            {/* ── Logo ───────────────────────────────────────────────────── */}
             <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
               <Image
-                src="/images/logo-t.svg"
+                src="/images/logo-2.svg"
                 alt="GRUTH"
-                width={180}
+                width={96}
                 height={44}
-                // style={{ width: "auto", height: "auto" }}
                 priority
               />
             </Link>
@@ -139,46 +139,38 @@ export default function Navbar() {
                   name={user?.name}
                   email={user?.email}
                   role={user?.role}
+                  image={user?.image}
                 />
               )}
             </div>
 
-            {/* ── Mobile: user avatar (shown when logged in) + hamburger ── */}
-            <div className="md:hidden flex items-center gap-2">
-              {session && (
-                <UserMenu
-                  name={user?.name}
-                  email={user?.email}
-                  role={user?.role}
-                />
-              )}
-              <button
-                className="p-2 rounded-lg text-charcoal-500 hover:text-charcoal-900 transition-colors"
-                onClick={() => setMobileOpen((v) => !v)}
-                aria-label="Toggle menu"
-                aria-expanded={mobileOpen}
+            {/* ── Mobile: hamburger ───────────────────────────────────────── */}
+            <button
+              className="md:hidden p-2 rounded-lg text-charcoal-500 hover:text-charcoal-900 transition-colors"
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
               >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                >
-                  {mobileOpen ? (
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  ) : (
-                    <>
-                      <line x1="3" y1="7" x2="21" y2="7" />
-                      <line x1="3" y1="12" x2="21" y2="12" />
-                      <line x1="3" y1="17" x2="21" y2="17" />
-                    </>
-                  )}
-                </svg>
-              </button>
-            </div>
+                {mobileOpen ? (
+                  <path d="M18 6L6 18M6 6l12 12" />
+                ) : (
+                  <>
+                    <line x1="3" y1="7" x2="21" y2="7" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="17" x2="21" y2="17" />
+                  </>
+                )}
+              </svg>
+            </button>
           </div>
         </div>
 
@@ -186,7 +178,7 @@ export default function Navbar() {
         <div
           className={[
             "md:hidden overflow-hidden transition-all duration-300 ease-in-out",
-            mobileOpen ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0",
+            mobileOpen ? "max-h-[420px] opacity-100" : "max-h-0 opacity-0",
           ].join(" ")}
           style={{
             background: "#ffffff",
@@ -245,50 +237,14 @@ export default function Navbar() {
                   </Link>
                 </>
               ) : (
-                <>
-                  {/* Dashboard quick-link */}
-                  <Link
-                    href={
-                      user?.role === "ADMIN"
-                        ? "/admin"
-                        : user?.role === "INSPECTOR"
-                          ? "/inspector"
-                          : "/dashboard"
-                    }
-                    className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white transition-all duration-150"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    <svg
-                      width="15"
-                      height="15"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <rect x="3" y="3" width="7" height="7" rx="1" />
-                      <rect x="14" y="3" width="7" height="7" rx="1" />
-                      <rect x="3" y="14" width="7" height="7" rx="1" />
-                      <rect x="14" y="14" width="7" height="7" rx="1" />
-                    </svg>
-                    {user?.role === "ADMIN"
-                      ? "Admin Console"
-                      : user?.role === "INSPECTOR"
-                        ? "Inspector Portal"
-                        : "My Dashboard"}
-                  </Link>
-
-                  {/* New verification CTA */}
-                  <Link
-                    href="/request-verification"
-                    className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl text-sm font-medium text-charcoal-700 hover:text-charcoal-950 border border-charcoal-200 hover:border-charcoal-300 transition-all duration-150"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    New Verification Request
-                  </Link>
-                </>
+                <div className="pt-1">
+                  <UserMenu
+                    name={user?.name}
+                    email={user?.email}
+                    role={user?.role}
+                    image={user?.image}
+                  />
+                </div>
               )}
             </div>
           </div>
