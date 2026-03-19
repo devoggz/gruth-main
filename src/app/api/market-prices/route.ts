@@ -32,7 +32,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // Confirm county exists
   const county = await prisma.county.findUnique({
     where: { id: countyId },
     select: { id: true },
@@ -51,20 +50,25 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     orderBy: [{ material: { category: "asc" } }, { material: { name: "asc" } }],
   });
 
-  const rows: MarketPriceRow[] = prices.map((p) => ({
-    id: p.id,
-    materialId: p.materialId,
-    materialName: p.material.name,
-    category: p.material.category,
-    unit: p.material.unit,
-    priceKes: p.priceKes,
-    priceLow: p.priceLow ?? null,
-    priceHigh: p.priceHigh ?? null,
-    sourceName: p.source?.name ?? "GRUTH Field Survey",
-    sourceUrl: p.source?.url ?? null,
-    updatedAt: p.updatedAt,
-    trend: p.trend,
-  }));
+  const rows: MarketPriceRow[] = prices.map((p) => {
+    // Cast to any to handle cases where the generated Prisma client
+    // predates a db push that added priceLow / priceHigh columns.
+    const raw = p as any;
+    return {
+      id: p.id,
+      materialId: p.materialId,
+      materialName: p.material.name,
+      category: p.material.category,
+      unit: p.material.unit,
+      priceKes: p.priceKes,
+      priceLow: raw.priceLow ?? null,
+      priceHigh: raw.priceHigh ?? null,
+      sourceName: p.source?.name ?? "GRUTH Field Survey",
+      sourceUrl: p.source?.url ?? null,
+      updatedAt: p.updatedAt,
+      trend: p.trend,
+    };
+  });
 
   return NextResponse.json(rows);
 }
