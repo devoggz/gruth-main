@@ -8,6 +8,7 @@ import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const viewport: Viewport = {
   // Prevents iOS from zooming on input focus
@@ -97,6 +98,7 @@ export default function RootLayout({
       <AuthSessionProvider>
         <body className="antialiased">
           <Analytics />
+          <SpeedInsights />
 
           <PWAInstallBanner />
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
