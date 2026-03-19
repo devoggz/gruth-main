@@ -25,12 +25,17 @@ export default async function AdminLayout({
           <div className="md:hidden flex items-center gap-2.5">
             <div className="w-7 h-7 bg-orange-500 rounded-lg flex items-center justify-center">
               <svg width="13" height="13" viewBox="0 0 18 18" fill="none">
-                <path d="M9 2L15 5.5V12.5L9 16L3 12.5V5.5L9 2Z" stroke="white" strokeWidth="1.5" fill="none" />
+                <path
+                  d="M9 2L15 5.5V12.5L9 16L3 12.5V5.5L9 2Z"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  fill="none"
+                />
                 <circle cx="9" cy="9" r="2" fill="white" />
               </svg>
             </div>
             <span className="font-display font-bold text-charcoal-950 text-sm">
-              GRUTH Admin
+              GRUTH
             </span>
           </div>
           <div className="hidden md:flex items-center gap-2">

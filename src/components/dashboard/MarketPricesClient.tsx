@@ -82,22 +82,40 @@ function TrendChip({ trend }: { trend: "UP" | "DOWN" | "STABLE" }) {
   );
 }
 
-// ─── Hover info tooltip ───────────────────────────────────────────────────────
+// ─── Hover tooltip — viewport-aware ──────────────────────────────────────────
 
-function PriceTooltip({ row }: { row: PriceRow }) {
+function PriceTooltip({
+  row,
+  anchorRef,
+}: {
+  row: PriceRow;
+  anchorRef: React.RefObject<HTMLElement>;
+}) {
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState<"above" | "below">("above");
+
+  useEffect(() => {
+    if (!anchorRef.current || !tooltipRef.current) return;
+    const anchor = anchorRef.current.getBoundingClientRect();
+    const tip = tooltipRef.current.getBoundingClientRect();
+    // If not enough space above, show below
+    setPos(anchor.top - tip.height - 10 < 0 ? "below" : "above");
+  }, [anchorRef]);
+
   return (
     <div
-      className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 z-50 w-64 pointer-events-none"
+      ref={tooltipRef}
+      className={`absolute left-0 z-[999] w-64 pointer-events-none ${
+        pos === "above" ? "bottom-full mb-2.5" : "top-full mt-2.5"
+      }`}
       style={{ filter: "drop-shadow(0 8px 24px rgba(0,0,0,0.18))" }}
     >
       <div className="bg-charcoal-950 text-white rounded-2xl px-4 py-3.5 text-xs">
-        {/* Material name */}
         <p className="font-semibold text-white text-sm mb-2 leading-tight">
           {row.materialName}
         </p>
 
-        {/* Price range */}
-        {row.priceLow != null && row.priceHigh != null ? (
+        {row.priceLow != null && row.priceHigh != null && (
           <div className="mb-2.5">
             <p className="text-charcoal-400 text-[10px] uppercase tracking-widest font-semibold mb-1">
               Market range
@@ -111,7 +129,6 @@ function PriceTooltip({ row }: { row: PriceRow }) {
                 KES {row.priceHigh.toLocaleString()}
               </span>
             </div>
-            {/* Range bar */}
             <div className="mt-1.5 h-1 bg-charcoal-800 rounded-full overflow-hidden">
               {(() => {
                 const range = row.priceHigh - row.priceLow;
@@ -131,16 +148,14 @@ function PriceTooltip({ row }: { row: PriceRow }) {
               })()}
             </div>
           </div>
-        ) : null}
+        )}
 
-        {/* Description */}
         {row.description && (
           <p className="text-charcoal-300 text-[11px] leading-relaxed mb-2.5 border-t border-charcoal-800 pt-2.5">
             {row.description}
           </p>
         )}
 
-        {/* Footer: source + updated */}
         <div className="flex items-center justify-between gap-2 border-t border-charcoal-800 pt-2">
           <span className="text-charcoal-400 text-[10px] truncate">
             {row.sourceUrl ? (
@@ -161,18 +176,28 @@ function PriceTooltip({ row }: { row: PriceRow }) {
           </span>
         </div>
       </div>
-      {/* Arrow */}
-      <div className="flex justify-center">
-        <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-charcoal-950" />
-      </div>
+      {pos === "above" && (
+        <div className="flex justify-start pl-4">
+          <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-charcoal-950" />
+        </div>
+      )}
+      {pos === "below" && (
+        <div
+          className="flex justify-start pl-4 order-first mb-0"
+          style={{ marginTop: -1, marginBottom: 2 }}
+        >
+          <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-charcoal-950" />
+        </div>
+      )}
     </div>
   );
 }
 
-// ─── Price row with hover tooltip ─────────────────────────────────────────────
+// ─── Price row ────────────────────────────────────────────────────────────────
 
 function PriceRowItem({ row }: { row: PriceRow }) {
   const [hovered, setHovered] = useState(false);
+  const cellRef = useRef<HTMLTableDataCellElement>(null);
 
   return (
     <tr
@@ -180,16 +205,24 @@ function PriceRowItem({ row }: { row: PriceRow }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <td className="px-5 py-3 font-medium text-charcoal-900 text-sm">
+      <td
+        ref={cellRef}
+        className="px-4 py-3 font-medium text-charcoal-900 text-sm"
+      >
         <div className="relative inline-block">
           <span className="border-b border-dashed border-charcoal-200 group-hover:border-orange-300 transition-colors">
             {row.materialName}
           </span>
-          {hovered && <PriceTooltip row={row} />}
+          {hovered && (
+            <PriceTooltip
+              row={row}
+              anchorRef={cellRef as React.RefObject<HTMLElement>}
+            />
+          )}
         </div>
       </td>
-      <td className="px-5 py-3 text-charcoal-400 text-xs">{row.unit}</td>
-      <td className="px-5 py-3 text-right">
+      <td className="px-4 py-3 text-charcoal-400 text-xs">{row.unit}</td>
+      <td className="px-4 py-3 text-right">
         <span className="font-display font-bold text-charcoal-950 text-sm">
           {row.priceKes.toLocaleString()}
         </span>
@@ -199,10 +232,10 @@ function PriceRowItem({ row }: { row: PriceRow }) {
           </span>
         )}
       </td>
-      <td className="px-5 py-3">
+      <td className="px-4 py-3">
         <TrendChip trend={row.trend} />
       </td>
-      <td className="px-5 py-3 text-charcoal-400 text-xs hidden lg:table-cell">
+      <td className="px-4 py-3 text-charcoal-400 text-xs hidden lg:table-cell">
         {row.sourceUrl ? (
           <a
             href={row.sourceUrl}
@@ -216,7 +249,7 @@ function PriceRowItem({ row }: { row: PriceRow }) {
           row.sourceName
         )}
       </td>
-      <td className="px-5 py-3 text-charcoal-400 text-xs hidden lg:table-cell">
+      <td className="px-4 py-3 text-charcoal-400 text-xs hidden lg:table-cell">
         {formatRelativeDate(row.updatedAt)}
       </td>
     </tr>
@@ -230,7 +263,7 @@ function MobilePriceCard({ row }: { row: PriceRow }) {
 
   return (
     <button
-      className="w-full text-left px-4 py-3.5 hover:bg-orange-50/50 active:bg-orange-50 transition-colors"
+      className="w-full text-left px-4 py-4 hover:bg-orange-50/50 active:bg-orange-50 transition-colors"
       onClick={() => setExpanded((v) => !v)}
     >
       <div className="flex items-start justify-between gap-3">
@@ -241,7 +274,7 @@ function MobilePriceCard({ row }: { row: PriceRow }) {
           <div className="text-xs text-charcoal-400 mt-0.5">{row.unit}</div>
         </div>
         <div className="text-right flex-shrink-0">
-          <div className="font-display font-bold text-charcoal-950">
+          <div className="font-display font-bold text-charcoal-950 text-sm">
             KES {row.priceKes.toLocaleString()}
           </div>
           {row.priceLow != null && row.priceHigh != null && (
@@ -249,13 +282,12 @@ function MobilePriceCard({ row }: { row: PriceRow }) {
               {row.priceLow.toLocaleString()} – {row.priceHigh.toLocaleString()}
             </div>
           )}
-          <div className="mt-1 flex justify-end">
+          <div className="mt-1.5 flex justify-end">
             <TrendChip trend={row.trend} />
           </div>
         </div>
       </div>
 
-      {/* Expanded detail */}
       {expanded && (
         <div className="mt-3 pt-3 border-t border-charcoal-100 space-y-1.5 text-left">
           {row.description && (
@@ -273,7 +305,7 @@ function MobilePriceCard({ row }: { row: PriceRow }) {
   );
 }
 
-// ─── Comparison chart tooltip ─────────────────────────────────────────────────
+// ─── Comparison tooltip ───────────────────────────────────────────────────────
 
 function ComparisonTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
@@ -287,19 +319,19 @@ function ComparisonTooltip({ active, payload, label }: any) {
   );
 }
 
-// ─── Skeleton loader ──────────────────────────────────────────────────────────
+// ─── Skeleton ─────────────────────────────────────────────────────────────────
 
 function TableSkeleton() {
   return (
-    <div className="card overflow-hidden">
-      <div className="px-5 py-3 bg-charcoal-50 border-b border-charcoal-100">
+    <div className="bg-white border border-charcoal-100 rounded-2xl overflow-hidden">
+      <div className="px-4 py-3 bg-charcoal-50 border-b border-charcoal-100">
         <div className="skeleton h-4 w-40" />
       </div>
       <div className="divide-y divide-charcoal-50">
-        {Array.from({ length: 5 }).map((_, i) => (
+        {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
-            className="px-5 py-3.5 flex items-center justify-between gap-4"
+            className="px-4 py-3.5 flex items-center justify-between gap-4"
           >
             <div className="skeleton h-4 w-48" />
             <div className="skeleton h-4 w-20" />
@@ -312,7 +344,7 @@ function TableSkeleton() {
   );
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// ─── Main ─────────────────────────────────────────────────────────────────────
 
 export function MarketPricesClient({
   counties,
@@ -330,7 +362,6 @@ export function MarketPricesClient({
     null,
   );
   const [view, setView] = useState<"table" | "chart">("table");
-  const countyScrollRef = useRef<HTMLDivElement>(null);
 
   const fetchPrices = useCallback(
     async (countyId: string) => {
@@ -376,16 +407,10 @@ export function MarketPricesClient({
   const comparisonData = comparisonMaterial
     ? counties
         .map((county) => {
-          const countyPrices = allCountyPrices[county.id] ?? [];
-          const match = countyPrices.find(
+          const match = (allCountyPrices[county.id] ?? []).find(
             (p) => p.materialName === comparisonMaterial,
           );
-          return {
-            county: county.name,
-            price: match?.priceKes ?? 0,
-            low: match?.priceLow ?? 0,
-            high: match?.priceHigh ?? 0,
-          };
+          return { county: county.name, price: match?.priceKes ?? 0 };
         })
         .filter((d) => d.price > 0)
     : [];
@@ -393,22 +418,19 @@ export function MarketPricesClient({
   const allMaterials = Array.from(
     new Set(defaultPrices.map((p) => p.materialName)),
   ).sort();
-
-  // Stats for selected county
   const totalItems = filtered.length;
   const risingCount = filtered.filter((p) => p.trend === "UP").length;
   const fallingCount = filtered.filter((p) => p.trend === "DOWN").length;
 
   return (
     <div className="space-y-5">
-      {/* ── County selector (horizontal scroll) ──────────────────────────── */}
+      {/* ── County selector ──────────────────────────────────────────────── */}
       <div>
         <p className="text-[10px] font-bold text-charcoal-400 uppercase tracking-widest mb-2.5">
           County
         </p>
         <div
-          ref={countyScrollRef}
-          className="flex gap-2 overflow-x-auto pb-1 scrollbar-none"
+          className="flex gap-2 overflow-x-auto pb-1"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {counties.map((c) => (
@@ -428,10 +450,9 @@ export function MarketPricesClient({
         </div>
       </div>
 
-      {/* ── View toggle + quick stats ─────────────────────────────────────── */}
+      {/* ── Stats + view toggle ───────────────────────────────────────────── */}
       <div className="flex items-center justify-between gap-3 flex-wrap">
-        {/* Stats pills */}
-        <div className="flex items-center gap-2 text-xs">
+        <div className="flex items-center gap-2 text-xs flex-wrap">
           <span className="bg-charcoal-100 text-charcoal-600 px-2.5 py-1 rounded-full font-semibold">
             {totalItems} items
           </span>
@@ -446,51 +467,40 @@ export function MarketPricesClient({
             </span>
           )}
         </div>
-
-        {/* View toggle */}
-        <div className="flex items-center bg-charcoal-100 rounded-xl p-1 gap-1">
-          <button
-            onClick={() => setView("table")}
-            className={[
-              "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150",
-              view === "table"
-                ? "bg-white text-charcoal-950 shadow-sm"
-                : "text-charcoal-500 hover:text-charcoal-700",
-            ].join(" ")}
-          >
-            Price List
-          </button>
-          <button
-            onClick={() => setView("chart")}
-            className={[
-              "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150",
-              view === "chart"
-                ? "bg-white text-charcoal-950 shadow-sm"
-                : "text-charcoal-500 hover:text-charcoal-700",
-            ].join(" ")}
-          >
-            Compare Counties
-          </button>
+        <div className="flex items-center bg-charcoal-100 rounded-xl p-1 gap-1 flex-shrink-0">
+          {(["table", "chart"] as const).map((v) => (
+            <button
+              key={v}
+              onClick={() => setView(v)}
+              className={[
+                "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 whitespace-nowrap",
+                view === v
+                  ? "bg-white text-charcoal-950 shadow-sm"
+                  : "text-charcoal-500 hover:text-charcoal-700",
+              ].join(" ")}
+            >
+              {v === "table" ? "Price List" : "Compare Counties"}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* ── Comparison chart view ─────────────────────────────────────────── */}
+      {/* ── Comparison chart ─────────────────────────────────────────────── */}
       {view === "chart" && (
-        <div className="card p-5 sm:p-6 space-y-5">
+        <div className="bg-white border border-charcoal-100 rounded-2xl p-5 sm:p-6 space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
             <div>
               <h3 className="font-display font-semibold text-charcoal-950 text-base">
                 County Price Comparison
               </h3>
               <p className="text-xs text-charcoal-400 mt-0.5">
-                Select a material to compare its price across all available
-                counties
+                Select a material to compare across counties
               </p>
             </div>
             <select
               value={comparisonMaterial ?? ""}
               onChange={(e) => setComparisonMaterial(e.target.value || null)}
-              className="text-sm border border-charcoal-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-300 bg-white text-charcoal-700 w-full sm:max-w-[240px]"
+              className="text-sm border border-charcoal-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-300 bg-white text-charcoal-700 w-full sm:max-w-[240px] h-10"
             >
               <option value="">Select a material…</option>
               {allMaterials.map((m) => (
@@ -502,7 +512,7 @@ export function MarketPricesClient({
           </div>
 
           {!comparisonMaterial ? (
-            <div className="flex flex-col items-center justify-center h-48 text-charcoal-300 gap-3">
+            <div className="flex flex-col items-center justify-center h-48 gap-3">
               <svg
                 className="w-10 h-10 text-charcoal-200"
                 viewBox="0 0 24 24"
@@ -523,7 +533,6 @@ export function MarketPricesClient({
             </div>
           ) : (
             <>
-              {/* Min / avg / max callouts */}
               {(() => {
                 const sorted = [...comparisonData].sort(
                   (a, b) => a.price - b.price,
@@ -535,15 +544,15 @@ export function MarketPricesClient({
                     comparisonData.length,
                 );
                 return (
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-3 gap-2 sm:gap-3">
                     <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3">
                       <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">
                         Cheapest
                       </p>
-                      <p className="font-display font-bold text-emerald-700 text-lg mt-0.5 leading-none">
+                      <p className="font-display font-bold text-emerald-700 text-base sm:text-lg mt-0.5 leading-none">
                         KES {cheapest.price.toLocaleString()}
                       </p>
-                      <p className="text-xs text-emerald-500 mt-1">
+                      <p className="text-xs text-emerald-500 mt-1 truncate">
                         {cheapest.county}
                       </p>
                     </div>
@@ -551,7 +560,7 @@ export function MarketPricesClient({
                       <p className="text-[10px] font-bold text-charcoal-500 uppercase tracking-widest">
                         Average
                       </p>
-                      <p className="font-display font-bold text-charcoal-800 text-lg mt-0.5 leading-none">
+                      <p className="font-display font-bold text-charcoal-800 text-base sm:text-lg mt-0.5 leading-none">
                         KES {avg.toLocaleString()}
                       </p>
                       <p className="text-xs text-charcoal-400 mt-1">
@@ -562,18 +571,17 @@ export function MarketPricesClient({
                       <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest">
                         Priciest
                       </p>
-                      <p className="font-display font-bold text-red-600 text-lg mt-0.5 leading-none">
+                      <p className="font-display font-bold text-red-600 text-base sm:text-lg mt-0.5 leading-none">
                         KES {priciest.price.toLocaleString()}
                       </p>
-                      <p className="text-xs text-red-400 mt-1">
+                      <p className="text-xs text-red-400 mt-1 truncate">
                         {priciest.county}
                       </p>
                     </div>
                   </div>
                 );
               })()}
-
-              <div className="h-60 sm:h-72">
+              <div className="h-56 sm:h-72">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={comparisonData}
@@ -587,12 +595,12 @@ export function MarketPricesClient({
                     />
                     <XAxis
                       dataKey="county"
-                      tick={{ fontSize: 11, fill: "#75736c" }}
+                      tick={{ fontSize: 10, fill: "#75736c" }}
                       axisLine={false}
                       tickLine={false}
                     />
                     <YAxis
-                      tick={{ fontSize: 11, fill: "#75736c" }}
+                      tick={{ fontSize: 10, fill: "#75736c" }}
                       axisLine={false}
                       tickLine={false}
                       width={44}
@@ -604,7 +612,7 @@ export function MarketPricesClient({
                       content={<ComparisonTooltip />}
                       cursor={{ fill: "#f97316", opacity: 0.06 }}
                     />
-                    <Bar dataKey="price" radius={[6, 6, 0, 0]} maxBarSize={52}>
+                    <Bar dataKey="price" radius={[6, 6, 0, 0]} maxBarSize={48}>
                       {comparisonData.map((entry) => (
                         <Cell
                           key={entry.county}
@@ -628,68 +636,63 @@ export function MarketPricesClient({
         </div>
       )}
 
-      {/* ── Table view ────────────────────────────────────────────────────── */}
+      {/* ── Table / price list ────────────────────────────────────────────── */}
       {view === "table" && (
         <>
-          {/* Search + category filters */}
-          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-            <div className="relative w-full sm:max-w-xs">
-              <svg
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-charcoal-300 pointer-events-none"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder={`Search ${countyName} prices…`}
-                className="w-full pl-8 pr-4 py-2 text-sm border border-charcoal-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-400 placeholder:text-charcoal-300 h-9"
-              />
-              {search && (
-                <button
-                  onClick={() => setSearch("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal-300 hover:text-charcoal-600 transition-colors"
-                >
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                  >
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </button>
-              )}
-            </div>
-
-            {/* Category pills — horizontal scroll on mobile */}
-            <div
-              className="flex gap-1.5 overflow-x-auto pb-0.5 flex-1"
-              style={{ scrollbarWidth: "none" }}
+          {/* Search bar — above categories */}
+          <div className="relative">
+            <svg
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-charcoal-300 pointer-events-none"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
             >
-              {["All", ...categories].map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={[
-                    "flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150",
-                    selectedCategory === cat
-                      ? "bg-orange-500 text-white shadow-sm"
-                      : "bg-charcoal-100 text-charcoal-600 hover:bg-charcoal-200",
-                  ].join(" ")}
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder={`Search ${countyName} prices…`}
+              className="w-full pl-9 pr-9 py-2.5 text-sm border border-charcoal-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400/40 focus:border-orange-400 placeholder:text-charcoal-300 bg-white h-11"
+            />
+            {search && (
+              <button
+                onClick={() => setSearch("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal-300 hover:text-charcoal-600 transition-colors p-1"
+              >
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
                 >
-                  {cat === "All" ? "All categories" : cat}
-                </button>
-              ))}
-            </div>
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+
+          {/* Category filters — NO scrollbar */}
+          <div className="flex flex-wrap gap-2">
+            {["All", ...categories].map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={[
+                  "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 whitespace-nowrap",
+                  selectedCategory === cat
+                    ? "bg-orange-500 text-white shadow-sm"
+                    : "bg-charcoal-100 text-charcoal-600 hover:bg-charcoal-200",
+                ].join(" ")}
+              >
+                {cat === "All" ? "All categories" : cat}
+              </button>
+            ))}
           </div>
 
           {/* Results */}
@@ -699,7 +702,7 @@ export function MarketPricesClient({
               <TableSkeleton />
             </div>
           ) : Object.keys(grouped).length === 0 ? (
-            <div className="card p-12 text-center">
+            <div className="bg-white border border-charcoal-100 rounded-2xl p-12 text-center">
               <svg
                 className="w-10 h-10 text-charcoal-200 mx-auto mb-3"
                 viewBox="0 0 24 24"
@@ -718,11 +721,13 @@ export function MarketPricesClient({
               </p>
             </div>
           ) : (
-            <div className="space-y-5">
+            <div className="space-y-4">
               {Object.entries(grouped).map(([category, rows]) => (
-                <div key={category} className="card overflow-hidden">
-                  {/* Category header */}
-                  <div className="px-5 py-3 bg-charcoal-50/80 border-b border-charcoal-100 flex items-center justify-between">
+                <div
+                  key={category}
+                  className="bg-white border border-charcoal-100 rounded-2xl overflow-hidden"
+                >
+                  <div className="px-4 sm:px-5 py-3 bg-charcoal-50 border-b border-charcoal-100 flex items-center justify-between">
                     <h3 className="font-display font-semibold text-charcoal-900 text-sm">
                       {category}
                     </h3>
@@ -736,27 +741,26 @@ export function MarketPricesClient({
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-charcoal-100">
-                          <th className="px-5 py-2.5 text-left text-[10px] font-bold text-charcoal-400 uppercase tracking-widest">
-                            Material
-                          </th>
-                          <th className="px-5 py-2.5 text-left text-[10px] font-bold text-charcoal-400 uppercase tracking-widest">
-                            Unit
-                          </th>
-                          <th className="px-5 py-2.5 text-right text-[10px] font-bold text-charcoal-400 uppercase tracking-widest">
-                            Price (KES)
-                          </th>
-                          <th className="px-5 py-2.5 text-left text-[10px] font-bold text-charcoal-400 uppercase tracking-widest">
-                            Trend
-                          </th>
-                          <th className="px-5 py-2.5 text-left text-[10px] font-bold text-charcoal-400 uppercase tracking-widest hidden lg:table-cell">
-                            Source
-                          </th>
-                          <th className="px-5 py-2.5 text-left text-[10px] font-bold text-charcoal-400 uppercase tracking-widest hidden lg:table-cell">
-                            Updated
-                          </th>
+                          {[
+                            "Material",
+                            "Unit",
+                            "Price (KES)",
+                            "Trend",
+                            "Source",
+                            "Updated",
+                          ].map((h, i) => (
+                            <th
+                              key={h}
+                              className={`px-4 py-2.5 text-[10px] font-bold text-charcoal-400 uppercase tracking-widest ${
+                                i === 2 ? "text-right" : "text-left"
+                              } ${i >= 4 ? "hidden lg:table-cell" : ""}`}
+                            >
+                              {h}
+                            </th>
+                          ))}
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-charcoal-50/80">
+                      <tbody className="divide-y divide-charcoal-50">
                         {rows.map((row) => (
                           <PriceRowItem key={row.id} row={row} />
                         ))}
@@ -764,7 +768,7 @@ export function MarketPricesClient({
                     </table>
                   </div>
 
-                  {/* Mobile card list */}
+                  {/* Mobile list */}
                   <div className="sm:hidden divide-y divide-charcoal-100">
                     {rows.map((row) => (
                       <MobilePriceCard key={row.id} row={row} />
@@ -782,8 +786,7 @@ export function MarketPricesClient({
         <strong className="font-semibold text-charcoal-500">Disclaimer:</strong>{" "}
         Prices are indicative mid-market rates sourced from supplier data and
         GRUTH field surveys. Actual prices vary by quantity, supplier, and
-        market conditions. Price ranges shown represent typical supplier quotes
-        at time of survey.
+        market conditions.
       </p>
     </div>
   );

@@ -32,7 +32,7 @@ export default function HeroSectionAlter() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div
           className="relative w-full rounded-2xl overflow-hidden"
-          style={{ minHeight: "min(96vh, 800px)" }}
+          style={{ minHeight: "min(96vh, 740px)" }}
         >
           {/* Background */}
           <img

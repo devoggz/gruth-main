@@ -18,7 +18,6 @@
   /* 1. Hard stop on horizontal overflow — the #1 cause of mobile layout shift */
   html {
     overflow-x: hidden;
-    scroll-behavior: smooth;
     /* Prevent iOS font size inflation on orientation change */
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;

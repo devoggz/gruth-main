@@ -41,8 +41,11 @@ const painPoints = [
         <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
       </svg>
     ),
-    title: "Relatives mean well...too well",
-    desc: " 'the foundation is almost done, bro, just waiting for cement prices to drop.' Six months later? Still waiting...",
+    label: "The Loyal Middleman",
+    title: "Updates that protect feelings, not facts",
+    desc: "Family and friends report what they think you want to hear. 'It's almost done' is the most expensive phrase in diaspora building.",
+    quote:
+      '"Foundation is progressing well." — 6 months, zero concrete poured.',
   },
   {
     icon: (
@@ -62,8 +65,10 @@ const painPoints = [
         <line x1="16" y1="17" x2="8" y2="17" />
       </svg>
     ),
-    title: "Contractors sound convincing",
-    desc: "Progress photos can be staged. Reports can be fabricated. Budgets disappear quietly.",
+    label: "The Paper Trail",
+    title: "Invoices and photos that don't add up",
+    desc: "Progress photos can be staged. Material receipts can be inflated. A contractor who knows you're abroad knows you can't verify anything.",
+    quote: '"Roofing iron: KES 2,400/sheet." Market rate: KES 1,100.',
   },
   {
     icon: (
@@ -82,8 +87,10 @@ const painPoints = [
         <line x1="12" y1="16" x2="12.01" y2="16" />
       </svg>
     ),
-    title: "You find out too late",
-    desc: "By the time the truth surfaces, months of remittances and trust have already been spent.",
+    label: "The Slow Drain",
+    title: "Money leaves. Clarity doesn't arrive.",
+    desc: "By the time the real picture emerges — stalled work, disputed boundaries, missing materials — months of remittances have already gone.",
+    quote: '"We only found out when we visited for Christmas."',
   },
 ];
 
@@ -93,84 +100,91 @@ export default function ProblemSection() {
   const ctaRef = useFadeIn();
 
   return (
-    <section className="relative py-24 sm:py-28  overflow-hidden">
-      {/* Subtle grid — orange lines on orange-50, very faint */}
+    <section className="relative py-24 sm:py-28 bg-orange-50 overflow-hidden">
+      {/* Subtle grid */}
       <div
-        className="absolute inset-0 opacity-[0.35] pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `
-            linear-gradient(to right, #f97316 1px, transparent 1px),
-            linear-gradient(to bottom, #f97316 1px, transparent 1px)
-          `,
+          backgroundImage: `linear-gradient(to right,#f97316 1px,transparent 1px),linear-gradient(to bottom,#f97316 1px,transparent 1px)`,
           backgroundSize: "60px 60px",
+          opacity: 0.06,
           maskImage:
             "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
           WebkitMaskImage:
             "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
-          opacity: 0.06,
         }}
       />
 
-      {/* Content */}
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+        {/* ── Header ─────────────────────────────────────────────────────── */}
         <div ref={headerRef} className="text-center mb-14 fade-up">
           <span className="inline-flex items-center gap-1.5 text-orange-600 text-[10px] font-bold tracking-widest uppercase bg-orange-100 border border-orange-200 px-3 py-1 rounded-full mb-6">
-            The Problem
+            Why GRUTH Exists
           </span>
-
-          <h2 className="font-display text-4xl  sm:text-5xl font-bold text-orange-500  mb-5 leading-tight tracking-tight">
-            "It's Almost done"
+          <h2 className="font-display text-4xl sm:text-5xl font-bold text-charcoal-950 mb-5 leading-tight tracking-tight">
+            Distance creates a gap.
             <br />
-            <span className="text-charcoal-950 font-display text-3xl  sm:text-3xl ">
-              Plot twist nobody ordered, but every diaspora project delivers.
+            <span className="text-orange-500 italic">
+              People fill it with reassurance.
             </span>
           </h2>
-
           <p className="text-charcoal-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-            You send money with care and hope. Updates come back with
-            enthusiasm… and sometimes a little creative editing. Whether it’s a
-            half-finished house, a questionable land boundary, inflated material
-            prices, or an event that’s “almost ready,” the distance can quietly
-            turn confidence into quiet doubt.
+            When you're thousands of miles away, everyone involved in your
+            project has an incentive to keep you calm — your relatives, your
+            contractor, even your caretaker. What you need instead is someone
+            with no stake in the outcome, standing on the actual ground.
           </p>
         </div>
 
-        {/* Pain point cards */}
+        {/* ── Pain point cards ───────────────────────────────────────────── */}
         <div
           ref={cardsRef}
           className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-14 fade-up"
           style={{ transitionDelay: "120ms" }}
         >
-          {painPoints.map(({ icon, title, desc }) => (
+          {painPoints.map(({ icon, label, title, desc, quote }) => (
             <div
               key={title}
-              className="group bg-white/80 hover:bg-white border border-orange-100 hover:border-orange-200 rounded-2xl px-5 py-6 shadow-sm hover:shadow-md transition-all duration-200"
+              className="group bg-white/80 hover:bg-white border border-orange-100 hover:border-orange-200 rounded-2xl px-5 py-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col"
             >
-              <div className="w-10 h-10 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center text-orange-500 mb-4 group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-all duration-200">
-                {icon}
+              {/* Icon + label */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center text-orange-500 flex-shrink-0 group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-all duration-200">
+                  {icon}
+                </div>
+                <span className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">
+                  {label}
+                </span>
               </div>
+
               <h3 className="font-display text-base font-semibold text-charcoal-950 mb-2 leading-snug">
                 {title}
               </h3>
-              <p className="text-charcoal-500 text-sm leading-relaxed">
+              <p className="text-charcoal-500 text-sm leading-relaxed mb-4 flex-1">
                 {desc}
               </p>
+
+              {/* Quote chip */}
+              <div className="bg-charcoal-50 border-l-2 border-orange-300 rounded-r-xl px-3 py-2.5 mt-auto">
+                <p className="text-charcoal-500 text-xs italic leading-relaxed">
+                  {quote}
+                </p>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* CTA */}
+        {/* ── CTA ────────────────────────────────────────────────────────── */}
         <div
           ref={ctaRef}
-          className="flex justify-center fade-up"
+          className="flex flex-col items-center gap-3 fade-up"
           style={{ transitionDelay: "240ms" }}
         >
           <Link
             href="/request-verification"
             className="group inline-flex items-center gap-2.5 bg-charcoal-950 hover:bg-charcoal-800 text-white font-semibold text-sm px-7 py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
           >
-            Get eyes on the ground
+            Get independent eyes on the ground
             <svg
               width="14"
               height="14"

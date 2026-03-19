@@ -31,7 +31,7 @@ export default function ServicesSection() {
   const gridRef = useFadeIn(0.05);
 
   return (
-    <section className="py-24 bg-orange-50 overflow-x-hidden">
+    <section className="py-24 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div

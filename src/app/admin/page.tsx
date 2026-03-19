@@ -80,25 +80,25 @@ export default async function AdminDashboardPage() {
   ).length;
 
   return (
-    <div className="space-y-6 pb-16">
-      {/* ── Header ───────────────────────────────────────────────────────────── */}
+    <div className="space-y-5 pb-16">
+      {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-            <span className="text-[10px] font-bold text-charcoal-400 uppercase tracking-[0.12em]">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+            <span className="text-[10px] font-bold text-charcoal-400 uppercase tracking-widest">
               Live
             </span>
           </div>
-          <h1 className="font-display text-[26px] font-bold text-charcoal-950 tracking-tight leading-none">
+          <h1 className="font-display text-2xl font-bold text-charcoal-950 tracking-tight leading-none">
             Operations Dashboard
           </h1>
-          <p className="text-charcoal-400 text-sm mt-2">
+          <p className="text-charcoal-400 text-sm mt-1.5">
             {clients.length} clients · {projects.length} projects ·{" "}
             {totalRequestsCount} intake submissions
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-shrink-0">
           <Link
             href="/dashboard/market-prices"
             className="inline-flex items-center gap-2 bg-white border border-charcoal-200 hover:border-charcoal-300 text-charcoal-700 text-sm font-medium px-4 py-2.5 rounded-xl transition-all shadow-sm hover:shadow"
@@ -133,7 +133,7 @@ export default async function AdminDashboardPage() {
         </div>
       </div>
 
-      {/* ── Stat cards ───────────────────────────────────────────────────────── */}
+      {/* ── Stat cards ─────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {(
           [
@@ -174,27 +174,27 @@ export default async function AdminDashboardPage() {
           <Link
             key={label}
             href={href}
-            className={`group bg-white rounded-2xl border p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-px cursor-pointer ${
+            className={`group bg-white rounded-2xl border p-4 sm:p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-px ${
               urgent
                 ? "border-orange-200 ring-1 ring-orange-100"
                 : "border-charcoal-100 hover:border-charcoal-200"
             }`}
           >
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
               <div
-                className={`w-2 h-2 rounded-full ${dot} ${urgent && value > 0 ? "animate-pulse" : ""}`}
+                className={`w-2 h-2 rounded-full flex-shrink-0 ${dot} ${urgent && value > 0 ? "animate-pulse" : ""}`}
               />
-              <span className="text-[10px] font-bold text-charcoal-400 uppercase tracking-[0.1em]">
+              <span className="text-[10px] font-bold text-charcoal-400 uppercase tracking-widest truncate">
                 {label}
               </span>
             </div>
-            <div className="font-display text-[38px] font-bold text-charcoal-950 leading-none tracking-tight tabular-nums">
+            <div className="font-display text-3xl sm:text-[38px] font-bold text-charcoal-950 leading-none tracking-tight tabular-nums">
               {value}
             </div>
-            <div className="flex items-center justify-between mt-3">
-              <span className="text-xs text-charcoal-400">{sub}</span>
+            <div className="flex items-center justify-between mt-2.5 sm:mt-3 gap-1">
+              <span className="text-xs text-charcoal-400 truncate">{sub}</span>
               <svg
-                className="w-3.5 h-3.5 text-charcoal-200 group-hover:text-orange-400 transition-colors"
+                className="w-3.5 h-3.5 text-charcoal-200 group-hover:text-orange-400 transition-colors flex-shrink-0"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -207,11 +207,11 @@ export default async function AdminDashboardPage() {
         ))}
       </div>
 
-      {/* ── Middle row ───────────────────────────────────────────────────────── */}
+      {/* ── Middle row: status / service mix / quick actions ──────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Status breakdown */}
+        {/* Project Status */}
         <div className="bg-white rounded-2xl border border-charcoal-100 p-5">
-          <p className="text-[10px] font-bold text-charcoal-400 uppercase tracking-[0.12em] mb-5">
+          <p className="text-[10px] font-bold text-charcoal-400 uppercase tracking-widest mb-5">
             Project Status
           </p>
           <div className="space-y-3.5">
@@ -266,9 +266,9 @@ export default async function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Service mix */}
+        {/* Service Mix */}
         <div className="bg-white rounded-2xl border border-charcoal-100 p-5">
-          <p className="text-[10px] font-bold text-charcoal-400 uppercase tracking-[0.12em] mb-5">
+          <p className="text-[10px] font-bold text-charcoal-400 uppercase tracking-widest mb-5">
             Service Mix
           </p>
           <div className="space-y-3">
@@ -299,36 +299,123 @@ export default async function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Quick actions */}
-        <div className="bg-charcoal-950 rounded-2xl p-5">
-          <p className="text-[10px] font-bold text-charcoal-600 uppercase tracking-[0.12em] mb-4">
+        {/* Quick Actions — now matches white card pattern */}
+        <div className="bg-white rounded-2xl border border-charcoal-100 p-5">
+          <p className="text-[10px] font-bold text-charcoal-400 uppercase tracking-widest mb-4">
             Quick Actions
           </p>
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             {[
-              { label: "All Projects", href: "/admin/projects", emoji: "📁" },
-              { label: "All Clients", href: "/admin/clients", emoji: "👥" },
+              {
+                label: "All Projects",
+                href: "/admin/projects",
+                icon: (
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+                  </svg>
+                ),
+              },
+              {
+                label: "All Clients",
+                href: "/admin/clients",
+                icon: (
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+                  </svg>
+                ),
+              },
               {
                 label: "Intake Requests",
                 href: "/admin/requests",
-                emoji: "📋",
+                icon: (
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                  </svg>
+                ),
               },
-              { label: "Messages", href: "/admin/messages", emoji: "💬" },
+              {
+                label: "Messages",
+                href: "/admin/messages",
+                icon: (
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+                  </svg>
+                ),
+              },
               {
                 label: "Market Prices",
                 href: "/dashboard/market-prices",
-                emoji: "📊",
+                icon: (
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M3 3v18h18" />
+                    <path d="M7 16l4-4 4 4 4-7" />
+                  </svg>
+                ),
               },
-            ].map(({ label, href, emoji }) => (
+            ].map(({ label, href, icon }) => (
               <Link
                 key={label}
                 href={href}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/8 text-charcoal-400 hover:text-white text-[13px] transition-all group"
+                className="flex items-center gap-3 px-2.5 py-2 rounded-xl hover:bg-charcoal-50 transition-colors group"
               >
-                <span>{emoji}</span>
-                <span className="flex-1 font-medium">{label}</span>
+                <span className="text-charcoal-400 group-hover:text-orange-500 transition-colors flex-shrink-0">
+                  {icon}
+                </span>
+                <span className="flex-1 text-sm font-medium text-charcoal-700 group-hover:text-charcoal-950 transition-colors">
+                  {label}
+                </span>
                 <svg
-                  className="w-3 h-3 text-charcoal-700 group-hover:text-charcoal-400 transition-colors"
+                  className="w-3 h-3 text-charcoal-200 group-hover:text-orange-400 transition-colors flex-shrink-0"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -342,12 +429,12 @@ export default async function AdminDashboardPage() {
         </div>
       </div>
 
-      {/* ── Requests Inbox ────────────────────────────────────────────────────── */}
+      {/* ── Requests Inbox ─────────────────────────────────────────────────── */}
       <RequestsInbox />
 
-      {/* ── Projects table ───────────────────────────────────────────────────── */}
+      {/* ── Projects table ─────────────────────────────────────────────────── */}
       <div className="bg-white rounded-2xl border border-charcoal-100 overflow-hidden">
-        <div className="px-6 py-4 border-b border-charcoal-100 flex items-center justify-between">
+        <div className="px-5 sm:px-6 py-4 border-b border-charcoal-100 flex items-center justify-between">
           <div>
             <h2 className="font-display font-semibold text-charcoal-950">
               Recent Projects
@@ -358,7 +445,7 @@ export default async function AdminDashboardPage() {
           </div>
           <Link
             href="/admin/projects"
-            className="text-xs font-semibold text-orange-500 hover:text-orange-600 transition-colors flex items-center gap-1"
+            className="text-xs font-semibold text-orange-500 hover:text-orange-600 transition-colors flex items-center gap-1 whitespace-nowrap"
           >
             View all
             <svg
@@ -372,6 +459,7 @@ export default async function AdminDashboardPage() {
             </svg>
           </Link>
         </div>
+
         {projects.length === 0 ? (
           <div className="py-20 text-center">
             <div className="w-12 h-12 bg-charcoal-50 rounded-2xl flex items-center justify-center mx-auto mb-3">
@@ -404,7 +492,7 @@ export default async function AdminDashboardPage() {
                   ].map((h) => (
                     <th
                       key={h}
-                      className="px-5 py-3 text-left text-[10px] font-bold text-charcoal-400 uppercase tracking-[0.1em] whitespace-nowrap"
+                      className="px-4 sm:px-5 py-3 text-left text-[10px] font-bold text-charcoal-400 uppercase tracking-widest whitespace-nowrap"
                     >
                       {h}
                     </th>
@@ -415,14 +503,14 @@ export default async function AdminDashboardPage() {
                 {projects.slice(0, 10).map((project) => (
                   <tr
                     key={project.id}
-                    className="hover:bg-orange-50/15 group transition-colors"
+                    className="hover:bg-orange-50/20 group transition-colors"
                   >
-                    <td className="px-5 py-3.5">
+                    <td className="px-4 sm:px-5 py-3.5">
                       <div className="font-semibold text-charcoal-900 text-sm truncate max-w-[160px]">
                         {project.name}
                       </div>
                     </td>
-                    <td className="px-5 py-3.5">
+                    <td className="px-4 sm:px-5 py-3.5">
                       <div className="flex items-center gap-2">
                         <div className="w-6 h-6 bg-charcoal-950 rounded-full flex items-center justify-center flex-shrink-0">
                           <span className="text-white text-[9px] font-bold">
@@ -435,26 +523,26 @@ export default async function AdminDashboardPage() {
                         </span>
                       </div>
                     </td>
-                    <td className="px-5 py-3.5">
-                      <span className="text-charcoal-400 text-xs">
+                    <td className="px-4 sm:px-5 py-3.5">
+                      <span className="text-charcoal-400 text-xs whitespace-nowrap">
                         {getProjectTypeLabel(project.type)}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5">
+                    <td className="px-4 sm:px-5 py-3.5">
                       <span
                         className={`status-badge text-[10px] ${getStatusColor(project.status)}`}
                       >
                         {project.status}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 text-charcoal-400 text-xs">
+                    <td className="px-4 sm:px-5 py-3.5 text-charcoal-400 text-xs whitespace-nowrap">
                       {project.inspections[0] ? (
                         formatRelativeDate(project.inspections[0].scheduledDate)
                       ) : (
                         <span className="text-charcoal-200">None yet</span>
                       )}
                     </td>
-                    <td className="px-5 py-3.5">
+                    <td className="px-4 sm:px-5 py-3.5">
                       <span className="font-mono text-charcoal-600 text-xs">
                         {project.estimatedBudget ? (
                           formatCurrency(project.estimatedBudget)
@@ -463,9 +551,9 @@ export default async function AdminDashboardPage() {
                         )}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5">
+                    <td className="px-4 sm:px-5 py-3.5">
                       {project.alerts.length > 0 ? (
-                        <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                        <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-bold px-2 py-0.5 rounded-full">
                           <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" />
                           {project.alerts.length}
                         </span>
@@ -473,10 +561,10 @@ export default async function AdminDashboardPage() {
                         <span className="text-charcoal-200 text-xs">—</span>
                       )}
                     </td>
-                    <td className="px-5 py-3.5">
+                    <td className="px-4 sm:px-5 py-3.5">
                       <Link
                         href={`/dashboard/projects/${project.id}`}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity text-xs font-semibold text-orange-500 hover:text-orange-600"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity text-xs font-semibold text-orange-500 hover:text-orange-600 whitespace-nowrap"
                       >
                         View →
                       </Link>
@@ -489,8 +577,9 @@ export default async function AdminDashboardPage() {
         )}
       </div>
 
-      {/* ── Bottom: Clients + Alerts ──────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      {/* ── Clients + Alerts ───────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* Clients */}
         <div className="bg-white rounded-2xl border border-charcoal-100 overflow-hidden">
           <div className="px-5 py-4 border-b border-charcoal-100 flex items-center justify-between">
             <div>
@@ -564,6 +653,7 @@ export default async function AdminDashboardPage() {
           )}
         </div>
 
+        {/* Alerts */}
         <div className="bg-white rounded-2xl border border-charcoal-100 overflow-hidden">
           <div className="px-5 py-4 border-b border-charcoal-100">
             <h2 className="font-display font-semibold text-charcoal-950">
@@ -598,7 +688,7 @@ export default async function AdminDashboardPage() {
                       <span className="font-semibold text-charcoal-900 text-sm truncate">
                         {alert.title}
                       </span>
-                      <span className="text-[10px] text-charcoal-400 flex-shrink-0">
+                      <span className="text-[10px] text-charcoal-400 flex-shrink-0 whitespace-nowrap">
                         {formatRelativeDate(alert.createdAt)}
                       </span>
                     </div>

@@ -67,13 +67,13 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* ── Logo ───────────────────────────────────────────────────── */}
             <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
               <Image
                 src="/images/logo-t.svg"
                 alt="GRUTH"
                 width={180}
                 height={44}
+                // style={{ width: "auto", height: "auto" }}
                 priority
               />
             </Link>
