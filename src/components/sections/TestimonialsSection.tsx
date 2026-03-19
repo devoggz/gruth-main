@@ -3,7 +3,7 @@
 const testimonials = [
   {
     quote:
-      "I was being told my house was 70% done. GroundTruth visited and confirmed the walls were only halfway up. Saved me from sending another £15,000 prematurely.",
+      "I was being told my house was 70% done. GRUTH visited and confirmed the walls were only halfway up. Saved me from sending another £15,000 prematurely.",
     name: "Sarah O.",
     location: "Manchester, UK",
     service: "Construction Verification",
@@ -17,7 +17,7 @@ const testimonials = [
   },
   {
     quote:
-      "The material price report was eye-opening. My contractor was quoting cement at nearly 30% above market. GroundTruth negotiated it down for me.",
+      "The material price report was eye-opening. My contractor was quoting cement at nearly 30% above market. GRUTH negotiated it down for me.",
     name: "Grace N.",
     location: "Oslo, Norway",
     service: "Material Pricing",

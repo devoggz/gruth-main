@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { formatDate, getStatusColor, getProjectTypeLabel } from "@/lib/utils";
 
-export const metadata = { title: "Projects | GroundTruth" };
+export const metadata = { title: "Projects | GRUTH" };
 
 const TYPE_ICONS: Record<string, string> = {
   CONSTRUCTION: "🏗️",

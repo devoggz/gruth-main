@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = { title: "About GroundTruth" };
+export const metadata: Metadata = { title: "About GRUTH" };
 
 export default function AboutPage() {
   return (
@@ -43,10 +43,10 @@ export default function AboutPage() {
               has no way to know until it's too late.
             </p>
             <p>
-              GroundTruth was built to close that gap. We're a team of Kenyans —
-              some based in Nairobi, some in the diaspora ourselves — who
-              believe that sending money home should come with the same
-              transparency you'd expect if you were standing there yourself.
+              GRUTH was built to close that gap. We're a team of Kenyans — some
+              based in Nairobi, some in the diaspora ourselves — who believe
+              that sending money home should come with the same transparency
+              you'd expect if you were standing there yourself.
             </p>
 
             <h2 className="font-display text-3xl font-bold text-charcoal-950 pt-4">

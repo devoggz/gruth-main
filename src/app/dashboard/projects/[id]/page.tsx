@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps) {
     where: { id },
     select: { name: true },
   });
-  return { title: p ? `${p.name} | GroundTruth` : "Project" };
+  return { title: p ? `${p.name} | GRUTH` : "Project" };
 }
 
 export default async function ProjectDetailPage({ params }: PageProps) {
@@ -687,7 +687,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 >
                   {!msg.isFromClient && (
                     <div className="text-xs font-semibold text-orange-600 mb-1">
-                      GroundTruth Team
+                      GRUTH Team
                     </div>
                   )}
                   {msg.content}

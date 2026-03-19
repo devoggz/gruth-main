@@ -288,7 +288,7 @@ export default function DashboardMobileNav({
                 </svg>
               </div>
               <span className="font-display font-semibold text-white text-base tracking-tight">
-                GroundTruth
+                GRUTH
               </span>
             </div>
 

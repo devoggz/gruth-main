@@ -57,7 +57,7 @@ function verificationHtml({ name, url }: { name: string; url: string }) {
                   <span style="color:#fff;font-size:18px;font-weight:700;line-height:32px;">G</span>
                 </td>
                 <td style="padding-left:10px;">
-                  <span style="color:#ffffff;font-size:16px;font-weight:600;letter-spacing:-0.3px;">GroundTruth</span>
+                  <span style="color:#ffffff;font-size:16px;font-weight:600;letter-spacing:-0.3px;">GRUTH</span>
                 </td>
               </tr>
             </table>
