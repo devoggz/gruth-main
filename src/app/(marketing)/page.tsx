@@ -29,7 +29,6 @@ export default function HomePage() {
             <ServicesSection />
             <QuoteCalculator />
             <HowItWorksSection />
-            <TestimonialsSection />
             <CommunitySection />
             <CtaSection />
         </div>
