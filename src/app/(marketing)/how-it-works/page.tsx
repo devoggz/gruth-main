@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import QuoteCalculator from "@/components/home/QuoteCalculator";
 
 const steps = [
   {
@@ -460,6 +461,7 @@ export default function HowItWorksPage() {
           </div>
         </div>
       </section>
+      <QuoteCalculator />
 
       {/* ── Dashboard callout ──────────────────────────────────────────────── */}
       <section className="py-20 bg-orange-50">

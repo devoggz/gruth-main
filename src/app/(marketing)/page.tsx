@@ -20,9 +20,7 @@ export default function HomePage() {
       <HeroSectionAlter />
       <ProblemSection />
       <ServicesSection />
-      <QuoteCalculator />
       <HowItWorksSection />
-      {/*<TestimonialsSection />*/}
       <CtaSection />
     </div>
   );

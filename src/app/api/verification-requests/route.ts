@@ -114,7 +114,7 @@ function adminNotificationHtml(
       <table width="520" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.08);">
         <tr>
           <td style="background:#121210;padding:20px 32px;">
-            <span style="color:#f97316;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;">GRUTH Admin</span>
+            <span style="color:#f97316;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;">GRUTH</span>
             <h2 style="margin:4px 0 0;color:#fff;font-size:18px;font-weight:700;">New Verification Request</h2>
           </td>
         </tr>
