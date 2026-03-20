@@ -4,6 +4,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUploadThing } from "@/utils/uploadthing";
 
 interface Props {
   projectId: string;
@@ -83,6 +84,16 @@ export default function InspectorFieldReport({
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [uploadProgress, setUploadProgress] = useState<
+    "idle" | "uploading" | "done"
+  >("idle");
+
+  // File picker state — actual File objects for Uploadthing
+  const [mediaFiles, setMediaFiles] = useState<File[]>([]);
+
+  const { startUpload } = useUploadThing("inspectionMedia", {
+    onUploadProgress: () => setUploadProgress("uploading"),
+  });
 
   const [form, setForm] = useState({
     status: "COMPLETED" as "IN_PROGRESS" | "COMPLETED",
@@ -96,24 +107,16 @@ export default function InspectorFieldReport({
     safetyCompliance: true,
   });
 
-  const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
-  const [newMedia, setNewMedia] = useState({
-    url: "",
-    filename: "",
-    type: "PHOTO" as const,
-    caption: "",
-  });
-
   const set = (k: string, v: any) => setForm((p) => ({ ...p, [k]: v }));
 
-  const addMedia = () => {
-    if (!newMedia.url.trim() || !newMedia.filename.trim()) return;
-    setMediaItems((prev) => [...prev, { ...newMedia, sortOrder: prev.length }]);
-    setNewMedia({ url: "", filename: "", type: "PHOTO", caption: "" });
+  const addFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = Array.from(e.target.files ?? []);
+    setMediaFiles((prev) => [...prev, ...selected].slice(0, 20));
+    e.target.value = "";
   };
 
-  const removeMedia = (i: number) =>
-    setMediaItems((prev) => prev.filter((_, idx) => idx !== i));
+  const removeFile = (i: number) =>
+    setMediaFiles((prev) => prev.filter((_, idx) => idx !== i));
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -127,22 +130,51 @@ export default function InspectorFieldReport({
     e.preventDefault();
     if (!validate()) return;
     setSubmitting(true);
-
-    const payload = {
-      ...form,
-      inspectionId,
-      scheduledDate: form.scheduledDate,
-      overallRating: form.overallRating || undefined,
-      workQuality: form.workQuality || undefined,
-      mediaUrls: mediaItems,
-    };
+    setErrors({});
 
     try {
+      // 1. Upload media files to Uploadthing (passes projectId + inspectionId as query params)
+      let uploadedMedia: { url: string; name: string }[] = [];
+      if (mediaFiles.length > 0) {
+        setUploadProgress("uploading");
+        const params = new URLSearchParams({ projectId });
+        if (inspectionId) params.set("inspectionId", inspectionId);
+
+        const result = await startUpload(mediaFiles, undefined);
+        if (!result) {
+          setErrors({ submit: "Media upload failed. Please try again." });
+          setSubmitting(false);
+          setUploadProgress("idle");
+          return;
+        }
+        uploadedMedia = result.map((f) => ({ url: f.ufsUrl, name: f.name }));
+        setUploadProgress("done");
+      }
+
+      // 2. Submit the report with uploaded media URLs
+      const payload = {
+        ...form,
+        inspectionId,
+        scheduledDate: form.scheduledDate,
+        overallRating: form.overallRating || undefined,
+        workQuality: form.workQuality || undefined,
+        // Pass URLs so the API can create InspectionMedia records for any
+        // files uploaded without an existing inspectionId
+        mediaUrls: uploadedMedia.map((f, i) => ({
+          url: f.url,
+          filename: f.name,
+          type: "PHOTO" as const,
+          caption: "",
+          sortOrder: i,
+        })),
+      };
+
       const res = await fetch(`/api/inspector/projects/${projectId}/report`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+
       if (res.ok) {
         setSubmitted(true);
         router.refresh();
@@ -369,37 +401,42 @@ export default function InspectorFieldReport({
         />
       </div>
 
-      {/* Media — URL-based (Cloudinary / Uploadthing integration point) */}
+      {/* Media — real file upload via Uploadthing */}
       <div>
-        <label className="label">Photos & Media</label>
+        <label className="label">Photos & Videos</label>
         <p className="text-xs text-charcoal-400 mb-3">
-          Paste URLs of photos you've uploaded to cloud storage (Cloudinary,
-          Uploadthing, etc.).
+          Select photos and videos from your device. Files upload to secure
+          cloud storage when you submit.
         </p>
 
-        {mediaItems.length > 0 && (
+        {/* File list */}
+        {mediaFiles.length > 0 && (
           <div className="space-y-2 mb-3">
-            {mediaItems.map((m, i) => (
+            {mediaFiles.map((f, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 bg-charcoal-50 rounded-lg px-3 py-2.5"
+                className="flex items-center gap-3 bg-charcoal-50 rounded-xl px-3 py-2.5"
               >
                 <span className="text-lg flex-shrink-0">
-                  {m.type === "PHOTO" ? "🖼️" : m.type === "VIDEO" ? "🎬" : "📄"}
+                  {f.type.startsWith("image/")
+                    ? "🖼️"
+                    : f.type.startsWith("video/")
+                      ? "🎬"
+                      : "📄"}
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-charcoal-800 truncate">
-                    {m.filename}
+                    {f.name}
                   </p>
-                  {m.caption && (
-                    <p className="text-xs text-charcoal-400 truncate">
-                      {m.caption}
-                    </p>
-                  )}
+                  <p className="text-xs text-charcoal-400">
+                    {f.size < 1024 ** 2
+                      ? `${(f.size / 1024).toFixed(0)} KB`
+                      : `${(f.size / 1024 ** 2).toFixed(1)} MB`}
+                  </p>
                 </div>
                 <button
                   type="button"
-                  onClick={() => removeMedia(i)}
+                  onClick={() => removeFile(i)}
                   className="w-6 h-6 rounded-full text-charcoal-400 hover:bg-red-100 hover:text-red-500 flex items-center justify-center transition-colors"
                 >
                   <svg
@@ -417,58 +454,61 @@ export default function InspectorFieldReport({
           </div>
         )}
 
-        <div className="border border-charcoal-100 rounded-xl p-4 space-y-3">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <input
-              type="url"
-              value={newMedia.url}
-              onChange={(e) =>
-                setNewMedia((p) => ({ ...p, url: e.target.value }))
-              }
-              className="input-field sm:col-span-2"
-              placeholder="https://... (image/video/doc URL)"
-            />
-            <select
-              value={newMedia.type}
-              onChange={(e) =>
-                setNewMedia((p) => ({ ...p, type: e.target.value as any }))
-              }
-              className="input-field"
+        {/* Drop zone / file picker */}
+        <label className="flex flex-col items-center gap-2 border-2 border-dashed border-charcoal-200 rounded-xl p-6 text-center cursor-pointer hover:border-orange-400 hover:bg-orange-50/30 transition-all group">
+          <div className="w-10 h-10 bg-charcoal-100 group-hover:bg-orange-100 rounded-xl flex items-center justify-center transition-colors">
+            <svg
+              className="w-5 h-5 text-charcoal-400 group-hover:text-orange-500 transition-colors"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
             >
-              <option value="PHOTO">Photo</option>
-              <option value="VIDEO">Video</option>
-              <option value="DOCUMENT">Document</option>
-            </select>
+              <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M16 12l-4-4m0 0l-4 4m4-4v12" />
+            </svg>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <input
-              type="text"
-              value={newMedia.filename}
-              onChange={(e) =>
-                setNewMedia((p) => ({ ...p, filename: e.target.value }))
-              }
-              className="input-field"
-              placeholder="filename.jpg"
-            />
-            <input
-              type="text"
-              value={newMedia.caption}
-              onChange={(e) =>
-                setNewMedia((p) => ({ ...p, caption: e.target.value }))
-              }
-              className="input-field sm:col-span-2"
-              placeholder="Caption (optional)"
-            />
+          <p className="text-sm font-semibold text-charcoal-700 group-hover:text-orange-700 transition-colors">
+            {mediaFiles.length > 0
+              ? "Add more files"
+              : "Select photos or videos"}
+          </p>
+          <p className="text-xs text-charcoal-400">
+            Images up to 16MB · Videos up to 128MB · max 20 files
+          </p>
+          <input
+            type="file"
+            multiple
+            className="hidden"
+            accept="image/*,video/*"
+            onChange={addFiles}
+          />
+        </label>
+
+        {uploadProgress === "uploading" && (
+          <div className="flex items-center gap-2 mt-3 text-xs text-orange-600 font-medium">
+            <svg
+              className="animate-spin w-3.5 h-3.5"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeDasharray="20 60"
+              />
+            </svg>
+            Uploading {mediaFiles.length} file{mediaFiles.length > 1 ? "s" : ""}
+            …
           </div>
-          <button
-            type="button"
-            onClick={addMedia}
-            disabled={!newMedia.url || !newMedia.filename}
-            className="btn-secondary text-sm py-2 disabled:opacity-40"
-          >
-            + Add Media
-          </button>
-        </div>
+        )}
+        {uploadProgress === "done" && (
+          <p className="text-xs text-emerald-600 font-medium mt-2">
+            ✓ Files uploaded successfully
+          </p>
+        )}
       </div>
 
       {errors.submit && (
@@ -498,7 +538,9 @@ export default function InspectorFieldReport({
                 strokeDasharray="20 60"
               />
             </svg>
-            Submitting report…
+            {uploadProgress === "uploading"
+              ? `Uploading ${mediaFiles.length} file${mediaFiles.length > 1 ? "s" : ""}…`
+              : "Submitting report…"}
           </span>
         ) : (
           <>

@@ -7,6 +7,7 @@ import type { E164Number } from "libphonenumber-js";
 import "react-phone-number-input/style.css";
 import Select from "react-select";
 import { KENYA_COUNTIES } from "@/app/constants";
+import { useUploadThing } from "@/utils/uploadthing";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -379,6 +380,13 @@ export default function RequestVerificationForm() {
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [uploadProgress, setUploadProgress] = useState<
+    "idle" | "uploading" | "done"
+  >("idle");
+
+  const { startUpload } = useUploadThing("verificationFiles", {
+    onUploadProgress: () => setUploadProgress("uploading"),
+  });
 
   const [form, setForm] = useState<FormState>({
     name: "",
@@ -450,36 +458,59 @@ export default function RequestVerificationForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const urgencyLabel = URGENCY_OPTIONS.find((u) => u.value === form.urgency);
-    const payload = {
-      name: form.name,
-      email: form.email,
-      phone: form.phone || undefined,
-      projectLocation: form.projectLocation,
-      county: form.county || undefined,
-      serviceType: form.serviceType,
-      urgency: form.urgency,
-      specificConcerns: form.specificConcerns || undefined,
-      onGroundContact: form.onGroundContact || undefined,
-      description: [
-        form.description,
-        form.specificConcerns
-          ? `\nSpecific concerns:\n${form.specificConcerns}`
-          : "",
-        `Urgency: ${urgencyLabel?.label} (${urgencyLabel?.sub})`,
-        form.onGroundContact
-          ? `On-ground contact: ${form.onGroundContact}`
-          : "",
-      ]
-        .filter(Boolean)
-        .join("\n\n"),
-    };
+    setErrors({});
+
     try {
+      // 1. Upload files to Uploadthing first (if any)
+      let uploadedFileData: { url: string; name: string }[] = [];
+      if (uploadedFiles.length > 0) {
+        setUploadProgress("uploading");
+        const result = await startUpload(uploadedFiles);
+        if (!result) {
+          setErrors({ submit: "File upload failed. Please try again." });
+          setLoading(false);
+          setUploadProgress("idle");
+          return;
+        }
+        uploadedFileData = result.map((f) => ({ url: f.ufsUrl, name: f.name }));
+        setUploadProgress("done");
+      }
+
+      // 2. Submit the form with file URLs included
+      const urgencyLabel = URGENCY_OPTIONS.find(
+        (u) => u.value === form.urgency,
+      );
+      const payload = {
+        name: form.name,
+        email: form.email,
+        phone: form.phone || undefined,
+        projectLocation: form.projectLocation,
+        county: form.county || undefined,
+        serviceType: form.serviceType,
+        urgency: form.urgency,
+        specificConcerns: form.specificConcerns || undefined,
+        onGroundContact: form.onGroundContact || undefined,
+        uploadedFiles: uploadedFileData,
+        description: [
+          form.description,
+          form.specificConcerns
+            ? `\nSpecific concerns:\n${form.specificConcerns}`
+            : "",
+          `Urgency: ${urgencyLabel?.label} (${urgencyLabel?.sub})`,
+          form.onGroundContact
+            ? `On-ground contact: ${form.onGroundContact}`
+            : "",
+        ]
+          .filter(Boolean)
+          .join("\n\n"),
+      };
+
       const res = await fetch("/api/verification-requests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+
       if (res.ok) {
         setSuccess(true);
       } else {
@@ -960,7 +991,9 @@ export default function RequestVerificationForm() {
                           strokeDasharray="20 60"
                         />
                       </svg>
-                      Submitting…
+                      {uploadProgress === "uploading"
+                        ? `Uploading ${uploadedFiles.length} file${uploadedFiles.length > 1 ? "s" : ""}…`
+                        : "Submitting…"}
                     </span>
                   ) : (
                     <>
