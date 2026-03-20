@@ -1,11 +1,13 @@
 // src/app/dashboard/layout.tsx
+import React from "react";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardMobileNav from "@/components/dashboard/DashboardMobileNav";
-import React from "react";
+import PushNotificationSetup from "@/components/shared/PushNotificationSetup";
+
 
 export default async function DashboardLayout({
   children,
@@ -35,6 +37,7 @@ export default async function DashboardLayout({
           user={{ name: user?.name, email: user?.email, role: user?.role }}
         />
         <main className="flex-1 overflow-y-auto">
+          <PushNotificationSetup />
           {/* pb-24 on mobile to clear the fixed bottom nav bar */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8">
             {children}
