@@ -87,6 +87,9 @@ model User {
   whatsapp      String?
   country       String?
   bio           String?
+  referralCode  String?  @unique  // e.g. "JAMES-47A"
+  referredBy    String?           // referralCode of the person who referred them
+  hearAboutUs   String?           // "Facebook", "Friend", "YouTube" etc
   role          UserRole  @default(CLIENT)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -100,6 +103,8 @@ model User {
   verificationTokens VerificationToken[]
   inspections        Inspection[]        @relation("InspectorUser")
   pushSubscriptions  PushSubscription[]
+  referrerCredits    ReferralCredit[]  @relation("ReferrerCredits")
+  referredCredits    ReferralCredit[]  @relation("ReferredCredits")
 
   @@map("users")
 }
@@ -492,4 +497,21 @@ model BudgetEntry {
   @@index([projectId, entryDate])
   @@index([projectId, category])  // ← added: for category breakdown chart queries
   @@map("budget_entries")
+}
+
+// ─── Referral system ──────────────────────────────────────────────────────────
+
+model ReferralCredit {
+  id          String   @id @default(cuid())
+  referrerId  String                         // user who referred
+  referredId  String                         // user who signed up
+  used        Boolean  @default(false)       // redeemed against a verification
+  createdAt   DateTime @default(now())
+
+  referrer User @relation("ReferrerCredits", fields: [referrerId], references: [id])
+  referred User @relation("ReferredCredits", fields: [referredId], references: [id])
+
+  @@unique([referredId])                     // one credit per referred user
+  @@index([referrerId])
+  @@map("referral_credits")
 }
