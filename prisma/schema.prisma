@@ -1,5 +1,6 @@
-// prisma/schema.prisma — GRUTH v2
-// Changes: inspector assignment, file uploads on requests, report PDF, detailed inspection fields
+// prisma/schema.prisma — GRUTH
+// Updated: added priceLow/priceHigh to CountyMaterialPrice,
+//          indexes on VerificationRequest, BudgetEntry category index
 
 generator client {
   provider = "prisma-client-js"
@@ -9,6 +10,8 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
 
 enum UserRole {
   CLIENT
@@ -72,6 +75,8 @@ enum PriceTrend {
   STABLE
 }
 
+// ─── Auth ─────────────────────────────────────────────────────────────────────
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -112,7 +117,8 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
@@ -123,7 +129,8 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
 }
@@ -134,11 +141,14 @@ model VerificationToken {
   token     String   @unique
   expiresAt DateTime
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([token])
   @@map("verification_tokens")
 }
+
+// ─── Core ─────────────────────────────────────────────────────────────────────
 
 model Project {
   id                String        @id @default(cuid())
@@ -208,34 +218,38 @@ model Inspection {
 }
 
 model InspectionMedia {
-  id           String     @id @default(cuid())
+  id           String    @id @default(cuid())
   inspectionId String
   type         MediaType
   url          String
   filename     String
   caption      String?
-  sortOrder    Int        @default(0)
-  timestamp    DateTime   @default(now())
-  createdAt    DateTime   @default(now())
-  inspection   Inspection @relation(fields: [inspectionId], references: [id], onDelete: Cascade)
+  sortOrder    Int       @default(0)
+  timestamp    DateTime  @default(now())
+  createdAt    DateTime  @default(now())
+
+  inspection Inspection @relation(fields: [inspectionId], references: [id], onDelete: Cascade)
 
   @@map("inspection_media")
 }
 
 model Report {
-  id           String     @id @default(cuid())
-  inspectionId String     @unique
+  id           String    @id @default(cuid())
+  inspectionId String    @unique
   title        String
-  content      String     @db.Text
-  summary      String?    @db.Text
+  content      String    @db.Text
+  summary      String?   @db.Text
   fileUrl      String?
   publishedAt  DateTime?
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  inspection   Inspection @relation(fields: [inspectionId], references: [id], onDelete: Cascade)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  inspection Inspection @relation(fields: [inspectionId], references: [id], onDelete: Cascade)
 
   @@map("reports")
 }
+
+// ─── Push notifications ───────────────────────────────────────────────────────
 
 model PushSubscription {
   id        String   @id @default(cuid())
@@ -250,6 +264,8 @@ model PushSubscription {
   @@index([userId])
   @@map("push_subscriptions")
 }
+
+// ─── Project supporting models ────────────────────────────────────────────────
 
 model MaterialPrice {
   id              String      @id @default(cuid())
@@ -266,21 +282,23 @@ model MaterialPrice {
   verifiedAt      DateTime?
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
-  project         Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  supplier        Supplier?   @relation(fields: [supplierId], references: [id])
+
+  project  Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  supplier Supplier? @relation(fields: [supplierId], references: [id])
 
   @@map("material_prices")
 }
 
 model Supplier {
-  id             String          @id @default(cuid())
+  id             String         @id @default(cuid())
   name           String
   contact        String?
   location       String?
-  verifiedStatus VerifiedStatus  @default(PENDING)
+  verifiedStatus VerifiedStatus @default(PENDING)
   notes          String?
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
   materialPrices MaterialPrice[]
 
   @@map("suppliers")
@@ -298,7 +316,8 @@ model Vendor {
   contractValue    Float?
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
-  project          Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@map("vendors")
 }
@@ -312,7 +331,8 @@ model ProgressStage {
   completedAt DateTime?
   notes       String?
   createdAt   DateTime  @default(now())
-  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@map("progress_stages")
 }
@@ -329,7 +349,8 @@ model Alert {
   resolvedAt DateTime?
   createdAt  DateTime      @default(now())
   updatedAt  DateTime      @updatedAt
-  project    Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([projectId, isRead])
   @@index([createdAt])
@@ -346,14 +367,17 @@ model Message {
   readAt       DateTime?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
-  project      Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  user         User      @relation(fields: [userId], references: [id])
-  sender       User?     @relation("MessageSender", fields: [senderId], references: [id])
+
+  project Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User     @relation(fields: [userId], references: [id])
+  sender  User?    @relation("MessageSender", fields: [senderId], references: [id])
 
   @@index([projectId, createdAt])
   @@index([userId, isFromClient, readAt])
   @@map("messages")
 }
+
+// ─── Intake ───────────────────────────────────────────────────────────────────
 
 model VerificationRequest {
   id               String   @id @default(cuid())
@@ -373,8 +397,13 @@ model VerificationRequest {
   status           String   @default("NEW")
   createdAt        DateTime @default(now())
 
+  // Indexes: admin inbox queries by status + time; spam detection by email
+  @@index([email])
+  @@index([status, createdAt])
   @@map("verification_requests")
 }
+
+// ─── Market prices ────────────────────────────────────────────────────────────
 
 model County {
   id           String                @id @default(cuid())
@@ -383,6 +412,7 @@ model County {
   region       String?
   createdAt    DateTime              @default(now())
   updatedAt    DateTime              @updatedAt
+
   marketPrices CountyMaterialPrice[]
 
   @@index([name])
@@ -390,28 +420,30 @@ model County {
 }
 
 model MarketMaterial {
-  id          String                @id @default(cuid())
-  name        String                @unique
+  id          String   @id @default(cuid())
+  name        String   @unique
   category    String
   unit        String
   description String?
-  createdAt   DateTime              @default(now())
-  updatedAt   DateTime              @updatedAt
-  prices      CountyMaterialPrice[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  prices CountyMaterialPrice[]
 
   @@index([category])
   @@map("market_materials")
 }
 
 model MarketPriceSource {
-  id        String                @id @default(cuid())
-  name      String                @unique
+  id        String   @id @default(cuid())
+  name      String   @unique
   url       String?
   county    String?
-  verified  Boolean               @default(false)
-  createdAt DateTime              @default(now())
-  updatedAt DateTime              @updatedAt
-  prices    CountyMaterialPrice[]
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  prices CountyMaterialPrice[]
 
   @@map("market_price_sources")
 }
@@ -419,18 +451,21 @@ model MarketPriceSource {
 model CountyMaterialPrice {
   id         String             @id @default(cuid())
   materialId String
-  material   MarketMaterial     @relation(fields: [materialId], references: [id])
   countyId   String
-  county     County             @relation(fields: [countyId], references: [id])
   sourceId   String?
-  source     MarketPriceSource? @relation(fields: [sourceId], references: [id])
   priceKes   Float
+  priceLow   Float?             // ← added: lower bound of verified price range
+  priceHigh  Float?             // ← added: upper bound of verified price range
   trend      PriceTrend         @default(STABLE)
   notes      String?
   scrapedUrl String?
   scrapedAt  DateTime?
   createdAt  DateTime           @default(now())
   updatedAt  DateTime           @updatedAt
+
+  material MarketMaterial     @relation(fields: [materialId], references: [id])
+  county   County             @relation(fields: [countyId], references: [id])
+  source   MarketPriceSource? @relation(fields: [sourceId], references: [id])
 
   @@unique([materialId, countyId, sourceId])
   @@index([countyId])
@@ -445,9 +480,9 @@ model BudgetEntry {
   id          String   @id @default(cuid())
   projectId   String
   amount      Float
-  category    String // e.g. "Labour", "Materials", "Inspector Fee", "Transport", "Other"
+  category    String   // "Labour" | "Materials" | "Inspector Fee" | "Transport" | "Other"
   description String?
-  entryDate   DateTime // The month this entry applies to (use 1st of month)
+  entryDate   DateTime // normalised to 1st of month
   currency    String   @default("KES")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -455,5 +490,6 @@ model BudgetEntry {
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([projectId, entryDate])
+  @@index([projectId, category])  // ← added: for category breakdown chart queries
   @@map("budget_entries")
 }

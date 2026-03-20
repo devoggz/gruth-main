@@ -1,56 +1,40 @@
 // src/app/api/messages/send/route.ts
-// POST /api/messages/send
-// Sends a message from an authenticated client to the GRUTH team on a project thread.
-
-import { auth } from "@/lib/auth";
+import { auth }   from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { z }      from "zod";
 import { NextRequest, NextResponse } from "next/server";
 
-interface SendMessageBody {
-  projectId: string;
-  content: string;
-}
+const schema = z.object({
+  projectId: z.string().min(1).max(128),
+  content:   z.string().min(1).max(4000).trim(), // 4000 char hard cap
+});
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   const session = await auth();
-  if (!session?.user?.id) {
+  if (!session?.user?.id)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
 
-  let body: SendMessageBody;
-  try {
-    body = (await req.json()) as SendMessageBody;
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
-  }
+  const body   = await req.json().catch(() => null);
+  const parsed = schema.safeParse(body);
+  if (!parsed.success)
+    return NextResponse.json({ error: "Invalid input." }, { status: 400 });
 
-  const { projectId, content } = body;
+  const { projectId, content } = parsed.data;
 
-  if (!projectId || !content?.trim()) {
-    return NextResponse.json(
-      { error: "projectId and content are required" },
-      { status: 400 },
-    );
-  }
-
-  // Ensure the project belongs to this user — prevents spoofed projectId
+  // Verify project belongs to this client — prevents IDOR
   const project = await prisma.project.findUnique({
-    where: { id: projectId, clientId: session.user.id },
+    where:  { id: projectId, clientId: session.user.id },
     select: { id: true },
   });
-
-  if (!project) {
-    return NextResponse.json({ error: "Project not found" }, { status: 404 });
-  }
+  if (!project)
+    return NextResponse.json({ error: "Project not found." }, { status: 404 });
 
   const message = await prisma.message.create({
     data: {
-      content: content.trim(),
+      content,
       isFromClient: true,
       projectId,
-      // userId = thread owner (the client)
-      userId: session.user.id,
-      // senderId = actual author of this message (also the client here)
+      userId:   session.user.id,
       senderId: session.user.id,
     },
   });
