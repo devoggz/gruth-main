@@ -9,6 +9,7 @@ import Select from "react-select";
 import Link from "next/link";
 import { KENYA_COUNTIES } from "@/app/constants";
 import { useUploadThing } from "@/utils/uploadthing";
+import KenyaLocationPicker, { type LocationValue } from "@/components/shared/KenyaLocationPicker";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -41,6 +42,7 @@ interface FormState {
   description:      string;
   specificConcerns: string;
   onGroundContact:  string;
+  locationValue:     LocationValue | null;
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -484,6 +486,7 @@ export default function RequestVerificationForm({
     description:      "",
     specificConcerns: "",
     onGroundContact:  "",
+    locationValue:     null,
   });
 
   // When user completes profile prompt, update local form state
@@ -589,6 +592,11 @@ export default function RequestVerificationForm({
         country:          isPreFilled ? (localCountry || userProfile!.country || undefined) : undefined,
         projectLocation:  form.projectLocation,
         county:           form.county || undefined,
+        // Include GPS coordinates if the user used the map picker
+        ...(form.locationValue?.lat ? {
+          latitude:  form.locationValue.lat,
+          longitude: form.locationValue.lng,
+        } : {}),
         serviceType:      form.serviceType,
         urgency:          form.urgency,
         specificConcerns: form.specificConcerns || undefined,
@@ -809,17 +817,15 @@ export default function RequestVerificationForm({
 
                     <div>
                       <label className="label">Specific Location *</label>
-                      <div className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-charcoal-400">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                        <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                      </svg>
-                    </span>
-                        <input type="text" value={form.projectLocation} onChange={e => set("projectLocation", e.target.value)}
-                               className={`input-field pl-10 ${errors.projectLocation ? "!border-red-300 focus:!ring-red-400/50" : ""}`}
-                               placeholder="e.g. Kiambu Road, Nairobi · Juja, Kiambu County"/>
-                      </div>
+                      <KenyaLocationPicker
+                          value={form.locationValue}
+                          onChange={loc => {
+                            set("locationValue", loc);
+                            set("projectLocation", loc.address);
+                          }}
+                          error={!!errors.projectLocation}
+                          placeholder="Search a location in Kenya…"
+                      />
                       <FieldError msg={errors.projectLocation} />
                     </div>
 
