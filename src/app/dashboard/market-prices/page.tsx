@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { MarketPricesClient } from "@/components/dashboard/MarketPricesClient";
 import { formatRelativeDate } from "@/lib/utils";
+import MarketPriceTicker from "@/components/dashboard/MarketPriceTicker";
 
 const MATERIAL_CATEGORIES = [
   "Cement & Concrete",
@@ -15,6 +16,25 @@ const MATERIAL_CATEGORIES = [
 export const metadata = { title: "Market Prices | GRUTH" };
 
 export default async function MarketPricesPage() {
+  // Fetch a sample of prices for the ticker — take 1 per county for top 8 materials
+  const tickerRaw = await prisma.countyMaterialPrice.findMany({
+    include: { material: true, county: true },
+    orderBy: [{ county: { name: "asc" } }, { updatedAt: "desc" }],
+    take: 94,   // ~2 items per county for variety
+  });
+
+  const tickerItems = tickerRaw
+    .filter(p => p.material.category === "Cement & Concrete" || p.material.category === "Steel & Metal")
+    .slice(0, 47)
+    .map(p => ({
+      county:   p.county.name,
+      material: p.material.name,
+      priceKes: p.priceKes,
+      priceLow: (p as any).priceLow ?? null,
+      priceHigh:(p as any).priceHigh ?? null,
+      trend:    p.trend as "UP" | "DOWN" | "STABLE",
+    }));
+
   const counties = await prisma.county.findMany({
     where: { marketPrices: { some: {} } },
     orderBy: { name: "asc" },
@@ -92,6 +112,11 @@ export default async function MarketPricesPage() {
           </span>
         </div>
       </div>
+
+      {/* Price ticker */}
+      {tickerItems.length > 0 && (
+        <MarketPriceTicker items={tickerItems} speed={38} />
+      )}
 
       {/* Info banner */}
       <div className="rounded-xl border border-blue-100 bg-blue-50/70 px-4 py-3.5 flex gap-3 items-start">
