@@ -178,7 +178,7 @@ export default function Navbar() {
         <div
           className={[
             "md:hidden overflow-hidden transition-all duration-300 ease-in-out",
-            mobileOpen ? "max-h-[420px] opacity-100" : "max-h-0 opacity-0",
+            mobileOpen ? "max-h-fit opacity-100" : "max-h-0 opacity-0",
           ].join(" ")}
           style={{
             background: "#ffffff",
