@@ -461,7 +461,6 @@ export default function HowItWorksPage() {
           </div>
         </div>
       </section>
-      <QuoteCalculator />
 
       {/* ── Dashboard callout ──────────────────────────────────────────────── */}
       <section className="py-20 bg-orange-50">
