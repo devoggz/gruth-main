@@ -1,9 +1,9 @@
 // src/lib/push.ts
-// Lazy VAPID initialisation — setVapidDetails is called inside the function,
-// not at module evaluation time, so Next.js build succeeds even when env vars
-// are not present in the build environment.
+// web-push is imported dynamically inside each function so that the library
+// never executes at module evaluation time. This prevents the build error:
+// "No subject set in vapidDetails.subject" which fires when web-push is
+// statically imported and VAPID env vars are absent during Next.js build.
 
-import webpush from "web-push";
 import { prisma } from "@/lib/prisma";
 
 export interface PushPayload {
@@ -13,31 +13,26 @@ export interface PushPayload {
     tag?:  string;
 }
 
-let vapidInitialised = false;
-
-function initVapid() {
-    if (vapidInitialised) return;
-
+async function getWebPush() {
     const subject    = process.env.VAPID_EMAIL;
     const publicKey  = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
     const privateKey = process.env.VAPID_PRIVATE_KEY;
 
-    // Skip silently at build time — all three vars must be present at runtime
     if (!subject || !publicKey || !privateKey) {
-        if (process.env.NODE_ENV === "production") {
-            console.warn("[push] VAPID env vars missing — push notifications disabled");
-        }
-        return;
+        console.warn("[push] VAPID env vars not set — push notifications disabled");
+        return null;
     }
 
+    // Dynamic import keeps web-push out of the module graph at build time
+    const webpush = (await import("web-push")).default;
     webpush.setVapidDetails(subject, publicKey, privateKey);
-    vapidInitialised = true;
+    return webpush;
 }
 
 // Send to a single user by userId
 export async function sendPushToUser(userId: string, payload: PushPayload) {
-    initVapid();
-    if (!vapidInitialised) return;
+    const webpush = await getWebPush();
+    if (!webpush) return;
 
     const subs = await prisma.pushSubscription.findMany({ where: { userId } });
     if (subs.length === 0) return;
@@ -64,8 +59,8 @@ export async function sendPushToUser(userId: string, payload: PushPayload) {
 
 // Broadcast to all subscribers
 export async function sendPushToAll(payload: PushPayload) {
-    initVapid();
-    if (!vapidInitialised) return;
+    const webpush = await getWebPush();
+    if (!webpush) return;
 
     const subs = await prisma.pushSubscription.findMany();
     return Promise.allSettled(
