@@ -1361,18 +1361,20 @@ Project certified complete. Recommend client obtains County completion certifica
         },
         update: {
           priceKes: mid(range),
+          priceLow: range[0],
+          priceHigh: range[1],
           trend: trend(),
           updatedAt: new Date(),
-          ...({ priceLow: range[0], priceHigh: range[1] } as any),
-        },
+        } as any,
         create: {
           materialId,
           countyId,
           sourceId,
           priceKes: mid(range),
+          priceLow: range[0],
+          priceHigh: range[1],
           trend: trend(),
-          ...({ priceLow: range[0], priceHigh: range[1] } as any),
-        },
+        } as any,
       });
       priceCount++;
     }
