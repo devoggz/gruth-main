@@ -32,6 +32,18 @@ export default function ServicesSection() {
 
   return (
     <section className="py-24 overflow-x-hidden">
+      <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: `linear-gradient(to right,#f97316 1px,transparent 1px),linear-gradient(to bottom,#f97316 1px,transparent 1px)`,
+            backgroundSize: "60px 60px",
+            opacity: 0.06,
+            maskImage:
+                "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+            WebkitMaskImage:
+                "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+          }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
