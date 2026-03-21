@@ -103,6 +103,7 @@ model User {
   verificationTokens VerificationToken[]
   inspections        Inspection[]        @relation("InspectorUser")
   pushSubscriptions  PushSubscription[]
+  pendingPayments    PendingPayment[]
   referrerCredits    ReferralCredit[]  @relation("ReferrerCredits")
   referredCredits    ReferralCredit[]  @relation("ReferredCredits")
 
@@ -400,6 +401,10 @@ model VerificationRequest {
   specificConcerns String?  @db.Text
   onGroundContact  String?
   status           String   @default("NEW")
+  paymentRef       String?           // Paystack transaction reference
+  paymentStatus    String   @default("PENDING") // PENDING | PAID | FAILED
+  amountKes        Int?                // amount charged in KES
+  paidAt           DateTime?           // when payment confirmed
   createdAt        DateTime @default(now())
 
   // Indexes: admin inbox queries by status + time; spam detection by email
@@ -498,6 +503,30 @@ model BudgetEntry {
   @@index([projectId, category])  // ← added: for category breakdown chart queries
   @@map("budget_entries")
 }
+
+// ─── Payment ──────────────────────────────────────────────────────────────────
+// Holds form data between "Proceed to Pay" click and Paystack callback.
+// Expired/failed records can be cleaned up by a scheduled job.
+
+model PendingPayment {
+  id            String   @id @default(cuid())
+  userId        String
+  paystackRef   String   @unique  // Paystack transaction reference
+  amountKes     Int                // amount in KES (integer, not float)
+  formSnapshot  String   @db.Text // JSON blob of full form submission
+  status        String   @default("PENDING") // PENDING | PAID | FAILED | EXPIRED
+  expiresAt     DateTime           // 1 hour from creation
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([paystackRef])
+  @@index([userId, status])
+  @@index([expiresAt])
+  @@map("pending_payments")
+}
+
 
 // ─── Referral system ──────────────────────────────────────────────────────────
 

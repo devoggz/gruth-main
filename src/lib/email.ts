@@ -57,7 +57,7 @@ function verificationHtml({ name, url }: { name: string; url: string }) {
                   <span style="color:#fff;font-size:18px;font-weight:700;line-height:32px;">G</span>
                 </td>
                 <td style="padding-left:10px;">
-                  <span style="color:#ffffff;font-size:16px;font-weight:600;letter-spacing:-0.3px;">GRUTH</span>
+                  <span style="color:#ffffff;font-size:16px;font-weight:600;letter-spacing:-0.3px;">GroundTruth</span>
                 </td>
               </tr>
             </table>
@@ -115,4 +115,94 @@ function verificationHtml({ name, url }: { name: string; url: string }) {
   </table>
 </body>
 </html>`;
+}
+
+// ─── Payment confirmation email ───────────────────────────────────────────────
+
+export async function sendPaymentConfirmationEmail({
+  to,
+  name,
+  serviceType,
+  reference,
+  amountKes,
+  channel,
+}: {
+  to:          string;
+  name:        string;
+  serviceType: string;
+  reference:   string;
+  amountKes:   number;
+  channel:     string;
+}) {
+  const firstName     = name.split(" ")[0];
+  const channelLabel  = channel === "mobile_money" ? "M-Pesa"
+                      : channel === "apple_pay"    ? "Apple Pay"
+                      : "Card";
+  const dashboardUrl  = `${APP_URL}/dashboard`;
+
+  await resend.emails.send({
+    from:    FROM,
+    to,
+    subject: `Payment confirmed — your GRUTH verification is submitted`,
+    html: `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#f4f4f0;font-family:'DM Sans',Helvetica,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f0;padding:40px 0;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.07);">
+        <tr>
+          <td style="background:#121210;padding:28px 40px;">
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="background:#f97316;border-radius:8px;width:32px;height:32px;text-align:center;vertical-align:middle;">
+                <span style="color:#fff;font-size:18px;font-weight:700;line-height:32px;">G</span>
+              </td>
+              <td style="padding-left:10px;"><span style="color:#fff;font-size:16px;font-weight:600;">GRUTH</span></td>
+            </tr></table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:40px 40px 32px;">
+            <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#121210;">Payment confirmed ✓</p>
+            <p style="margin:0 0 24px;font-size:15px;color:#6b7280;line-height:1.6;">
+              Hi ${firstName}, your payment has been received and your verification request submitted. Our team will be in touch within 2 business hours.
+            </p>
+            <table cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:28px;border:1px solid #f3f4f6;border-radius:10px;overflow:hidden;">
+              ${[
+                ["Service",          serviceType],
+                ["Amount paid",      `KES ${amountKes.toLocaleString()}`],
+                ["Payment method",   channelLabel],
+                ["Reference",        reference],
+              ].map(([k, v]) => `
+              <tr>
+                <td style="padding:12px 16px;font-size:13px;color:#9ca3af;background:#f9f9f7;border-bottom:1px solid #f3f4f6;width:140px;">${k}</td>
+                <td style="padding:12px 16px;font-size:13px;color:#121210;font-weight:500;border-bottom:1px solid #f3f4f6;">${v}</td>
+              </tr>`).join("")}
+            </table>
+            <table cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <tr>
+                <td style="background:#f97316;border-radius:8px;">
+                  <a href="${dashboardUrl}" target="_blank"
+                    style="display:inline-block;padding:14px 32px;color:#fff;font-size:15px;font-weight:600;text-decoration:none;">
+                    View your dashboard →
+                  </a>
+                </td>
+              </tr>
+            </table>
+            <p style="margin:0;font-size:13px;color:#9ca3af;line-height:1.6;">
+              Questions? Reply to this email or visit <a href="${APP_URL}/contact" style="color:#f97316;">gruth.ke/contact</a>.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f9f9f7;padding:20px 40px;border-top:1px solid #f3f4f6;">
+            <p style="margin:0;font-size:12px;color:#9ca3af;text-align:center;">GRUTH · Nairobi, Kenya · <a href="${APP_URL}" style="color:#f97316;text-decoration:none;">gruth.ke</a></p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`,
+  });
 }
