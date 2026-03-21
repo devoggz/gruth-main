@@ -2,7 +2,7 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { DM_Sans, DM_Mono, Playfair_Display } from "next/font/google";
+import { DM_Sans, DM_Mono, Funnel_Display } from "next/font/google";
 import AuthSessionProvider from "@/components/providers/SessionProvider";
 import PWAInstallBanner from "@/components/shared/PWAInstallBanner";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
@@ -11,10 +11,6 @@ import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-// ─── Self-hosted fonts via next/font ─────────────────────────────────────────
-// Downloaded at build time, served from your own domain with immutable cache
-// headers. Eliminates the render-blocking round-trip to fonts.googleapis.com
-// that was causing the 14-16s first load.
 
 const dmSans = DM_Sans({
   subsets:  ["latin"],
@@ -32,7 +28,7 @@ const dmMono = DM_Mono({
   preload:  false,
 });
 
-const playfair = Playfair_Display({
+const playfair = Funnel_Display({
   subsets:  ["latin"],
   weight:   ["700", "800"],
   display:  "swap",
