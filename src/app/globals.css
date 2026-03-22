@@ -151,12 +151,12 @@
   .input-field {
     @apply w-full
     px-3.5 py-2.5
-    border border-charcoal-200 rounded-xl
+    border border-charcoal-400 rounded-xl
     text-sm text-charcoal-900
     placeholder:text-charcoal-400 placeholder:text-xs
     bg-white
     transition-colors duration-150
-    focus:outline-none focus:ring-1 focus:ring-orange-400/40 focus:border-orange-400
+    focus:outline-none  focus:border-orange-400
       /* Fixed height prevents iOS zoom-induced layout shift */
     h-11;
   }
