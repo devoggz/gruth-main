@@ -42,7 +42,7 @@ export async function GET(): Promise<NextResponse> {
 
     return NextResponse.json({
         referralCode: user!.referralCode,
-        referralUrl:  `${process.env.NEXT_PUBLIC_APP_URL ?? "https://gruth.ke"}/register?ref=${user!.referralCode}`,
+        referralUrl:  `${process.env.NEXT_PUBLIC_APP_URL ?? "https://gruth-main.vercel.app"}/register?ref=${user!.referralCode}`,
         totalReferred,
         unusedCredits,
     });
