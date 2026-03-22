@@ -58,10 +58,11 @@ export default function Navbar() {
       <>
         <nav
             className={[
-              "fixed left-0 right-0 z-50 bg-white",
-              "border-b border-charcoal-100",
+              "fixed left-0 right-0 z-50",
               "transition-all duration-300",
-              scrolled ? "shadow-[0_2px_16px_rgba(0,0,0,0.08)]" : "",
+              scrolled
+                  ? "bg-white border-b border-charcoal-100 shadow-[0_2px_16px_rgba(0,0,0,0.08)]"
+                  : "bg-transparent border-b border-transparent",
             ].join(" ")}
             style={{ top: bannerH }}
         >
@@ -69,9 +70,9 @@ export default function Navbar() {
             <div className="flex items-center justify-between h-16">
               <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
                 <Image
-                    src="/images/logo-t.svg"
+                    src={scrolled ? "/images/logo-t.svg" : "/images/logo-w.svg"}
                     alt="GRUTH"
-                    width={80}
+                    width={140}
                     height={36}
                     style={{ width: "auto", height: "36px" }}
                     priority
@@ -89,8 +90,8 @@ export default function Navbar() {
                           className={[
                             "relative px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-150",
                             active
-                                ? "text-charcoal-950"
-                                : "text-charcoal-500 hover:text-charcoal-900",
+                                ? scrolled ? "text-charcoal-950" : "text-white"
+                                : scrolled ? "text-charcoal-500 hover:text-charcoal-900" : "text-white/70 hover:text-white",
                           ].join(" ")}
                       >
                         {label}
@@ -109,7 +110,11 @@ export default function Navbar() {
                       {/* Ghost sign-in */}
                       <Link
                           href="/login"
-                          className="text-sm font-medium text-charcoal-500 hover:text-charcoal-900 transition-colors duration-150 px-1"
+                          className={`text-sm font-medium transition-colors duration-150 px-1 ${
+                              scrolled
+                                  ? "text-charcoal-500 hover:text-charcoal-900"
+                                  : "text-white/70 hover:text-white"
+                          }`}
                       >
                         Sign in
                       </Link>
@@ -153,7 +158,11 @@ export default function Navbar() {
                     />
                 )}
                 <button
-                    className="p-2 rounded-lg text-charcoal-500 hover:text-charcoal-900 transition-colors"
+                    className={`p-2 rounded-lg transition-colors ${
+                        scrolled
+                            ? "text-charcoal-500 hover:text-charcoal-900"
+                            : "text-white/80 hover:text-white"
+                    }`}
                     onClick={() => setMobileOpen((v) => !v)}
                     aria-label="Toggle menu"
                     aria-expanded={mobileOpen}

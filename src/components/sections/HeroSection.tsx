@@ -1,152 +1,143 @@
+"use client";
+// src/components/sections/HeroSectionAlter.tsx
+// Full-bleed hero — edge to edge, height-screen, navbar floats on top.
+
 import Link from "next/link";
 
-const trustBadges = [
-  "Photo + Video Evidence",
-  "Written Reports",
-  "Secure Dashboard",
-  "Verified Inspectors",
-];
+function TrustBadge() {
+    return (
+        <div className="hidden lg:block absolute bottom-10 right-10 z-20 pointer-events-none">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3.5 shadow-2xl min-w-[160px]">
+                <div className="font-display text-2xl font-bold text-white leading-none mb-0.5">
+                    150+
+                </div>
+                <div className="text-white/60 text-xs leading-snug">
+                    Diaspora families
+                    <br />
+                    verified across Kenya
+                </div>
+            </div>
+        </div>
+    );
+}
 
-const statCards = [
-  { value: "150+", label: "Families Served" },
-  { value: "48h", label: "Report Turnaround" },
-  { value: "100%", label: "Independent Inspectors" },
-  { value: "6", label: "Service Categories" },
+const trustBadges = [
+    "Photo + Video Evidence",
+    "Written Reports",
+    "Secure Dashboard",
+    "Verified Inspectors",
 ];
 
 export default function HeroSection() {
-  return (
-    <section className="relative bg-charcoal-950 min-h-[92vh] flex items-center overflow-hidden">
-      <div
-        className="absolute inset-0 opacity-[0.06]"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, #f97316 1px, transparent 1px),
-            linear-gradient(to bottom, #f97316 1px, transparent 1px)
+    return (
+        <section className="relative w-full h-screen min-h-[600px] max-h-[960px] overflow-hidden">
+
+            {/* Background image — full bleed */}
+            <img
+                src="https://l954sx9dfs.ufs.sh/f/pgwsuECRjuZYbl6qz6s6XfCH4Q3Mz8bhvFZ0Em5ncsaDxIlB"
+                alt="Construction site in Kenya"
+                className="absolute inset-0 w-full h-full object-cover object-center"
+                loading="eager"
+            />
+
+            {/* Gradient overlay */}
+            <div
+                className="absolute inset-0"
+                style={{
+                    background: `
+            linear-gradient(to top, rgba(10,9,8,0.92) 0%, rgba(10,9,8,0.55) 45%, rgba(10,9,8,0.15) 75%, transparent 100%),
+            linear-gradient(to right, rgba(10,9,8,0.5) 0%, transparent 55%)
           `,
-          backgroundSize: "60px 60px",
-        }}
-      />
+                }}
+            />
 
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 70% at 30% 50%, transparent 0%, #1A1916 75%)",
-        }}
-      />
+            {/* Grid texture */}
+            <div
+                className="absolute inset-0 opacity-[0.04] mix-blend-screen pointer-events-none"
+                style={{
+                    backgroundImage: `linear-gradient(to right,#f97316 1px,transparent 1px),linear-gradient(to bottom,#f97316 1px,transparent 1px)`,
+                    backgroundSize: "60px 60px",
+                }}
+            />
 
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 right-24 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-24 left-8  w-56 h-56 bg-orange-500/5  rounded-full blur-2xl" />
-      </div>
+            {/* Content — capped at max-w-7xl, padded to sit below the 64px navbar */}
+            <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center pt-16">
+                <div className="max-w-xl">
+                    <div
+                        className="inline-flex items-center gap-2 bg-orange-500/15 border border-orange-500/25 text-orange-300 text-[10px] font-bold px-3 py-1.5 rounded-full mb-6 uppercase tracking-widest"
+                        style={{ animation: "hero-fade-up 0.65s ease both" }}
+                    >
+                        <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" />
+                        Ground Truth Verification
+                    </div>
 
-      <div className="absolute right-16 xl:right-48 top-1/2 -translate-y-1/2 hidden lg:grid grid-cols-2 gap-px">
-        {statCards.map(({ value, label }) => (
-          <div
-            key={label}
-            className="w-48 h-48 flex flex-col items-center justify-center gap-1
-                       border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm"
-          >
-            <span className="font-display text-3xl font-bold text-orange-400 leading-none">
-              {value}
-            </span>
-            <span className="text-charcoal-400 text-xs font-medium text-center leading-tight px-3">
-              {label}
-            </span>
-          </div>
-        ))}
-      </div>
+                    <h1
+                        className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.05] mb-5 tracking-tight"
+                        style={{ animation: "hero-fade-up 0.65s 0.08s ease both" }}
+                    >
+                        Know exactly
+                        <br />
+                        what&rsquo;s happening
+                        <br />
+                        <span className="text-orange-400 italic">back home.</span>
+                    </h1>
 
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="max-w-xl lg:max-w-2xl">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-medium px-3 py-1.5 rounded-full mb-8 uppercase tracking-wider">
-            <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" />
-            Ground Truth Verification
-          </div>
+                    <p
+                        className="text-white/60 text-base sm:text-lg leading-relaxed mb-8 max-w-md"
+                        style={{ animation: "hero-fade-up 0.65s 0.16s ease both" }}
+                    >
+                        Clear photos, videos, measurements and reports delivered to your
+                        secure dashboard in 48 hours. So distance never means doubt again.
+                    </p>
 
-          {/* Headline */}
-          <h1 className="font-display text-5xl sm:text-6xl lg:text-[4.25rem] font-bold text-white leading-[1.05] mb-6 tracking-tight">
-            Know exactly
-            <br />
-            what&rsquo;s happening
-            <br />
-            <span className="text-orange-400 italic">back home.</span>
-          </h1>
+                    <div
+                        className="flex flex-col sm:flex-row gap-3"
+                        style={{ animation: "hero-fade-up 0.65s 0.24s ease both" }}
+                    >
+                        <Link
+                            href="/request-verification"
+                            className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-7 py-3.5 rounded-xl transition-all duration-200 hover:shadow-xl hover:shadow-orange-500/30 hover:-translate-y-0.5 active:translate-y-0"
+                        >
+                            Request a Verification
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </Link>
 
-          {/* Sub-copy */}
-          <p className="text-charcoal-300 text-lg sm:text-xl leading-relaxed mb-14">
-            GRUTH sends an independent inspector to your site in Kenya. You get
-            documented evidence — not reassurances.
-          </p>
+                        <Link
+                            href="/how-it-works"
+                            className="inline-flex items-center justify-center gap-2 text-white/70 hover:text-white bg-white/10 hover:bg-white/15 border border-white/15 hover:border-white/30 rounded-xl px-7 py-3.5 text-sm font-medium transition-all duration-200 backdrop-blur-sm"
+                        >
+                            See how it works
+                        </Link>
+                    </div>
+                </div>
+            </div>
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-14">
-            <Link
-              href="/request-verification"
-              className="btn-primary text-base py-4 px-8"
-            >
-              Request a Verification
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </Link>
-            <Link
-              href="/how-it-works"
-              className="inline-flex items-center gap-2 text-charcoal-300 hover:text-white border border-white/10 hover:border-white/30 rounded-lg px-8 py-4 font-medium transition-all duration-200"
-            >
-              See how it works
-            </Link>
-          </div>
+            {/* Trust badges — bottom left, aligned with content container */}
+            <div className="absolute bottom-8 left-4 sm:left-6 lg:left-8 z-20 max-w-7xl">
+                {/* Offset to match content padding */}
+                <div className="ml-0 sm:ml-2 lg:ml-4 flex flex-wrap gap-x-5 gap-y-2">
+                    {trustBadges.map((t) => (
+                        <div key={t} className="flex items-center gap-1.5 text-white/50 text-xs">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2.5">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                            {t}
+                        </div>
+                    ))}
+                </div>
+            </div>
 
-          {/* Trust badges */}
-          <div className="flex flex-wrap gap-x-6 gap-y-3">
-            {trustBadges.map((t) => (
-              <div
-                key={t}
-                className="flex items-center gap-2 text-charcoal-400 text-sm"
-              >
-                <svg
-                  width="13"
-                  height="13"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#f97316"
-                  strokeWidth="2.5"
-                >
-                  <path d="M20 6L9 17l-5-5" />
-                </svg>
-                {t}
-              </div>
-            ))}
-          </div>
+            {/* Floating trust card — bottom right */}
+            <TrustBadge />
 
-          {/* Mobile stat strip — only visible below lg */}
-          <div className="mt-14 grid grid-cols-4 gap-px border border-white/[0.06] lg:hidden">
-            {statCards.map(({ value, label }) => (
-              <div
-                key={label}
-                className="flex flex-col items-center justify-center py-4 bg-white/[0.03] gap-0.5"
-              >
-                <span className="font-display text-xl font-bold text-orange-400 leading-none">
-                  {value}
-                </span>
-                <span className="text-charcoal-500 text-[10px] font-medium text-center leading-tight px-1">
-                  {label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+            <style>{`
+        @keyframes hero-fade-up {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+        </section>
+    );
 }
