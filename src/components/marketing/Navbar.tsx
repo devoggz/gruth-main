@@ -71,7 +71,7 @@ export default function Navbar() {
                 <Image
                     src="/images/logo-t.svg"
                     alt="GRUTH"
-                    width={90}
+                    width={80}
                     height={36}
                     style={{ width: "auto", height: "36px" }}
                     priority
