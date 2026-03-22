@@ -44,7 +44,7 @@ export default function HeroSectionAlter() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div
           className="relative w-full rounded-2xl overflow-hidden"
-          style={{ minHeight: "min(96vh, 740px)" }}
+          style={{ minHeight: "min(96vh, 800px)" }}
         >
           {/* Background */}
           <img
@@ -103,8 +103,7 @@ export default function HeroSectionAlter() {
                 className="text-white/60 text-base sm:text-lg leading-relaxed mb-8 max-w-md"
                 style={{ animation: "hero-fade-up 0.65s 0.16s ease both" }}
               >
-                Clear photos, videos, measurements and reports delivered to your
-                secure dashboard in 48 hours. So distance never means doubt
+                We physically verify land, property, businesses, and people on your behalf, so distance never means doubt
                 again.
               </p>
 
@@ -116,7 +115,7 @@ export default function HeroSectionAlter() {
                   href="/request-verification"
                   className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-7 py-3.5 rounded-xl transition-all duration-200 hover:shadow-xl hover:shadow-orange-500/30 hover:-translate-y-0.5 active:translate-y-0"
                 >
-                  Request a Verification
+                  Verify Now
                   <svg
                     width="14"
                     height="14"

@@ -2,7 +2,7 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { DM_Sans, DM_Mono, Funnel_Display } from "next/font/google";
+import { DM_Sans, DM_Mono, Funnel_Display, Red_Hat_Display } from "next/font/google";
 import AuthSessionProvider from "@/components/providers/SessionProvider";
 import PWAInstallBanner from "@/components/shared/PWAInstallBanner";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
@@ -28,7 +28,7 @@ const dmMono = DM_Mono({
   preload:  false,
 });
 
-const playfair = Funnel_Display({
+const playfair = Red_Hat_Display({
   subsets:  ["latin"],
   weight:   ["700", "800"],
   display:  "swap",

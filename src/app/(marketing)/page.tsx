@@ -9,7 +9,7 @@ import CtaSection from "@/components/sections/CtaSection";
 import HeroSectionAlter from "@/components/sections/HeroSectionAlter";
 
 export const metadata: Metadata = {
-    title: "Request Verification Now – Get Eyes on Your Project in 48 Hours",
+    title: "Get it Verified – Eyes on Your Project in 48 Hours",
 };
 
 export default function HomePage() {
