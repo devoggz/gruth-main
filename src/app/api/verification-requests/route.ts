@@ -5,8 +5,8 @@ import { Resend }  from "resend";
 import { z }       from "zod";
 
 const resend     = new Resend(process.env.RESEND_API_KEY);
-const APP_URL    = process.env.NEXT_PUBLIC_APP_URL ?? "https://gruth.ke";
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "admin@gruth.ke";
+const APP_URL    = process.env.NEXT_PUBLIC_APP_URL ?? "https://gruth-main.vercel.app";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "kengovoga@gmail.com";
 
 // Each uploaded file the client sends back after Uploadthing completes
 const fileSchema = z.object({

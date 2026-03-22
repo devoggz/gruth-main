@@ -1,7 +1,3 @@
-// src/app/(marketing)/v/[code]/page.tsx
-// Public shareable verification summary — linked from project dashboard.
-// Shows inspector-signed summary, GPS, date — no sensitive data.
-// URL: gruth.ke/v/[projectId-shortcode]
 
 import { prisma }   from "@/lib/prisma";
 import { notFound } from "next/navigation";

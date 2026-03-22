@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
   const paystackRef = generateRef("GRUTH");
   const expiresAt   = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
-  const appUrl     = process.env.NEXT_PUBLIC_APP_URL ?? "https://gruth.ke";
+  const appUrl     = process.env.NEXT_PUBLIC_APP_URL ?? "https://gruth-main.vercel.app";
   const callbackUrl = `${appUrl}/payment/callback?reference=${paystackRef}`;
 
   try {

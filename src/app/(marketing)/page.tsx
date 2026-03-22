@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     openGraph: {
         title:       "GRUTH — Diaspora Verification",
         description: "Know exactly what's happening with your property or project in Kenya.",
-        url:         "https://gruth.ke",
+        url:         "https://gruth-main.vercel.app",
         siteName:    "GRUTH",
         type:        "website",
     },
