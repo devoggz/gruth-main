@@ -17,7 +17,18 @@ export default function Navbar() {
   const user = session?.user as any;
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 24);
+    // Throttle scroll handler — runs at most once per animation frame.
+    // On mobile this prevents jank from frequent scroll events.
+    let ticking = false;
+    const handler = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 24);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
@@ -58,10 +69,11 @@ export default function Navbar() {
     <>
       <nav
         className={[
-          "fixed left-0 right-0 z-50 bg-white",
-          "border-b border-charcoal-100",
+          "fixed left-0 right-0 z-50",
           "transition-all duration-300",
-          scrolled ? "shadow-[0_2px_16px_rgba(0,0,0,0.08)]" : "",
+          scrolled
+            ? "bg-white border-b border-charcoal-100 shadow-[0_2px_16px_rgba(0,0,0,0.08)]"
+            : "bg-transparent border-b border-transparent",
         ].join(" ")}
         style={{ top: bannerH }}
       >
@@ -89,8 +101,8 @@ export default function Navbar() {
                     className={[
                       "relative px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-150",
                       active
-                        ? "text-charcoal-950"
-                        : "text-charcoal-500 hover:text-charcoal-900",
+                        ? scrolled ? "text-charcoal-950" : "text-white"
+                        : scrolled ? "text-charcoal-500 hover:text-charcoal-900" : "text-white/70 hover:text-white",
                     ].join(" ")}
                   >
                     {label}
@@ -109,7 +121,9 @@ export default function Navbar() {
                   {/* Ghost sign-in */}
                   <Link
                     href="/login"
-                    className="text-sm font-medium text-charcoal-500 hover:text-charcoal-900 transition-colors duration-150 px-1"
+                    className={`text-sm font-medium transition-colors duration-150 px-1 ${
+                      scrolled ? "text-charcoal-500 hover:text-charcoal-900" : "text-white/70 hover:text-white"
+                    }`}
                   >
                     Sign in
                   </Link>

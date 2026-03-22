@@ -1,15 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ─── Design tokens ─────────────────────────────────────────────────────────── */
+/* Note: --font-display, --font-body, --font-mono are injected by next/font
+   via className on <html>. The fallbacks below only apply if next/font fails
+   (e.g. during SSR hydration gap) — keep them as safe fallbacks only. */
 
 :root {
-  --font-display: "Roboto", sans-serif;
-  --font-body: "DM Sans", system-ui, sans-serif;
-  --font-mono: "DM Mono", "Courier New", monospace;
+  --font-display: "Georgia", serif;       /* fallback only — overridden by next/font */
+  --font-body:    "system-ui", sans-serif; /* fallback only — overridden by next/font */
+  --font-mono:    "Courier New", monospace; /* fallback only — overridden by next/font */
 }
 
 /* ─── Base reset — prevent all layout shift sources ────────────────────────── */
@@ -206,6 +207,14 @@
     position: relative;
   }
 
+  /* content-visibility: auto skips rendering of off-screen sections entirely
+     on mobile until the user scrolls near them — biggest single paint saving.
+     contain-intrinsic-size reserves space so layout doesn't shift when they render. */
+  section:not(:first-of-type) {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 600px;
+  }
+
   /* Max-width wrapper with consistent horizontal padding */
   .container-page {
     @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
@@ -391,4 +400,49 @@
   border-radius: 50%;
   background: currentColor;
   animation: pulseRing 1.8s ease-out infinite;
+}
+
+/* ─── Mobile performance ─────────────────────────────────────────────────────── */
+
+/* Respect user preference for reduced motion — also helps low-end mobile devices */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+    scroll-behavior:           auto   !important;
+  }
+}
+
+/* Disable backdrop-blur on low-end mobile — it's GPU-expensive and causes jank.
+   Replaces blurred glass elements with a solid semi-transparent background. */
+@media (max-width: 640px) {
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl {
+    backdrop-filter:         none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color:        rgba(10, 9, 8, 0.75) !important;
+  }
+}
+
+/* Native momentum scrolling on iOS */
+.overflow-y-auto,
+.overflow-y-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* GPU-accelerate hero image for smoother paint on mobile */
+.hero-img {
+  will-change:   transform;
+  transform:     translateZ(0);
+}
+
+/* Prevent the animate-pulse dot in the hero badge from
+   triggering a full repaint on mobile every 2s */
+.animate-pulse {
+  will-change: opacity;
 }

@@ -46,12 +46,21 @@ export default function HeroSectionAlter() {
           className="relative w-full rounded-2xl overflow-hidden"
           style={{ minHeight: "min(96vh, 800px)" }}
         >
-          {/* Background */}
+          {/* Background image — full bleed */}
+          {/* fetchpriority=high tells the browser this is the LCP element immediately */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://l954sx9dfs.ufs.sh/f/pgwsuECRjuZYbl6qz6s6XfCH4Q3Mz8bhvFZ0Em5ncsaDxIlB"
+            srcSet="https://l954sx9dfs.ufs.sh/f/pgwsuECRjuZYbl6qz6s6XfCH4Q3Mz8bhvFZ0Em5ncsaDxIlB?w=828 828w, https://l954sx9dfs.ufs.sh/f/pgwsuECRjuZYbl6qz6s6XfCH4Q3Mz8bhvFZ0Em5ncsaDxIlB?w=1200 1200w, https://l954sx9dfs.ufs.sh/f/pgwsuECRjuZYbl6qz6s6XfCH4Q3Mz8bhvFZ0Em5ncsaDxIlB 1920w"
+            sizes="100vw"
             alt="Construction site in Kenya"
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover object-center hero-img"
             loading="eager"
+            // @ts-ignore — fetchPriority valid HTML5, React types lag behind
+            fetchPriority="high"
+            decoding="sync"
+            width={1920}
+            height={1080}
           />
 
           {/* Gradient overlay */}

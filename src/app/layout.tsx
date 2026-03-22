@@ -2,7 +2,7 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { DM_Sans, DM_Mono, Funnel_Display, Red_Hat_Display } from "next/font/google";
+import { DM_Sans, DM_Mono, Red_Hat_Display } from "next/font/google";
 import AuthSessionProvider from "@/components/providers/SessionProvider";
 import PWAInstallBanner from "@/components/shared/PWAInstallBanner";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
@@ -94,8 +94,8 @@ export default function RootLayout({
           className={`${dmSans.variable} ${dmMono.variable} ${playfair.variable}`}
       >
       <head>
-        {/* Media CDN prefetch — fonts no longer need googleapis preconnect */}
-        <link rel="dns-prefetch" href="//l954sx9dfs.ufs.sh" />
+        {/* Preconnect to image CDN — eliminates DNS+TCP+TLS from the LCP critical path */}
+        <link rel="preconnect" href="https://l954sx9dfs.ufs.sh" />
         <link rel="dns-prefetch" href="//images.unsplash.com" />
 
         {/* PWA meta */}
@@ -106,11 +106,17 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title"      content="GRUTH"    />
 
-        {/* Preload hero image to reduce LCP */}
+        {/* Hero image preload — fetchpriority tells browser this is the LCP element.
+            imageSrcSet/imageSizes let mobile devices fetch a smaller file. */}
         <link
             rel="preload"
             as="image"
             href="https://l954sx9dfs.ufs.sh/f/pgwsuECRjuZYbl6qz6s6XfCH4Q3Mz8bhvFZ0Em5ncsaDxIlB"
+            // @ts-ignore — imageSrcSet is valid in HTML5 but not yet in React types
+            imageSrcSet="https://l954sx9dfs.ufs.sh/f/pgwsuECRjuZYbl6qz6s6XfCH4Q3Mz8bhvFZ0Em5ncsaDxIlB?w=828 828w, https://l954sx9dfs.ufs.sh/f/pgwsuECRjuZYbl6qz6s6XfCH4Q3Mz8bhvFZ0Em5ncsaDxIlB?w=1200 1200w, https://l954sx9dfs.ufs.sh/f/pgwsuECRjuZYbl6qz6s6XfCH4Q3Mz8bhvFZ0Em5ncsaDxIlB 1920w"
+            imageSizes="100vw"
+            // @ts-ignore
+            fetchPriority="high"
         />
       </head>
       <AuthSessionProvider>
