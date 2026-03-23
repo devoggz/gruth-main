@@ -43,8 +43,7 @@ const painPoints = [
     ),
     label: "Verification",
     title: "Photo + Video Evidence",
-    desc: "High-resolution photos and on-site walk-through videos captured from the ground—so you’re not relying on forwarded clips or selective angles.",
-    quote: "See exactly what’s there. No filters. No staging.",
+    desc: "When reassurance replaces reality, you need proof. Get clear, on-site photos and walk-through videos that show exactly what’s happening—nothing staged, nothing filtered.",
   },
   {
     icon: (
@@ -66,8 +65,7 @@ const painPoints = [
     ),
     label: "Clarity",
     title: "Written Reports",
-    desc: "Structured, no-fluff reports that break down what’s been done, what’s missing, and what doesn’t add up—so you can make informed decisions fast.",
-    quote: "No guesswork. Just clear, actionable insight.",
+    desc: "Instead of vague updates, get structured reports that break down real progress, highlight gaps, and call out anything that doesn’t add up—so you always know where things stand.",
   },
   {
     icon: (
@@ -88,8 +86,7 @@ const painPoints = [
     ),
     label: "Control",
     title: "Secure Dashboard",
-    desc: "Access every inspection, report, and update in one place. Track progress over time and stay fully in control—wherever you are.",
-    quote: "Your entire project. One secure view.",
+    desc: "All your inspections and reports, organized in one place. Track progress over time, revisit past updates, and stay fully in control—no matter where you are.",
   },
 ];
 
@@ -99,14 +96,14 @@ export default function ProblemSection() {
   const ctaRef = useFadeIn();
 
   return (
-      <section className="relative py-12 overflow-hidden">
+      <section className="relative py-14 overflow-hidden">
         {/* Subtle grid */}
         <div
             className="absolute inset-0 pointer-events-none"
             style={{
               backgroundImage: `linear-gradient(to right,#f97316 1px,transparent 1px),linear-gradient(to bottom,#f97316 1px,transparent 1px)`,
               backgroundSize: "60px 60px",
-              opacity: 0.06,
+              opacity: 0.05,
               maskImage:
                   "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
               WebkitMaskImage:
@@ -116,7 +113,7 @@ export default function ProblemSection() {
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* ── Header ─────────────────────────────────────────────────────── */}
-          <div ref={headerRef} className="text-center mb-14 fade-up">
+          <div ref={headerRef} className="text-center mb-16 fade-up">
           <span className="inline-flex items-center gap-1.5 text-orange-600 text-[10px] font-bold tracking-widest uppercase bg-orange-100 border border-orange-200 px-3 py-1 rounded-full mb-6">
             Why GRUTH Exists
           </span>
@@ -135,20 +132,23 @@ export default function ProblemSection() {
             </p>
           </div>
 
-          {/* ── Pain point cards ───────────────────────────────────────────── */}
+          {/* ── Cards ─────────────────────────────────────────────────────── */}
           <div
               ref={cardsRef}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mb-14 fade-up"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-16 fade-up"
               style={{ transitionDelay: "120ms" }}
           >
-            {painPoints.map(({ icon, label, title, desc, quote }) => (
+            {painPoints.map(({ icon, label, title, desc }) => (
                 <div
                     key={title}
-                    className="group bg-white/80 hover:bg-white border border-orange-100 hover:border-orange-200 rounded-2xl px-5 py-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col"
+                    className="group relative bg-white border border-orange-100 hover:border-orange-300 rounded-2xl px-6 py-7 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col"
                 >
+                  {/* Glow accent */}
+                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-300 bg-gradient-to-br from-orange-50 via-transparent to-transparent pointer-events-none" />
+
                   {/* Icon + label */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center text-orange-500 flex-shrink-0 group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-all duration-200">
+                  <div className="flex items-center gap-3 mb-5 relative z-10">
+                    <div className="w-11 h-11 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-all duration-300">
                       {icon}
                     </div>
                     <span className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">
@@ -156,19 +156,13 @@ export default function ProblemSection() {
                 </span>
                   </div>
 
-                  <h3 className="font-display text-base font-semibold text-charcoal-950 mb-2 leading-snug">
+                  <h3 className="font-display text-lg font-semibold text-charcoal-950 mb-3 leading-snug relative z-10">
                     {title}
                   </h3>
-                  <p className="text-charcoal-500 text-sm leading-relaxed mb-4 flex-1">
+
+                  <p className="text-charcoal-600 text-sm leading-relaxed relative z-10">
                     {desc}
                   </p>
-
-                  {/* Quote chip */}
-                  <div className="bg-charcoal-50 border-l-2 border-orange-300 rounded-r-xl px-3 py-2.5 mt-auto">
-                    <p className="text-charcoal-500 text-xs italic leading-relaxed">
-                      {quote}
-                    </p>
-                  </div>
                 </div>
             ))}
           </div>
