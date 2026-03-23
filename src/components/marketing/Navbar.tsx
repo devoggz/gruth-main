@@ -74,7 +74,7 @@ export default function Navbar() {
             style={{ top: bannerH }}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
+            <div className="flex items-center justify-between h-14">
 
               {/* ── Logo ─────────────────────────────────────────────────────── */}
               <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
@@ -82,8 +82,8 @@ export default function Navbar() {
                     src={transparent ? "/images/logo-w.svg" : "/images/logo-t.svg"}
                     alt="GRUTH"
                     width={90}
-                    height={36}
-                    style={{ width: "auto", height: "36px" }}
+                    height={30}
+                    style={{ width: "auto", height: "30px" }}
                     priority
                 />
               </Link>
