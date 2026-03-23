@@ -115,19 +115,19 @@ export default function HeroSection() {
             </div>
 
             {/* Trust badges — bottom left, aligned with content container */}
-            <div className="absolute bottom-8 left-4 sm:left-6 lg:left-8 z-20 max-w-7xl">
-                {/* Offset to match content padding */}
-                <div className="ml-0 sm:ml-2 lg:ml-4 flex flex-wrap gap-x-5 gap-y-2">
-                    {trustBadges.map((t) => (
-                        <div key={t} className="flex items-center gap-1.5 text-white/50 text-xs">
-                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2.5">
-                                <path d="M20 6L9 17l-5-5" />
-                            </svg>
-                            {t}
-                        </div>
-                    ))}
-                </div>
-            </div>
+            {/*<div className="absolute bottom-8 left-4 sm:left-6 lg:left-8 z-20 max-w-7xl">*/}
+            {/*    /!* Offset to match content padding *!/*/}
+            {/*    <div className="ml-0 sm:ml-2 lg:ml-4 flex flex-wrap gap-x-5 gap-y-2">*/}
+            {/*        {trustBadges.map((t) => (*/}
+            {/*            <div key={t} className="flex items-center gap-1.5 text-white/50 text-xs">*/}
+            {/*                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2.5">*/}
+            {/*                    <path d="M20 6L9 17l-5-5" />*/}
+            {/*                </svg>*/}
+            {/*                {t}*/}
+            {/*            </div>*/}
+            {/*        ))}*/}
+            {/*    </div>*/}
+            {/*</div>*/}
 
             {/* Floating trust card — bottom right */}
             <TrustBadge />
