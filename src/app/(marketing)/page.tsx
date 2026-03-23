@@ -1,4 +1,4 @@
-// src/app/(marketing)/page.tsx
+t// src/app/(marketing)/page.tsx
 // Performance: HeroSectionAlter is imported normally (above fold, critical path).
 // All below-fold sections use dynamic() with ssr:true so their JS is
 // code-split into separate chunks — the browser only downloads them when needed,
@@ -38,7 +38,6 @@ export default function HomePage() {
       <HeroSection />
       <ProblemSection />
       <ServicesSection />
-      <QuoteCalculator />
       <HowItWorksSection />
       <CtaSection />
     </div>
