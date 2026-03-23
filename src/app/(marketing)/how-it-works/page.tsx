@@ -3,7 +3,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import QuoteCalculator from "@/components/home/QuoteCalculator";
+
+const QuoteCalculator   = dynamic(() => import("@/components/home/QuoteCalculator"),       { ssr: true });   
 
 const steps = [
   {
@@ -431,94 +432,15 @@ export default function HowItWorksPage() {
                 );
               })}
 
-              {/* Inline CTA */}
-              <div className="mt-2 bg-orange-500 rounded-2xl px-5 py-5">
-                <p className="text-white font-display font-bold text-base mb-1">
-                  Ready to verify?
-                </p>
-                <p className="text-orange-100 text-xs leading-relaxed mb-4">
-                  No upfront payment. Report delivered before you pay.
-                </p>
-                <Link
-                  href="/request-verification"
-                  className="inline-flex items-center gap-2 bg-white text-orange-600 hover:bg-orange-50 text-sm font-bold px-4 py-2.5 rounded-xl transition-colors"
-                >
-                  Request a Verification
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </div>
+<QuoteCalculator />
+
+  
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Dashboard callout ──────────────────────────────────────────────── */}
-      <section className="py-20 bg-orange-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative bg-charcoal-950 rounded-3xl p-8 sm:p-12 overflow-hidden">
-            <div
-              className="absolute inset-0 opacity-[0.04]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
-                backgroundSize: "40px 40px",
-              }}
-            />
-            <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-8 justify-between">
-              <div className="max-w-md">
-                <span className="inline-flex items-center gap-1.5 text-orange-400 text-[10px] font-bold tracking-widest uppercase bg-orange-400/10 px-3 py-1 rounded-full mb-5">
-                  Client Dashboard
-                </span>
-                <h2 className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
-                  Monitor everything
-                  <br />
-                  from one place.
-                </h2>
-                <p className="text-charcoal-400 text-sm leading-relaxed">
-                  Your secure dashboard gives you real-time access to all your
-                  projects, inspection timelines, evidence galleries, verified
-                  market prices, and direct messaging with our team.
-                </p>
-              </div>
-              <div className="flex flex-col gap-3 w-full sm:w-auto">
-                <Link
-                  href="/register"
-                  className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold px-6 py-3.5 rounded-xl transition-all hover:shadow-lg hover:shadow-orange-500/25 hover:-translate-y-0.5"
-                >
-                  Create Your Account
-                  <svg
-                    width="13"
-                    height="13"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </Link>
-                <Link
-                  href="/request-verification"
-                  className="inline-flex items-center justify-center text-center gap-2 bg-white/[0.06] hover:bg-white/10 border border-white/10 text-white text-sm font-medium px-6 py-3.5 rounded-xl transition-colors"
-                >
-                  Request first, register later
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* ── FAQs ───────────────────────────────────────────────────────────── */}
       <section className="py-20 bg-white">
