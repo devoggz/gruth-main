@@ -68,7 +68,7 @@ export default function Navbar() {
             className={[
               "fixed left-0 right-0 z-50 transition-all duration-300",
               transparent
-                  ? "bg-transparent border-b border-transparent"
+                  ? "bg-charcoal-950 border-b border-transparent"
                   : "bg-white border-b border-charcoal-100 shadow-[0_2px_16px_rgba(0,0,0,0.08)]",
             ].join(" ")}
             style={{ top: bannerH }}
