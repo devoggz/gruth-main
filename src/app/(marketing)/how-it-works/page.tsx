@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 
 const QuoteCalculator   = dynamic(() => import("@/components/home/QuoteCalculator"),       { ssr: true });   
 
