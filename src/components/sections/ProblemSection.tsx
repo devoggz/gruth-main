@@ -100,7 +100,7 @@ export default function ProblemSection() {
   const ctaRef = useFadeIn();
 
   return (
-    <section className="relative py-6 overflow-hidden">
+    <section className="relative py-12 overflow-hidden">
       {/* Subtle grid */}
       <div
         className="absolute inset-0 pointer-events-none"
