@@ -28,7 +28,7 @@ const trustBadges = [
 
 export default function HeroSectionAlter() {
   return (
-    <section className="relative py-12 overflow-hidden">
+    <section className="relative py-16 overflow-hidden">
       <div
           className="absolute inset-0 pointer-events-none"
           style={{
