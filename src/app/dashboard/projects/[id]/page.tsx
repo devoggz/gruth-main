@@ -71,30 +71,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               <span className="text-charcoal-400 text-sm">· {project.location}</span>
             </div>
           </div>
-          <div className="flex items-center gap-3 flex-shrink-0">
-            {project.reportFileUrl && (
-                <a href={project.reportFileUrl} target="_blank" rel="noreferrer"
-                   className="inline-flex items-center gap-2 bg-white border border-charcoal-200 hover:border-charcoal-300 text-charcoal-700 text-sm font-medium px-4 py-2.5 rounded-xl transition-all shadow-sm">
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                  </svg>
-                  Download Report
-                </a>
-            )}
 
-            {/* Share verification badge */}
-            {project.status === "COMPLETED" && (
-                <a href={`/v/${project.id.slice(0, 12)}`} target="_blank" rel="noreferrer"
-                   className="inline-flex items-center gap-2 bg-white border border-charcoal-200 hover:border-emerald-300 hover:text-emerald-700 text-charcoal-700 text-sm font-medium px-4 py-2.5 rounded-xl transition-all shadow-sm">
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
-                  </svg>
-                  Share Badge
-                </a>
-            )}
-
-
-          </div>
         </div>
 
         {/* ── Unread alerts ──────────────────────────────────────────────────── */}
