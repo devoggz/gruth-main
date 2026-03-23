@@ -26,24 +26,25 @@ const SERVICE_TYPES = [
   },
   {
     value: "land",
-    label: "Land & Property",
+    label: "Land & Property Verification",
     base: [120, 250] as [number, number],
-  },
-  {
-    value: "wedding",
-    label: "Wedding & Events",
-    base: [100, 200] as [number, number],
-  },
-  {
-    value: "business",
-    label: "Business Investment",
-    base: [120, 300] as [number, number],
   },
   {
     value: "materials",
     label: "Material Pricing Audit",
     base: [80, 180] as [number, number],
   },
+  {
+    value: "Events",
+    label: "Events & Functions Oversight",
+    base: [100, 200] as [number, number],
+  },
+  {
+    value: "business",
+    label: "Business Investment Verification",
+    base: [120, 300] as [number, number],
+  },
+
 ] as const;
 
 type ServiceValue = (typeof SERVICE_TYPES)[number]["value"];
@@ -172,7 +173,7 @@ function getSizeLabel(service: ServiceValue) {
 // ─── Add-ons ──────────────────────────────────────────────────────────────────
 
 const ADDONS = [
-  { value: "drone", label: "Drone Footage", price: 75 },
+  { value: "drone", label: "Drone Footage", price: 80 },
   { value: "lab", label: "Material Lab Testing", price: 80 },
   { value: "extra", label: "Extra Site Visit", price: 60 },
   { value: "video", label: "Video Evidence Package", price: 50 },
@@ -315,7 +316,7 @@ export default function QuoteCalculator() {
             </div>
 
             {/* County + Urgency */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-1 gap-5">
               <div>
                 <CalcLabel>Project Location</CalcLabel>
                 <div className="relative mt-2">
@@ -346,7 +347,7 @@ export default function QuoteCalculator() {
 
               <div>
                 <CalcLabel>Urgency</CalcLabel>
-                <div className="flex gap-2 mt-2">
+                <div className="grid grid-cols-2 sm:grid-cols-1 gap-2 mt-2">
                   {URGENCY.map((u) => (
                     <button
                       key={u.value}
@@ -373,7 +374,7 @@ export default function QuoteCalculator() {
             {showSize && (
               <div>
                 <CalcLabel>{getSizeLabel(service)}</CalcLabel>
-                <div className="grid grid-cols-3 gap-2.5 mt-2">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-2.5 mt-2">
                   {getSizeOptions(service).map((p) => (
                     <button
                       key={p.value}

@@ -43,11 +43,9 @@ export default function HeroSectionAlter() {
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div
-          className="relative w-full rounded-2xl overflow-hidden"
-          style={{ minHeight: "min(96vh, 800px)" }}
+          className="relative w-full rounded-2xl overflow-hidden h-fit"
         >
-          {/* Background image — full bleed */}
-          {/* fetchpriority=high tells the browser this is the LCP element immediately */}
+
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://l954sx9dfs.ufs.sh/f/pgwsuECRjuZYbl6qz6s6XfCH4Q3Mz8bhvFZ0Em5ncsaDxIlB"

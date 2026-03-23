@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "Independent, on-the-ground verification for diaspora-funded projects in Kenya. Photos, video, measurements — delivered to your dashboard in 48 hours.",
   openGraph: {
     title:       "GRUTH — Diaspora property & investment verification",
-    description: "Know exactly what's happening with your property or project in Kenya.",
+    description: "Know exactly what's happening with your property or project at home.",
     url:         "https://gruth.ke",
     siteName:    "GRUTH",
     type:        "website",
