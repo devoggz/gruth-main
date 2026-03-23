@@ -130,7 +130,7 @@ export default function Navbar() {
                           href="/request-verification"
                           className="group inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/25 hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap"
                       >
-                        Get a Verification
+                        Get it Verified
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
                              className="transition-transform duration-200 group-hover:translate-x-0.5">
                           <path d="M5 12h14M12 5l7 7-7 7" />
