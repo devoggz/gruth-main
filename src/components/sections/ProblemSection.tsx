@@ -26,6 +26,7 @@ function useFadeIn(threshold = 0.12) {
 const painPoints = [
   {
     icon: (
+        // Camera icon (Photo + Video Evidence)
         <svg
             width="18"
             height="18"
@@ -36,9 +37,8 @@ const painPoints = [
             strokeLinecap="round"
             strokeLinejoin="round"
         >
-          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+          <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V7a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
+          <circle cx="12" cy="13" r="4" />
         </svg>
     ),
     label: "Verification",
@@ -47,6 +47,7 @@ const painPoints = [
   },
   {
     icon: (
+        // Document/report icon
         <svg
             width="18"
             height="18"
@@ -59,8 +60,8 @@ const painPoints = [
         >
           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
           <polyline points="14 2 14 8 20 8" />
-          <line x1="16" y1="13" x2="8" y2="13" />
-          <line x1="16" y1="17" x2="8" y2="17" />
+          <line x1="8" y1="13" x2="16" y2="13" />
+          <line x1="8" y1="17" x2="14" y2="17" />
         </svg>
     ),
     label: "Clarity",
@@ -69,6 +70,7 @@ const painPoints = [
   },
   {
     icon: (
+        // Shield icon (security + control)
         <svg
             width="18"
             height="18"
@@ -79,9 +81,8 @@ const painPoints = [
             strokeLinecap="round"
             strokeLinejoin="round"
         >
-          <circle cx="12" cy="12" r="10" />
-          <line x1="12" y1="8" x2="12" y2="12" />
-          <line x1="12" y1="16" x2="12.01" y2="16" />
+          <path d="M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z" />
+          <path d="M9 12l2 2 4-4" />
         </svg>
     ),
     label: "Control",
@@ -112,7 +113,7 @@ export default function ProblemSection() {
         />
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* ── Header ─────────────────────────────────────────────────────── */}
+          {/* Header */}
           <div ref={headerRef} className="text-center mb-16 fade-up">
           <span className="inline-flex items-center gap-1.5 text-orange-600 text-[10px] font-bold tracking-widest uppercase bg-orange-100 border border-orange-200 px-3 py-1 rounded-full mb-6">
             Why GRUTH Exists
@@ -132,7 +133,7 @@ export default function ProblemSection() {
             </p>
           </div>
 
-          {/* ── Cards ─────────────────────────────────────────────────────── */}
+          {/* Cards */}
           <div
               ref={cardsRef}
               className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-16 fade-up"
@@ -141,14 +142,10 @@ export default function ProblemSection() {
             {painPoints.map(({ icon, label, title, desc }) => (
                 <div
                     key={title}
-                    className="group relative bg-white border border-orange-100 hover:border-orange-300 rounded-2xl px-6 py-7 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col"
+                    className="group bg-white border border-orange-100 hover:border-orange-300 rounded-2xl px-6 py-7 transition-all duration-200 hover:shadow-md flex flex-col"
                 >
-                  {/* Glow accent */}
-                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-300 bg-gradient-to-br from-orange-50 via-transparent to-transparent pointer-events-none" />
-
-                  {/* Icon + label */}
-                  <div className="flex items-center gap-3 mb-5 relative z-10">
-                    <div className="w-11 h-11 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-all duration-300">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-11 h-11 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-all duration-200">
                       {icon}
                     </div>
                     <span className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">
@@ -156,18 +153,18 @@ export default function ProblemSection() {
                 </span>
                   </div>
 
-                  <h3 className="font-display text-lg font-semibold text-charcoal-950 mb-3 leading-snug relative z-10">
+                  <h3 className="font-display text-lg font-semibold text-charcoal-950 mb-3 leading-snug">
                     {title}
                   </h3>
 
-                  <p className="text-charcoal-600 text-sm leading-relaxed relative z-10">
+                  <p className="text-charcoal-600 text-sm leading-relaxed">
                     {desc}
                   </p>
                 </div>
             ))}
           </div>
 
-          {/* ── CTA ────────────────────────────────────────────────────────── */}
+          {/* CTA */}
           <div
               ref={ctaRef}
               className="flex flex-col items-center gap-3 fade-up"
