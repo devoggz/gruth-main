@@ -50,7 +50,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   const unreadAlerts         = project.alerts.filter(a => !a.isRead);
 
   return (
-      <div className="space-y-6 pb-12">
+      <div className="space-y-6 w-full px-4 pb-12">
 
         {/* ── Header ─────────────────────────────────────────────────────────── */}
         <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -93,10 +93,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 </a>
             )}
 
-            <Link href="/request-verification"
-                  className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all hover:shadow-lg hover:shadow-orange-500/20 whitespace-nowrap">
-              + New Verification
-            </Link>
+
           </div>
         </div>
 
