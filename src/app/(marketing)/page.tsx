@@ -1,8 +1,4 @@
-t// src/app/(marketing)/page.tsx
-// Performance: HeroSectionAlter is imported normally (above fold, critical path).
-// All below-fold sections use dynamic() with ssr:true so their JS is
-// code-split into separate chunks — the browser only downloads them when needed,
-// shrinking the initial JS payload that blocks TTI on mobile.
+// src/app/(marketing)/page.tsx
 
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
