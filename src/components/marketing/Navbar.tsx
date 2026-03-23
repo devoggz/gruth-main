@@ -65,14 +65,14 @@ export default function Navbar() {
   return (
       <>
         <nav
-            className="bg-charcoal-950 border-b border-transparent fixed left-0 right-0 z-50 transition-all duration-300"
-            // className={[
-            //   "fixed left-0 right-0 z-50 transition-all duration-300",
-            //   transparent
-            //       ? "bg-charcoal-950 border-b border-transparent"
-            //       : "bg-white border-b border-charcoal-100 shadow-[0_2px_16px_rgba(0,0,0,0.08)]",
-            // ].join(" ")}
-            // style={{ top: bannerH }}
+
+            className={[
+            "fixed left-0 right-0 z-50 transition-all duration-300",
+            transparent
+            ? "bg-charcoal-950 border-b border-transparent"
+            : "bg-charcoal-950 border-b border-charcoal-100 shadow-[0_2px_16px_rgba(0,0,0,0.08)]",
+           ].join(" ")}
+            style={{ top: bannerH }}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-14">
