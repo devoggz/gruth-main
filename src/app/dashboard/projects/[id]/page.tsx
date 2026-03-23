@@ -198,7 +198,6 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-charcoal-900 text-sm">{project.inspector.name}</p>
-                        <p className="text-charcoal-400 text-xs">Verified GRUTH Inspector</p>
                         {project.inspector.bio && (
                             <p className="text-charcoal-600 text-xs mt-2 leading-relaxed">{project.inspector.bio}</p>
                         )}
