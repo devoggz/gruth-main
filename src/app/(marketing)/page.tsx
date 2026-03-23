@@ -6,7 +6,7 @@
 
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import HeroSectionAlter from "@/components/sections/HeroSectionAlter";
+import HeroSection from "@/components/sections/HeroSection";
 
 // ─── Below-fold sections — code-split ────────────────────────────────────────
 // ssr:true = still server-rendered (no flash), but JS is a separate chunk
@@ -35,7 +35,7 @@ export default function HomePage() {
   return (
     <div>
       {/* HeroSectionAlter is above-fold — NOT code-split, loaded immediately */}
-      <HeroSectionAlter />
+      <HeroSection />
       <ProblemSection />
       <ServicesSection />
       <QuoteCalculator />
