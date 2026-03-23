@@ -82,8 +82,8 @@ export default function Navbar() {
                     src={transparent ? "/images/logo-w.svg" : "/images/logo-t.svg"}
                     alt="GRUTH"
                     width={90}
-                    height={25}
-                    style={{ width: "auto", height: "25px" }}
+                    height={30}
+                    style={{ width: "auto", height: "30px" }}
                     priority
                 />
               </Link>

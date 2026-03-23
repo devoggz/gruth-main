@@ -9,7 +9,7 @@ function TrustBadge() {
         <div className="hidden lg:block absolute bottom-10 right-10 z-20 pointer-events-none">
             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3.5 shadow-2xl min-w-[160px]">
                 <div className="font-display text-2xl font-bold text-white leading-none mb-0.5">
-                    150+
+                    100+
                 </div>
                 <div className="text-white/60 text-xs leading-snug">
                     Diaspora families
