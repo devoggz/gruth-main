@@ -14,7 +14,7 @@ const trustBadges = [
 
 export default function HeroSection() {
     return (
-        <section className="relative w-full min-h-[600px] max-h-[740px] overflow-hidden">
+        <section className="relative w-full min-h-[600px] max-h-[820px] overflow-hidden">
 
             {/* Background image — full bleed */}
             <img
@@ -45,15 +45,15 @@ export default function HeroSection() {
             />
 
             {/* Content — capped at max-w-7xl, padded to sit below the 64px navbar */}
-            <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center pt-16">
+            <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center pt-16">
                 <div className="max-w-2xl">
-                    <div
-                        className="inline-flex items-center gap-2 bg-orange-500/15 border border-orange-500/25 text-orange-300 text-[10px] font-bold px-3 py-1.5 rounded-full mb-6 uppercase tracking-widest"
-                        style={{ animation: "hero-fade-up 0.65s ease both" }}
-                    >
-                        <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" />
-                        Ground Truth Verification
-                    </div>
+                    {/*<div*/}
+                    {/*    className="inline-flex items-center gap-2 bg-orange-500/15 border border-orange-500/25 text-orange-300 text-[10px] font-bold px-3 py-1.5 rounded-full mb-6 uppercase tracking-widest"*/}
+                    {/*    style={{ animation: "hero-fade-up 0.65s ease both" }}*/}
+                    {/*>*/}
+                    {/*    <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" />*/}
+                    {/*    Ground Truth Verification*/}
+                    {/*</div>*/}
 
                     <h1
                         className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.05] mb-5 tracking-tight"
