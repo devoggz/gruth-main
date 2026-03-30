@@ -148,7 +148,7 @@ export default function Navbar() {
                 {session && (
                     <button
                         onClick={() => setMobileOpen(v => !v)}
-                        className="flex items-center justify-center w-9 h-9 rounded-full bg-charcoal-950 text-white text-xs font-bold"
+                        className="flex items-center justify-center w-12 h-12 rounded-full bg-charcoal-950 text-white text-xs font-bold"
                         aria-label="Open user menu"
                     >
                       {user?.name?.charAt(0)?.toUpperCase() ?? "U"}
@@ -180,10 +180,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* ── Mobile drawer ─────────────────────────────────────────────────────
-            IMPORTANT: overflow-visible so the UserMenu dropdown is not clipped.
-            Height is animated via max-h but we need visible overflow for the
-            absolute-positioned user menu panel — handled via padding instead. */}
+
           <div
               className={[
                 "md:hidden transition-all duration-300 ease-in-out bg-white border-t border-charcoal-100",
