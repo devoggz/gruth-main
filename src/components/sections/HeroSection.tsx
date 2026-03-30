@@ -18,7 +18,7 @@ export default function HeroSection() {
 
             {/* Background image — full bleed */}
             <img
-                src="/images/nairobi.avif"
+                src="/images/grid.avif"
                 alt="Construction site in Kenya"
                 className="absolute inset-0 w-full h-full object-cover object-center"
                 loading="eager"
