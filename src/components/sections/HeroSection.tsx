@@ -14,11 +14,11 @@ const trustBadges = [
 
 export default function HeroSection() {
     return (
-        <section className="relative w-full h-screen min-h-[600px] max-h-[960px] overflow-hidden">
+        <section className="relative w-full min-h-[600px] max-h-[740px] overflow-hidden">
 
             {/* Background image — full bleed */}
             <img
-                src="/images/grid.avif"
+                src="/images/nairobi.avif"
                 alt="Construction site in Kenya"
                 className="absolute inset-0 w-full h-full object-cover object-center"
                 loading="eager"
