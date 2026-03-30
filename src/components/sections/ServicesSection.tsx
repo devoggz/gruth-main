@@ -55,7 +55,7 @@ export default function ServicesSection() {
               Our Services
             </span>
             <h2 className="font-display text-4xl sm:text-5xl font-bold text-charcoal-950 tracking-tight">
-              What we verify
+              Whatever you're sending money home for, we'll make sure it's real.
             </h2>
           </div>
           <Link

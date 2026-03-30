@@ -1,23 +1,6 @@
 "use client";
 
 import Link from "next/link";
-function TrustBadge() {
-  return (
-    <div className="hidden lg:block absolute bottom-8 right-8 sm:bottom-10 sm:right-10 z-20 pointer-events-none">
-      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3.5 shadow-2xl min-w-[160px]">
-        <div className="font-display text-2xl font-bold text-white leading-none mb-0.5">
-          150+
-        </div>
-
-        <div className="text-white/60 text-xs leading-snug">
-          Diaspora families
-          <br />
-          verified across Kenya
-        </div>
-      </div>
-    </div>
-  );
-}
 
 const trustBadges = [
   "Photo + Video Evidence",
@@ -167,8 +150,7 @@ export default function HeroSectionAlter() {
             ))}
           </div>
 
-          {/* Floating trust card — bottom right */}
-          <TrustBadge />
+
         </div>
       </div>
 

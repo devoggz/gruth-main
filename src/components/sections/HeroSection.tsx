@@ -4,22 +4,6 @@
 
 import Link from "next/link";
 
-function TrustBadge() {
-    return (
-        <div className="hidden lg:block absolute bottom-10 right-10 z-20 pointer-events-none">
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3.5 shadow-2xl min-w-[160px]">
-                <div className="font-display text-2xl font-bold text-white leading-none mb-0.5">
-                    100+
-                </div>
-                <div className="text-white/60 text-xs leading-snug">
-                    Diaspora families
-                    <br />
-                    verified across Kenya
-                </div>
-            </div>
-        </div>
-    );
-}
 
 const trustBadges = [
     "Photo + Video Evidence",
@@ -86,8 +70,7 @@ export default function HeroSection() {
                         className="text-white/60 text-base sm:text-lg leading-relaxed mb-8 max-w-md"
                         style={{ animation: "hero-fade-up 0.65s 0.16s ease both" }}
                     >
-                        Clear photos, videos, measurements and reports delivered to your
-                        secure dashboard in 48 hours. So distance never means doubt again.
+                        Your contractor says it's 80% done. Your cousin says the same thing. Find out what's actually true with independent eyes on your site in 48 hours
                     </p>
 
                     <div
@@ -114,23 +97,6 @@ export default function HeroSection() {
                 </div>
             </div>
 
-            {/* Trust badges — bottom left, aligned with content container */}
-            {/*<div className="absolute bottom-8 left-4 sm:left-6 lg:left-8 z-20 max-w-7xl">*/}
-            {/*    /!* Offset to match content padding *!/*/}
-            {/*    <div className="ml-0 sm:ml-2 lg:ml-4 flex flex-wrap gap-x-5 gap-y-2">*/}
-            {/*        {trustBadges.map((t) => (*/}
-            {/*            <div key={t} className="flex items-center gap-1.5 text-white/50 text-xs">*/}
-            {/*                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="2.5">*/}
-            {/*                    <path d="M20 6L9 17l-5-5" />*/}
-            {/*                </svg>*/}
-            {/*                {t}*/}
-            {/*            </div>*/}
-            {/*        ))}*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-
-            {/* Floating trust card — bottom right */}
-            <TrustBadge />
 
             <style>{`
         @keyframes hero-fade-up {

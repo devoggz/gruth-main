@@ -14,7 +14,6 @@ import HeroSection from "@/components/sections/HeroSection";
 
 const ProblemSection    = dynamic(() => import("@/components/sections/ProblemSection"),    { ssr: true });
 const ServicesSection   = dynamic(() => import("@/components/sections/ServicesSection"),   { ssr: true });
-const QuoteCalculator   = dynamic(() => import("@/components/home/QuoteCalculator"),       { ssr: true });
 const HowItWorksSection = dynamic(() => import("@/components/sections/HowItWorksSection"), { ssr: true });
 const CtaSection        = dynamic(() => import("@/components/sections/CtaSection"),        { ssr: true });
 
@@ -38,7 +37,6 @@ export default function HomePage() {
       <HeroSection />
       <ProblemSection />
       <ServicesSection />
-      <QuoteCalculator />
       <HowItWorksSection />
       <CtaSection />
     </div>
