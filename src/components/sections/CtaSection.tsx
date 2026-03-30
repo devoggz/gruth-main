@@ -37,7 +37,7 @@ export default function CtaSection() {
                     Get Eyes You Can Actually Trust
                 </h2>
                 <p className="text-orange-100 text-base sm:text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-                    Family love is real. Family updates? Let's get a second opinion.
+                    Every week you wait is another of 'its coming along nicely'. Get the truth
                 </p>
 
                 <div className="flex flex-col sm:flex-row justify-center gap-3">

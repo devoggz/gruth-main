@@ -126,10 +126,7 @@ export default function ProblemSection() {
             </span>
             </h2>
             <p className="text-charcoal-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              When you're thousands of miles away, everyone involved in your
-              project has an incentive to keep you calm — your relatives, your
-              contractor, even your caretaker. What you need instead is someone
-              with no stake in the outcome, standing on the actual ground.
+                The further away you are, the easier it is to be told what you want to hear. Everyone involved has something to gain from keeping you calm. We started GRUTH because we were that person abroad — sending money home, trusting the updates, hoping for the best. You deserve better than hope.
             </p>
           </div>
 
