@@ -46,7 +46,7 @@ export default function HeroSection() {
 
             {/* Content — capped at max-w-7xl, padded to sit below the 64px navbar */}
             <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center pt-16">
-                <div className="max-w-xl">
+                <div className="max-w-2xl">
                     <div
                         className="inline-flex items-center gap-2 bg-orange-500/15 border border-orange-500/25 text-orange-300 text-[10px] font-bold px-3 py-1.5 rounded-full mb-6 uppercase tracking-widest"
                         style={{ animation: "hero-fade-up 0.65s ease both" }}
