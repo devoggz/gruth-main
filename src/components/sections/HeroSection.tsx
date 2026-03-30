@@ -15,7 +15,7 @@ const trustBadges = [
 
 export default function HeroSection() {
     return (
-        <section className="relative w-full h-screen min-h-[600px] max-h-[960px] overflow-hidden">
+        <section className="relative w-full h-screen min-h-[600px] max-h-[940px] overflow-hidden">
 
             {/* Background image — full bleed */}
             <Image
