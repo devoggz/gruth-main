@@ -3,6 +3,7 @@
 // Full-bleed hero — edge to edge, height-screen, navbar floats on top.
 
 import Link from "next/link";
+import Image from "next/image";
 
 
 const trustBadges = [
@@ -14,11 +15,13 @@ const trustBadges = [
 
 export default function HeroSection() {
     return (
-        <section className="relative w-full min-h-[600px] max-h-[820px] overflow-hidden">
+        <section className="relative w-full h-screen min-h-[600px] max-h-[960px] overflow-hidden">
 
             {/* Background image — full bleed */}
-            <img
+            <Image
                 src="/images/nairobi.avif"
+                height="1920"
+                width="1080"
                 alt="Construction site in Kenya"
                 className="absolute inset-0 w-full h-full object-cover object-center"
                 loading="eager"
@@ -47,13 +50,13 @@ export default function HeroSection() {
             {/* Content — capped at max-w-7xl, padded to sit below the 64px navbar */}
             <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col text-center items-center justify-center pt-16">
                 <div className="max-w-2xl">
-                    {/*<div*/}
-                    {/*    className="inline-flex items-center gap-2 bg-orange-500/15 border border-orange-500/25 text-orange-300 text-[10px] font-bold px-3 py-1.5 rounded-full mb-6 uppercase tracking-widest"*/}
-                    {/*    style={{ animation: "hero-fade-up 0.65s ease both" }}*/}
-                    {/*>*/}
-                    {/*    <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" />*/}
-                    {/*    Ground Truth Verification*/}
-                    {/*</div>*/}
+                    <div
+                        className="inline-flex items-center gap-2 bg-orange-500/15 border border-orange-500/25 text-orange-300 text-[10px] font-bold px-3 py-1.5 rounded-full mb-6 uppercase tracking-widest"
+                        style={{ animation: "hero-fade-up 0.65s ease both" }}
+                    >
+                        <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" />
+                        Ground Truth Verification
+                    </div>
 
                     <h1
                         className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.05] mb-5 tracking-tight"
@@ -74,7 +77,7 @@ export default function HeroSection() {
                     </p>
 
                     <div
-                        className="flex flex-col sm:flex-row gap-3"
+                        className="flex flex-col justify-center sm:flex-row gap-3"
                         style={{ animation: "hero-fade-up 0.65s 0.24s ease both" }}
                     >
                         <Link
