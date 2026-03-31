@@ -34,7 +34,7 @@ function PageHero() {
           <span className="text-orange-400">we offer</span>
         </h1>
         <p className="text-charcoal-400 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
-          Five categories. One promise — a verified, photo-documented report
+         One promise — a verified, photo-documented report
           from a qualified inspector on the ground in Kenya.
         </p>
         {/* Quick-nav pills */}

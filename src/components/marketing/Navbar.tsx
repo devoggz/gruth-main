@@ -79,7 +79,7 @@ export default function Navbar() {
               {/* ── Logo ─────────────────────────────────────────────────────── */}
               <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
                 <Image
-                    src={transparent ? "/images/logo-w.svg" : "/images/logo-t.svg"}
+                    src={transparent ? "/images/icon.svg" : "/images/logo-tt.svg"}
                     alt="GRUTH"
                     width={90}
                     height={30}

@@ -433,12 +433,16 @@ export default function HowItWorksPage() {
                 );
               })}
 
-<QuoteCalculator />
 
   
             </div>
           </div>
         </div>
+        <div className="pt-16">
+
+        <QuoteCalculator />
+        </div>
+
       </section>
 
       

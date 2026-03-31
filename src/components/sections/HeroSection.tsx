@@ -5,6 +5,16 @@
 import Link from "next/link";
 import Image from "next/image";
 
+function ScrollIndicator() {
+    return (
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce-slow pointer-events-none">
+      <span className="text-charcoal-600 text-[10px] font-bold uppercase tracking-[0.2em]">
+        Scroll
+      </span>
+            <div className="w-px h-10 bg-gradient-to-b from-charcoal-600 to-transparent" />
+        </div>
+    );
+}
 
 const trustBadges = [
     "Photo + Video Evidence",
@@ -48,15 +58,15 @@ export default function HeroSection() {
             />
 
             {/* Content — capped at max-w-7xl, padded to sit below the 64px navbar */}
-            <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col text-center items-center justify-center pt-16">
-                <div className="max-w-2xl">
-                    <div
-                        className="inline-flex items-center gap-2 bg-orange-500/15 border border-orange-500/25 text-orange-300 text-[10px] font-bold px-3 py-1.5 rounded-full mb-6 uppercase tracking-widest"
-                        style={{ animation: "hero-fade-up 0.65s ease both" }}
-                    >
-                        <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" />
-                        Ground Truth Verification
-                    </div>
+            <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col text-center items-center justify-center pt-8">
+                <div className="max-w-4xl">
+                    {/*<div*/}
+                    {/*    className="inline-flex items-center gap-2 bg-orange-500/15 border border-orange-500/25 text-orange-300 text-[10px] font-bold px-3 py-1.5 rounded-full mb-6 uppercase tracking-widest"*/}
+                    {/*    style={{ animation: "hero-fade-up 0.65s ease both" }}*/}
+                    {/*>*/}
+                    {/*    <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" />*/}
+                    {/*    Ground Truth Verification*/}
+                    {/*</div>*/}
 
                     <h1
                         className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.05] mb-5 tracking-tight"
@@ -82,7 +92,7 @@ export default function HeroSection() {
                     >
                         <Link
                             href="/request-verification"
-                            className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-7 py-3.5 rounded-xl transition-all duration-200 hover:shadow-xl hover:shadow-orange-500/30 hover:-translate-y-0.5 active:translate-y-0"
+                            className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-7 py-3.5 rounded-xl transition-all duration-200  hover:-translate-y-0.5 active:translate-y-0"
                         >
                             Get it Verified
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -98,7 +108,32 @@ export default function HeroSection() {
                         </Link>
                     </div>
                 </div>
+                <div
+                    className="absolute bottom-12 flex flex-wrap gap-x-6 gap-y-3"
+                    style={{ animation: "hero-fade-up 0.7s 0.4s ease both" }}
+                >
+                    {trustBadges.map((t) => (
+                        <div
+                            key={t}
+                            className="flex items-center gap-2 text-charcoal-400 text-sm"
+                        >
+                            <svg
+                                width="13"
+                                height="13"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#f97316"
+                                strokeWidth="2.5"
+                            >
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                            {t}
+                        </div>
+                    ))}
+                </div>
             </div>
+
+            {/*<ScrollIndicator/>*/}
 
 
             <style>{`
