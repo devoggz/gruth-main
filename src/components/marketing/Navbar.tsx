@@ -82,9 +82,9 @@ export default function Navbar() {
                     src={transparent ? "/images/icon.svg" : "/images/logo-tt.svg"}
                     alt="GRUTH"
                     width={90}
-                    height={30}
+                    height={28}
                     priority
-                    className="w-auto h-auto"
+                    style={{ width: "auto", height: "28px" }}
                 />
               </Link>
 
