@@ -83,8 +83,8 @@ export default function Navbar() {
                     alt="GRUTH"
                     width={90}
                     height={30}
-                    style={{ width: "auto", height: "30px" }}
                     priority
+                    className="w-auto h-auto"
                 />
               </Link>
 
@@ -99,7 +99,7 @@ export default function Navbar() {
                           className={[
                             "relative px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-150",
                             active
-                                ? transparent ? "text-white"          : "text-charcoal-950"
+                                ? transparent ? "text-orange-500"          : "text-charcoal-950"
                                 : transparent ? "text-white/80 hover:text-white" : "text-charcoal-500 hover:text-charcoal-900",
                           ].join(" ")}
                       >

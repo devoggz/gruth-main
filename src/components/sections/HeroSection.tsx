@@ -60,16 +60,16 @@ export default function HeroSection() {
             {/* Content — capped at max-w-7xl, padded to sit below the 64px navbar */}
             <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col text-center items-center justify-center pt-8">
                 <div className="max-w-4xl">
-                    {/*<div*/}
-                    {/*    className="inline-flex items-center gap-2 bg-orange-500/15 border border-orange-500/25 text-orange-300 text-[10px] font-bold px-3 py-1.5 rounded-full mb-6 uppercase tracking-widest"*/}
-                    {/*    style={{ animation: "hero-fade-up 0.65s ease both" }}*/}
-                    {/*>*/}
-                    {/*    <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" />*/}
-                    {/*    Ground Truth Verification*/}
-                    {/*</div>*/}
+                    <div
+                        className="inline-flex items-center gap-2 bg-orange-500/20 border border-orange-500/25 text-orange-300 text-[10px] font-bold px-3 py-1.5 rounded-full mb-6 uppercase tracking-widest"
+                        style={{ animation: "hero-fade-up 0.65s ease both" }}
+                    >
+                        <span className="w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" />
+                        WELCOME TO GRUTH
+                    </div>
 
                     <h1
-                        className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.05] mb-5 tracking-tight"
+                        className="font-display text-6xl lg:text-7xl font-bold text-white leading-[1.05] mb-5 tracking-tight"
                         style={{ animation: "hero-fade-up 0.65s 0.08s ease both" }}
                     >
                         Know exactly
@@ -80,10 +80,10 @@ export default function HeroSection() {
                     </h1>
 
                     <p
-                        className="text-white/60 text-base sm:text-lg leading-relaxed mb-8 max-w-md"
+                        className="text-white/60 text-base sm:text-lg text-center leading-relaxed mb-8 max-w-lg"
                         style={{ animation: "hero-fade-up 0.65s 0.16s ease both" }}
                     >
-                        Your contractor says it's 80% done. Your cousin says the same thing. Find out what's actually true with independent eyes on your site in 48 hours
+                        Your fundi says it's 80% done. Your cousin says the same thing. But is is true? Find out what's actually true with independent eyes on your site in 48 hours
                     </p>
 
                     <div
@@ -115,7 +115,7 @@ export default function HeroSection() {
                     {trustBadges.map((t) => (
                         <div
                             key={t}
-                            className="flex items-center gap-2 text-charcoal-400 text-sm"
+                            className="flex justify-between items-center gap-2 text-charcoal-400 text-sm"
                         >
                             <svg
                                 width="13"
