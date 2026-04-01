@@ -29,7 +29,7 @@ export default function HeroSection() {
 
             {/* Background image — full bleed */}
             <Image
-                src="/images/nairobi.avif"
+                src="/images/hero.jpg"
                 height="1920"
                 width="1080"
                 alt="Construction site in Kenya"
@@ -72,7 +72,7 @@ export default function HeroSection() {
                         className="font-display text-6xl lg:text-7xl font-bold text-white leading-[1.05] mb-5 tracking-tight"
                         style={{ animation: "hero-fade-up 0.65s 0.08s ease both" }}
                     >
-                        Know exactly
+                        See exactly
                         <br />
                         what&rsquo;s happening
                         <br />
