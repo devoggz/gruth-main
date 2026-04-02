@@ -59,6 +59,7 @@ export default function ServicesSection() {
             </h2>
           </div>
           <Link
+prefetch={true}
             href="/services"
             className="self-start sm:self-auto inline-flex items-center gap-1.5 text-sm font-semibold text-charcoal-600 hover:text-charcoal-950 transition-colors whitespace-nowrap"
           >
@@ -180,6 +181,7 @@ function ServiceCard({
             {description}
           </p>
           <Link
+prefetch={true}
             href={`/services#${id}`}
             className="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 text-[11px] font-bold uppercase tracking-widest transition-colors w-fit"
           >
