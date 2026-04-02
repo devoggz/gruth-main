@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 
+export const revalidate = 3600;
+
 const QuoteCalculator   = dynamic(() => import("@/components/home/QuoteCalculator"),       { ssr: true });   
 
 const steps = [
