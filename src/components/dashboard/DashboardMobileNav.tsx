@@ -15,28 +15,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: Omit<NavItem, "badge">[] = [
-  {
-    label: "Home",
-    href: "/dashboard",
-    exact: true,
-    icon: (
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <rect x="3" y="3" width="7" height="7" rx="1" />
-        <rect x="14" y="3" width="7" height="7" rx="1" />
-        <rect x="3" y="14" width="7" height="7" rx="1" />
-        <rect x="14" y="14" width="7" height="7" rx="1" />
-      </svg>
-    ),
-  },
+  
   {
     label: "Projects",
     href: "/dashboard/projects",
@@ -72,6 +51,28 @@ const NAV_ITEMS: Omit<NavItem, "badge">[] = [
       >
         <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
         <path d="M13.73 21a2 2 0 01-3.46 0" />
+      </svg>
+    ),
+  },
+{
+    label: "Home",
+    href: "/dashboard",
+    exact: true,
+    icon: (
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect x="3" y="3" width="7" height="7" rx="1" />
+        <rect x="14" y="3" width="7" height="7" rx="1" />
+        <rect x="3" y="14" width="7" height="7" rx="1" />
+        <rect x="14" y="14" width="7" height="7" rx="1" />
       </svg>
     ),
   },
@@ -259,7 +260,7 @@ prefetch={true}
 
             {/* All nav items */}
             <div className="px-4 py-3 grid grid-cols-2 gap-2">
-              {[...NAV_ITEMS, ...EXTRA_ITEMS].map((item) => {
+              {[...NAV_ITEMS].map((item) => {
                 const active = isActive(item as NavItem);
                 return (
                   <Link
