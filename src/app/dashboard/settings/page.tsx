@@ -5,6 +5,8 @@ import { redirect }        from "next/navigation";
 import AccountSettingsForm from "@/components/shared/AcountSettingsForm";
 import ReferralPanel       from "@/components/dashboard/ReferralPanel";
 
+export const revalidate = 3600;
+
 export const metadata = { title: "Settings | GRUTH" };
 
 export default async function SettingsPage() {
