@@ -75,7 +75,7 @@ export default function DashboardSidebar() {
       {/* Logo */}
       <div className="flex items-center gap-2.5 h-16 px-5 border-b border-white/5 flex-shrink-0">
         <Image
-          src="/images/logo-w.svg"
+          src="/images/icon.svg"
           alt="GRUTH"
           width={120}
           height={32}
@@ -92,6 +92,7 @@ export default function DashboardSidebar() {
 
           return (
             <Link
+prefetch={true}
               key={href}
               href={href}
               className={[
@@ -119,6 +120,7 @@ export default function DashboardSidebar() {
       {/* Footer */}
       <div className="px-3 py-4 border-t border-white/5 space-y-0.5">
         <Link
+prefetch={true}
           href="/request-verification"
           className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-semibold bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition-all duration-150"
         >
@@ -128,6 +130,7 @@ export default function DashboardSidebar() {
           New Verification
         </Link>
         <Link
+prefetch={true}
           href="/"
           className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] text-charcoal-500 hover:text-charcoal-200 hover:bg-white/5 transition-all duration-150"
         >
