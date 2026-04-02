@@ -71,7 +71,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   const unreadAlerts = project.alerts.filter((a) => !a.isRead);
 
   return (
-    <div className="space-y-6 w-full px-4 pb-12">
+    <div className="space-y-6 w-full pb-12">
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
