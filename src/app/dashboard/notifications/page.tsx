@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { formatRelativeDate } from "@/lib/utils";
 import { MarkAlertsRead } from "@/components/dashboard/MarkAlertsRead";
 
+export const revalidate = 3600;
+
 export default async function NotificationsPage() {
   const session = await auth();
   const userId = session?.user?.id!;
