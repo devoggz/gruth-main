@@ -91,6 +91,7 @@ export default function HeroSection() {
                         style={{ animation: "hero-fade-up 0.65s 0.24s ease both" }}
                     >
                         <Link
+prefetch={true}
                             href="/request-verification"
                             className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-7 py-3.5 rounded-xl transition-all duration-200  hover:-translate-y-0.5 active:translate-y-0"
                         >
@@ -101,6 +102,7 @@ export default function HeroSection() {
                         </Link>
 
                         <Link
+prefetch={true}
                             href="/how-it-works"
                             className="inline-flex items-center justify-center gap-2 text-white/70 hover:text-white bg-white/10 hover:bg-white/15 border border-white/15 hover:border-white/30 rounded-xl px-7 py-3.5 text-sm font-medium transition-all duration-200 backdrop-blur-sm"
                         >
