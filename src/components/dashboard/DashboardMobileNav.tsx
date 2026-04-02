@@ -243,15 +243,7 @@ prefetch={true}
             {/* Logo header */}
             <div className="flex items-center gap-2.5 px-6 py-4 border-b border-charcoal-800">
               <div className="w-7 h-7 bg-orange-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
-                  <path
-                    d="M9 2L15 5.5V12.5L9 16L3 12.5V5.5L9 2Z"
-                    stroke="white"
-                    strokeWidth="1.5"
-                    fill="none"
-                  />
-                  <circle cx="9" cy="9" r="2" fill="white" />
-                </svg>
+            
               </div>
               <span className="font-display font-semibold text-white text-base tracking-tight">
                 GRUTH
@@ -260,7 +252,7 @@ prefetch={true}
 
             {/* All nav items */}
             <div className="px-4 py-3 grid grid-cols-2 gap-2">
-              {[...NAV_ITEMS].map((item) => {
+              {[...NAV_ITEMS, ...EXTRA_ITEMS].map((item) => {
                 const active = isActive(item as NavItem);
                 return (
                   <Link
