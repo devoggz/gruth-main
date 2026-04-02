@@ -104,6 +104,7 @@ export default function AdminSidebar() {
           const active = exact ? pathname === href : pathname.startsWith(href);
           return (
             <Link
+prefetch={true}
               key={href}
               href={href}
               className={[
@@ -126,6 +127,7 @@ export default function AdminSidebar() {
       {/* Footer */}
       <div className="px-2.5 py-3 border-t border-white/5 space-y-0.5">
         <Link
+prefetch={true}
           href="/admin/settings"
           className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] text-charcoal-500 hover:text-charcoal-200 hover:bg-white/5 transition-all duration-150"
         >
