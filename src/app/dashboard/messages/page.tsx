@@ -4,7 +4,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { formatRelativeDate } from "@/lib/utils";
 
-export const revalidate = 3600;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
