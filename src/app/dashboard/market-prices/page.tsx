@@ -4,6 +4,8 @@ import { MarketPricesClient } from "@/components/dashboard/MarketPricesClient";
 import { formatRelativeDate } from "@/lib/utils";
 import MarketPriceTicker from "@/components/dashboard/MarketPriceTicker";
 
+export const revalidate = 3600;
+
 const MATERIAL_CATEGORIES = [
   "Cement & Concrete",
   "Steel & Metal",
