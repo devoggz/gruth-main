@@ -77,7 +77,7 @@ export default function Navbar() {
             <div className="flex items-center py-4 justify-between h-16">
 
               {/* ── Logo ─────────────────────────────────────────────────────── */}
-              <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
+              <Link href="/" className="flex items-center gap-2.5 prefetch={true} flex-shrink-0">
                 <Image
                     src={transparent ? "/images/icon.svg" : "/images/logo-tt.svg"}
                     alt="GRUTH"
