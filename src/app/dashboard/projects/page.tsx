@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { formatDate, getStatusColor, getProjectTypeLabel } from "@/lib/utils";
 
+export const revalidate = 3600;
+
 export const metadata = { title: "Projects | GRUTH" };
 
 const TYPE_ICONS: Record<string, string> = {
@@ -46,7 +48,9 @@ export default async function ProjectsPage() {
             {projects.length} project{projects.length !== 1 ? "s" : ""}
           </p>
         </div>
-        <Link href="/request-verification" className="btn-primary text-sm">
+        <Link
+prefetch={true}
+ href="/request-verification" className="btn-primary text-sm">
           + New Request
         </Link>
       </div>
@@ -60,7 +64,10 @@ export default async function ProjectsPage() {
           <p className="text-charcoal-500 mb-6">
             Submit a verification request to get started.
           </p>
-          <Link href="/request-verification" className="btn-primary">
+          <Link
+prefetch={true}
+
+ href="/request-verification" className="btn-primary">
             Request Verification
           </Link>
         </div>
@@ -79,6 +86,7 @@ export default async function ProjectsPage() {
 
             return (
               <Link
+prefetch={true}
                 key={project.id}
                 href={`/dashboard/projects/${project.id}`}
                 className="card block hover:border-orange-200 transition-all group overflow-hidden"
