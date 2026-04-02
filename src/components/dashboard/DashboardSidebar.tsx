@@ -77,7 +77,7 @@ export default function DashboardSidebar() {
         <Image
           src="/images/icon.svg"
           alt="GRUTH"
-          width={120}
+          width={32}
           height={32}
           priority
         />
