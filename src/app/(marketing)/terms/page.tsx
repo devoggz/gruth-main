@@ -3,6 +3,8 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "The terms and conditions governing your use of GRUTH.",
