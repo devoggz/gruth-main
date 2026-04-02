@@ -1,6 +1,8 @@
 "use client";
 // src/components/dashboard/MarketPricesClient.tsx
 
+import { CATEGORY_NAMES } from "@/lib/material-categories";
+
 import { useState, useEffect, useCallback, useRef } from "react";
 import { formatRelativeDate } from "@/lib/utils";
 import {
@@ -722,7 +724,13 @@ export function MarketPricesClient({
             </div>
           ) : (
             <div className="space-y-4">
-              {Object.entries(grouped).map(([category, rows]) => (
+              {// Sort categories in canonical order defined in material-categories.ts
+              [...Object.entries(grouped)].sort(([a], [b]) => {
+                const ai = CATEGORY_NAMES.indexOf(a);
+                const bi = CATEGORY_NAMES.indexOf(b);
+                // Unknown categories (index === -1) go to the end
+                return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+              }).map(([category, rows]) => (
                 <div
                   key={category}
                   className="bg-white border border-charcoal-100 rounded-2xl overflow-hidden"
