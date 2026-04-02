@@ -4,6 +4,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { formatRelativeDate } from "@/lib/utils";
 
+export const revalidate = 3600;
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface Message {
@@ -281,6 +283,7 @@ export default function MessagesPage() {
             inspector, your thread will appear here.
           </p>
           <Link
+prefetch={true}
             href="/request-verification"
             className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
           >
@@ -340,6 +343,7 @@ export default function MessagesPage() {
         {/* Link to project — visible in mobile chat header */}
         {mobileView === "chat" && activeThread && (
           <Link
+prefetch={true}
             href={`/dashboard/projects/${activeThread.projectId}`}
             className="sm:hidden ml-auto text-xs font-semibold text-orange-600 hover:text-orange-700 flex-shrink-0"
           >
@@ -398,6 +402,7 @@ export default function MessagesPage() {
                   </p>
                 </div>
                 <Link
+prefetch={true}
                   href={`/dashboard/projects/${activeThread.projectId}`}
                   className="text-xs font-semibold text-orange-600 hover:text-orange-700 flex-shrink-0 whitespace-nowrap"
                 >
