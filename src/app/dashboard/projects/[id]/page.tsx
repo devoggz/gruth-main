@@ -12,6 +12,8 @@ import BudgetManager  from "@/components/dashboard/BudgetManager";
 
 interface PageProps { params: Promise<{ id: string }> }
 
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: PageProps) {
   const { id } = await params;
   const p = await prisma.project.findUnique({ where: { id }, select: { name: true } });
@@ -56,7 +58,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
             <div className="flex items-center gap-2 mb-2 text-sm">
-              <Link href="/dashboard/projects" className="text-charcoal-400 hover:text-charcoal-700 transition-colors">
+              <Link
+prefetch={true}
+ href="/dashboard/projects" className="text-charcoal-400 hover:text-charcoal-700 transition-colors">
                 Projects
               </Link>
               <span className="text-charcoal-300">/</span>
@@ -397,7 +401,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             <div className="bg-white border border-charcoal-100 rounded-2xl p-5 sm:p-6">
               <div className="flex items-center justify-between mb-5">
                 <h2 className="font-display font-semibold text-charcoal-950">Recent Messages</h2>
-                <Link href="/dashboard/messages"
+                <Link
+prefetch={true}
+ href="/dashboard/messages"
                       className="text-xs font-semibold text-orange-500 hover:text-orange-600 transition-colors">
                   Open full thread →
                 </Link>
