@@ -2,6 +2,8 @@
 // src/app/(marketing)/contact/page.tsx
 import React, { useState } from "react";
 
+export const revalidate = 3600;
+
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
