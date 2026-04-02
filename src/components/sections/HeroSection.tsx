@@ -30,11 +30,12 @@ export default function HeroSection() {
             {/* Background image — full bleed */}
             <Image
                 src="/images/hero.jpg"
-                height="1920"
-                width="1080"
-                alt="Construction site in Kenya"
-                className="absolute inset-0 w-full h-full object-cover object-center"
-                loading="eager"
+               alt="Construction site in Kenya"
+  fill                            // fills the container
+  priority                        // LCP — fetch immediately
+  quality={85}
+  sizes="100vw"
+  className="object-cover object-center hero-img"
             />
 
             {/* Gradient overlay */}
