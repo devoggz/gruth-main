@@ -112,17 +112,7 @@ export default function MarketPriceTicker({ items, speed = 40, paused = false }:
         style={{ background: "linear-gradient(to left, #1a1916, transparent)" }}
       />
 
-      {/* Header label */}
-      <div className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex items-center gap-2">
-        <span className="relative flex h-1.5 w-1.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-60" />
-          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-orange-500" />
-        </span>
-        <span className="text-[10px] font-bold text-charcoal-500 uppercase tracking-widest whitespace-nowrap">
-          Live Prices
-        </span>
-      </div>
-
+      
       {/* Pause indicator */}
       {hovering && (
         <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20">
