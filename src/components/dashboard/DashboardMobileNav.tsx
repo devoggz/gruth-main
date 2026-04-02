@@ -171,6 +171,7 @@ export default function DashboardMobileNav({
             const active = isActive(item);
             return (
               <Link
+prefetch={true}
                 key={item.href}
                 href={item.href}
                 className={`relative flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-150 ${
@@ -262,6 +263,7 @@ export default function DashboardMobileNav({
                 const active = isActive(item as NavItem);
                 return (
                   <Link
+prefetch={true}
                     key={item.href}
                     href={item.href}
                     onClick={() => setOpen(false)}
