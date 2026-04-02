@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { formatRelativeDate } from "@/lib/utils";
 
+export const revalidate = 3600;
+
 export default async function AdminMessagesPage() {
   const session = await auth();
   if ((session?.user as any)?.role !== "ADMIN") redirect("/dashboard");

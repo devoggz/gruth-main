@@ -13,45 +13,121 @@ import { CATEGORY_NAME_SET } from "./material-categories";
 const KEYWORD_MAP: Array<{ keywords: string[]; category: string }> = [
   // ── Cement & Concrete ──────────────────────────────────────────────────────
   {
-    keywords: ["cement", "concrete", "ballast", "block", "lintel", "pozzolana", "opc", "portland", "precast"],
+    keywords: [
+      "cement",
+      "concrete",
+      "ballast",
+      "block",
+      "lintel",
+      "pozzolana",
+      "opc",
+      "portland",
+      "precast",
+    ],
     category: "Cement & Concrete",
   },
 
   // ── Steel & Metal ──────────────────────────────────────────────────────────
   // "roofing nails" before "roofing" so nails don't fall into Timber & Roofing
   {
-    keywords: ["rebar", "steel", "brc mesh", "iron sheet", "gi sheet", "roofing nail", "galvanised nail",
-               "nails", "mesh", "angle iron", "hollow section", "channel bar", "binding wire"],
+    keywords: [
+      "rebar",
+      "steel",
+      "brc mesh",
+      "iron sheet",
+      "gi sheet",
+      "roofing nail",
+      "galvanised nail",
+      "nails",
+      "mesh",
+      "angle iron",
+      "hollow section",
+      "channel bar",
+      "binding wire",
+    ],
     category: "Steel & Metal",
   },
 
   // ── Sand & Aggregates ──────────────────────────────────────────────────────
   {
-    keywords: ["sand", "aggregate", "hardcore", "quarry dust", "crusher run", "gravel", "fill",
-               "sub-base", "murram"],
+    keywords: [
+      "sand",
+      "aggregate",
+      "hardcore",
+      "quarry dust",
+      "crusher run",
+      "gravel",
+      "fill",
+      "sub-base",
+      "murram",
+    ],
     category: "Sand & Aggregates",
   },
 
   // ── Timber & Roofing ──────────────────────────────────────────────────────
   // NOTE: "roofing" keyword comes AFTER Steel so iron sheets don't land here
   {
-    keywords: ["timber", "plywood", "fascia", "ridging", "purlin", "truss", "board", "batten",
-               "softwood", "hardwood", "roofing", "roof"],
+    keywords: [
+      "timber",
+      "plywood",
+      "fascia",
+      "ridging",
+      "purlin",
+      "truss",
+      "board",
+      "batten",
+      "softwood",
+      "hardwood",
+      "roofing",
+      "roof",
+    ],
     category: "Timber & Roofing",
   },
 
   // ── Finishes & Paint ──────────────────────────────────────────────────────
   {
-    keywords: ["paint", "tile", "adhesive", "plaster", "skim", "waterproof", "emulsion",
-               "varnish", "primer", "sealer", "grout", "floor coat", "wall coat"],
+    keywords: [
+      "paint",
+      "tile",
+      "adhesive",
+      "plaster",
+      "skim",
+      "waterproof",
+      "emulsion",
+      "varnish",
+      "primer",
+      "sealer",
+      "grout",
+      "floor coat",
+      "wall coat",
+    ],
     category: "Finishes & Paint",
   },
 
   // ── Hardware & Fixings ────────────────────────────────────────────────────
   {
-    keywords: ["pipe", "hinge", "padlock", "cable", "mcb", "breaker", "fitting", "valve",
-               "tap", "socket", "switch", "conduit", "pvc", "gi pipe", "ppr", "bolt",
-               "screw", "nut", "washer", "lock"],
+    keywords: [
+      "pipe",
+      "hinge",
+      "padlock",
+      "cable",
+      "mcb",
+      "breaker",
+      "fitting",
+      "valve",
+      "tap",
+      "socket",
+      "switch",
+      "conduit",
+      "pvc",
+      "gi pipe",
+      "ppr",
+      "bolt",
+      "screw",
+      "nut",
+      "washer",
+      "lock",
+    ],
     category: "Hardware & Fixings",
   },
 ];
@@ -71,7 +147,7 @@ export function categorizeMaterial(rawName: string): string {
   if (CATEGORY_NAME_SET.has(rawName.trim())) return rawName.trim();
 
   for (const { keywords, category } of KEYWORD_MAP) {
-    if (keywords.some(kw => normalised.includes(kw.toLowerCase()))) {
+    if (keywords.some((kw) => normalised.includes(kw.toLowerCase()))) {
       return category;
     }
   }
@@ -86,6 +162,6 @@ export function categorizeMaterials(
   rawNames: string[],
 ): Record<string, string> {
   return Object.fromEntries(
-    rawNames.map(name => [name, categorizeMaterial(name)])
+    rawNames.map((name) => [name, categorizeMaterial(name)]),
   );
 }

@@ -12,7 +12,7 @@ export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
   // 1. Read raw body for signature validation
-  const rawBody  = await req.text();
+  const rawBody = await req.text();
   const signature = req.headers.get("x-paystack-signature") ?? "";
 
   // 2. Validate signature — reject anything that doesn't match
@@ -77,11 +77,14 @@ export async function POST(req: NextRequest) {
     await prisma.$transaction([
       prisma.pendingPayment.update({
         where: { paystackRef: reference },
-        data:  { status: "PAID" },
+        data: { status: "PAID" },
       }),
       prisma.verificationRequest.update({
         where: { id: existing.id },
-        data:  { paymentStatus: "PAID", paidAt: new Date(verification.paidAt ?? Date.now()) },
+        data: {
+          paymentStatus: "PAID",
+          paidAt: new Date(verification.paidAt ?? Date.now()),
+        },
       }),
     ]);
     return NextResponse.json({ received: true });
@@ -97,30 +100,36 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ received: true });
   }
 
-  await prisma.$transaction(async tx => {
+  await prisma.$transaction(async (tx) => {
     await tx.pendingPayment.update({
       where: { paystackRef: reference },
-      data:  { status: "PAID" },
+      data: { status: "PAID" },
     });
     await tx.verificationRequest.create({
       data: {
-        name:             String(snapshot.name            ?? ""),
-        email:            String(snapshot.email           ?? ""),
-        phone:            snapshot.phone    ? String(snapshot.phone)    : null,
-        country:          snapshot.country  ? String(snapshot.country)  : null,
-        projectLocation:  String(snapshot.projectLocation ?? ""),
-        county:           snapshot.county   ? String(snapshot.county)   : null,
-        serviceType:      String(snapshot.serviceType     ?? ""),
-        description:      String(snapshot.description     ?? ""),
-        urgency:          String(snapshot.urgency         ?? "standard"),
-        specificConcerns: snapshot.specificConcerns ? String(snapshot.specificConcerns) : null,
-        onGroundContact:  snapshot.onGroundContact  ? String(snapshot.onGroundContact)  : null,
-        filesJson:        snapshot.uploadedFiles    ? JSON.stringify(snapshot.uploadedFiles) : null,
-        status:           "NEW",
-        paymentRef:       reference,
-        paymentStatus:    "PAID",
-        amountKes:        pending.amountKes,
-        paidAt:           new Date(verification.paidAt ?? Date.now()),
+        name: String(snapshot.name ?? ""),
+        email: String(snapshot.email ?? ""),
+        phone: snapshot.phone ? String(snapshot.phone) : null,
+        country: snapshot.country ? String(snapshot.country) : null,
+        projectLocation: String(snapshot.projectLocation ?? ""),
+        county: snapshot.county ? String(snapshot.county) : null,
+        serviceType: String(snapshot.serviceType ?? ""),
+        description: String(snapshot.description ?? ""),
+        urgency: String(snapshot.urgency ?? "standard"),
+        specificConcerns: snapshot.specificConcerns
+          ? String(snapshot.specificConcerns)
+          : null,
+        onGroundContact: snapshot.onGroundContact
+          ? String(snapshot.onGroundContact)
+          : null,
+        filesJson: snapshot.uploadedFiles
+          ? JSON.stringify(snapshot.uploadedFiles)
+          : null,
+        status: "NEW",
+        paymentRef: reference,
+        paymentStatus: "PAID",
+        amountKes: pending.amountKes,
+        paidAt: new Date(verification.paidAt ?? Date.now()),
       },
     });
   });

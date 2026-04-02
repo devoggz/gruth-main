@@ -12,21 +12,33 @@ import HeroSection from "@/components/sections/HeroSection";
 // ssr:true = still server-rendered (no flash), but JS is a separate chunk
 // loaded after the critical path, improving TTI on mobile.
 
-const ProblemSection    = dynamic(() => import("@/components/sections/ProblemSection"),    { ssr: true });
-const ServicesSection   = dynamic(() => import("@/components/sections/ServicesSection"),   { ssr: true });
-const HowItWorksSection = dynamic(() => import("@/components/sections/HowItWorksSection"), { ssr: true });
-const CtaSection        = dynamic(() => import("@/components/sections/CtaSection"),        { ssr: true });
+const ProblemSection = dynamic(
+  () => import("@/components/sections/ProblemSection"),
+  { ssr: true },
+);
+const ServicesSection = dynamic(
+  () => import("@/components/sections/ServicesSection"),
+  { ssr: true },
+);
+const HowItWorksSection = dynamic(
+  () => import("@/components/sections/HowItWorksSection"),
+  { ssr: true },
+);
+const CtaSection = dynamic(() => import("@/components/sections/CtaSection"), {
+  ssr: true,
+});
 
 export const metadata: Metadata = {
   title: "Get it Verified – Eyes on Your Project in 48 Hours",
   description:
     "Independent, on-the-ground verification for diaspora-funded projects in Kenya. Photos, video, measurements — delivered to your dashboard in 48 hours.",
   openGraph: {
-    title:       "GRUTH — Diaspora property & investment verification",
-    description: "Know exactly what's happening with your property or project at home.",
-    url:         "https://gruth.ke",
-    siteName:    "GRUTH",
-    type:        "website",
+    title: "GRUTH — Diaspora property & investment verification",
+    description:
+      "Know exactly what's happening with your property or project at home.",
+    url: "https://gruth.ke",
+    siteName: "GRUTH",
+    type: "website",
   },
 };
 

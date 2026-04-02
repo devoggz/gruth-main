@@ -5,12 +5,12 @@
 // Called by Vercel Cron (vercel.json) or a Docker cron job.
 
 import { NextRequest, NextResponse } from "next/server";
-import { prisma }       from "@/lib/prisma";
-import { runScrapers }  from "@/server/scraper/runScrapers";
-import { detectTrend }  from "@/lib/market-intelligence";
+import { prisma } from "@/lib/prisma";
+import { runScrapers } from "@/server/scraper/runScrapers";
+import { detectTrend } from "@/lib/market-intelligence";
 import type { NormalisedPrice } from "@/server/scraper/types";
 
-export const runtime    = "nodejs";
+export const runtime = "nodejs";
 export const maxDuration = 60; // seconds — scraping takes time
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
@@ -37,28 +37,28 @@ async function upsertPrices(
   countyId: string,
 ): Promise<{ upserted: number; skipped: number }> {
   let upserted = 0;
-  let skipped  = 0;
+  let skipped = 0;
 
   for (const p of prices) {
     try {
       // 1. Upsert the material (name is unique)
       const material = await prisma.marketMaterial.upsert({
-        where:  { name: p.materialName },
+        where: { name: p.materialName },
         create: {
-          name:     p.materialName,
+          name: p.materialName,
           category: p.category,
-          unit:     p.unit,
+          unit: p.unit,
         },
         update: {
           // Don't overwrite manually-set descriptions
           category: p.category,
-          unit:     p.unit,
+          unit: p.unit,
         },
       });
 
       // 2. Upsert the price source
       const source = await prisma.marketPriceSource.upsert({
-        where:  { name: p.sourceName },
+        where: { name: p.sourceName },
         create: { name: p.sourceName, url: p.sourceUrl, verified: false },
         update: { url: p.sourceUrl },
       });
@@ -85,21 +85,21 @@ async function upsertPrices(
         create: {
           materialId: material.id,
           countyId,
-          sourceId:   source.id,
-          priceKes:   p.priceKes,
-          priceLow:   p.priceLow  ?? null,
-          priceHigh:  p.priceHigh ?? null,
+          sourceId: source.id,
+          priceKes: p.priceKes,
+          priceLow: p.priceLow ?? null,
+          priceHigh: p.priceHigh ?? null,
           trend,
           scrapedUrl: p.sourceUrl,
-          scrapedAt:  new Date(p.scrapedAt),
+          scrapedAt: new Date(p.scrapedAt),
         },
         update: {
-          priceKes:   p.priceKes,
-          priceLow:   p.priceLow  ?? null,
-          priceHigh:  p.priceHigh ?? null,
+          priceKes: p.priceKes,
+          priceLow: p.priceLow ?? null,
+          priceHigh: p.priceHigh ?? null,
           trend,
           scrapedUrl: p.sourceUrl,
-          scrapedAt:  new Date(p.scrapedAt),
+          scrapedAt: new Date(p.scrapedAt),
         },
       });
 
@@ -122,8 +122,7 @@ export async function POST(req: NextRequest) {
 
   // Optionally scope to a specific county via query param.
   // Defaults to Nairobi (the most price-representative county).
-  const countyName =
-    req.nextUrl.searchParams.get("county") ?? "Nairobi";
+  const countyName = req.nextUrl.searchParams.get("county") ?? "Nairobi";
 
   const county = await prisma.county.findFirst({
     where: { name: { contains: countyName, mode: "insensitive" } },
@@ -132,7 +131,7 @@ export async function POST(req: NextRequest) {
   if (!county) {
     return NextResponse.json(
       { error: `County "${countyName}" not found in DB` },
-      { status: 404 }
+      { status: 404 },
     );
   }
 
@@ -142,7 +141,7 @@ export async function POST(req: NextRequest) {
   if (prices.length === 0) {
     return NextResponse.json(
       { success: false, errors, message: "All scrapers returned 0 prices" },
-      { status: 502 }
+      { status: 502 },
     );
   }
 
@@ -150,10 +149,10 @@ export async function POST(req: NextRequest) {
   const { upserted, skipped } = await upsertPrices(prices, county.id);
 
   const summary = {
-    success:     true,
+    success: true,
     runAt,
-    county:      county.name,
-    scraped:     prices.length,
+    county: county.name,
+    scraped: prices.length,
     upserted,
     skipped,
     errors,

@@ -2,7 +2,6 @@
 // src/app/(marketing)/contact/page.tsx
 import React, { useState } from "react";
 
-
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);

@@ -6,24 +6,24 @@
 import { useEffect, useRef, useState } from "react";
 
 interface TickerItem {
-  county:       string;
-  material:     string;
-  priceKes:     number;
-  priceLow:     number | null;
-  priceHigh:    number | null;
-  trend:        "UP" | "DOWN" | "STABLE";
+  county: string;
+  material: string;
+  priceKes: number;
+  priceLow: number | null;
+  priceHigh: number | null;
+  trend: "UP" | "DOWN" | "STABLE";
 }
 
 interface Props {
-  items:   TickerItem[];
-  speed?:  number;   // pixels per second, default 40
-  paused?: boolean;  // pause on hover
+  items: TickerItem[];
+  speed?: number; // pixels per second, default 40
+  paused?: boolean; // pause on hover
 }
 
 const TREND_STYLE = {
-  UP:     { label: "↑", color: "text-red-400"     },
-  DOWN:   { label: "↓", color: "text-emerald-400" },
-  STABLE: { label: "→", color: "text-charcoal-400"},
+  UP: { label: "↑", color: "text-red-400" },
+  DOWN: { label: "↓", color: "text-emerald-400" },
+  STABLE: { label: "→", color: "text-charcoal-400" },
 };
 
 function TickerCard({ item }: { item: TickerItem }) {
@@ -54,10 +54,14 @@ function TickerCard({ item }: { item: TickerItem }) {
   );
 }
 
-export default function MarketPriceTicker({ items, speed = 40, paused = false }: Props) {
-  const trackRef   = useRef<HTMLDivElement>(null);
-  const rafRef     = useRef<number | undefined>(undefined);
-  const posRef     = useRef(0);
+export default function MarketPriceTicker({
+  items,
+  speed = 40,
+  paused = false,
+}: Props) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | undefined>(undefined);
+  const posRef = useRef(0);
   const [hovering, setHovering] = useState(false);
 
   // Double the items for seamless loop
@@ -104,19 +108,24 @@ export default function MarketPriceTicker({ items, speed = 40, paused = false }:
       onMouseLeave={() => setHovering(false)}
     >
       {/* Left fade */}
-      <div className="absolute left-0 top-0 bottom-0 w-12 z-10 pointer-events-none"
-        style={{ background: "linear-gradient(to right, #1a1916, transparent)" }}
+      <div
+        className="absolute left-0 top-0 bottom-0 w-12 z-10 pointer-events-none"
+        style={{
+          background: "linear-gradient(to right, #1a1916, transparent)",
+        }}
       />
       {/* Right fade */}
-      <div className="absolute right-0 top-0 bottom-0 w-12 z-10 pointer-events-none"
+      <div
+        className="absolute right-0 top-0 bottom-0 w-12 z-10 pointer-events-none"
         style={{ background: "linear-gradient(to left, #1a1916, transparent)" }}
       />
 
-      
       {/* Pause indicator */}
       {hovering && (
         <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20">
-          <span className="text-[10px] text-charcoal-600 font-medium">Paused</span>
+          <span className="text-[10px] text-charcoal-600 font-medium">
+            Paused
+          </span>
         </div>
       )}
 
@@ -124,7 +133,10 @@ export default function MarketPriceTicker({ items, speed = 40, paused = false }:
       <div className="py-3 pl-28 pr-4">
         <div ref={trackRef} className="flex will-change-transform">
           {doubled.map((item, i) => (
-            <TickerCard key={`${item.county}-${item.material}-${i}`} item={item} />
+            <TickerCard
+              key={`${item.county}-${item.material}-${i}`}
+              item={item}
+            />
           ))}
         </div>
       </div>

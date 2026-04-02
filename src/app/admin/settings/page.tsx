@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import AccountSettingsForm from "@/components/shared/AcountSettingsForm";
 
+export const revalidate = 3600;
+
 export const metadata = { title: "Settings | GRUTH Admin" };
 
 export default async function AdminSettingsPage() {

@@ -3,6 +3,8 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import RequestsInbox from "@/components/admin/RequestsInbox";
 
+export const revalidate = 3600;
+
 export default async function AdminRequestsPage() {
   const session = await auth();
   if ((session?.user as any)?.role !== "ADMIN") redirect("/dashboard");

@@ -44,7 +44,6 @@ const SERVICE_TYPES = [
     label: "Business Investment Verification",
     base: [120, 300] as [number, number],
   },
-
 ] as const;
 
 type ServiceValue = (typeof SERVICE_TYPES)[number]["value"];

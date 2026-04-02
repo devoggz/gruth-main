@@ -6,22 +6,22 @@ export interface RawScrapedPrice {
   /** Raw name as it appears on the source page */
   materialName: string;
   /** Price in KES as a number (already parsed from string) */
-  priceKes:     number;
+  priceKes: number;
   /** Optional low-end of range */
-  priceLow?:    number;
+  priceLow?: number;
   /** Optional high-end of range */
-  priceHigh?:   number;
+  priceHigh?: number;
   /** Display name of the source */
-  sourceName:   string;
+  sourceName: string;
   /** URL of the source page that was scraped */
-  sourceUrl:    string;
+  sourceUrl: string;
   /** ISO string — set to now() by the scraper */
-  scrapedAt:    string;
+  scrapedAt: string;
 }
 
 export interface NormalisedPrice extends RawScrapedPrice {
   /** Canonical category assigned by categorizeMaterial() */
-  category:   string;
+  category: string;
   /** Normalised unit string (e.g. "per bag", "per tonne") */
-  unit:       string;
+  unit: string;
 }

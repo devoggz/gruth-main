@@ -10,6 +10,8 @@ import {
 } from "@/lib/utils";
 import { DashboardCharts } from "@/components/dashboard/DashboardCharts";
 
+export const revalidate = 3600;
+
 export default async function DashboardPage() {
   const session = await auth();
   const userId = session?.user?.id!;
@@ -155,7 +157,7 @@ export default async function DashboardPage() {
           </p>
         </div>
         <Link
-prefetch={true}
+          prefetch={true}
           href="/request-verification"
           className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/20 hover:-translate-y-0.5 flex-shrink-0 whitespace-nowrap"
         >
@@ -218,7 +220,7 @@ prefetch={true}
 
         {/* Alerts */}
         <Link
-prefetch={true}
+          prefetch={true}
           href="/dashboard/notifications"
           className="bg-white border border-charcoal-100 rounded-2xl p-4 sm:p-5 block hover:border-amber-200 hover:shadow-md transition-all duration-200 group"
         >
@@ -245,7 +247,7 @@ prefetch={true}
 
         {/* Messages */}
         <Link
-prefetch={true}
+          prefetch={true}
           href="/dashboard/messages"
           className="bg-white border border-charcoal-100 rounded-2xl p-4 sm:p-5 block hover:border-orange-200 hover:shadow-md transition-all duration-200 group"
         >
@@ -287,7 +289,7 @@ prefetch={true}
               Your Projects
             </h2>
             <Link
-prefetch={true}
+              prefetch={true}
               href="/dashboard/projects"
               className="text-orange-500 text-sm font-semibold hover:text-orange-600 transition-colors"
             >
@@ -307,8 +309,7 @@ prefetch={true}
                 Submit your first verification request to get started.
               </p>
               <Link
-prefetch={true}
-
+                prefetch={true}
                 href="/request-verification"
                 className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
               >
@@ -329,7 +330,7 @@ prefetch={true}
 
                 return (
                   <Link
-prefetch={true}
+                    prefetch={true}
                     key={project.id}
                     href={`/dashboard/projects/${project.id}`}
                     className="bg-white border border-charcoal-100 rounded-2xl p-4 sm:p-5 block hover:border-orange-200 hover:shadow-md transition-all duration-200 group"
@@ -426,7 +427,7 @@ prefetch={true}
                 <div className="space-y-4">
                   {recentInspections.map((ins) => (
                     <Link
-prefetch={true}
+                      prefetch={true}
                       key={ins.id}
                       href={`/dashboard/projects/${ins.project.id}`}
                       className="flex gap-3 relative hover:opacity-70 transition-opacity group"
@@ -519,7 +520,7 @@ prefetch={true}
                 },
               ].map(({ label, href, icon, badge }) => (
                 <Link
-prefetch={true}
+                  prefetch={true}
                   key={href}
                   href={href}
                   className="flex items-center gap-3 px-2.5 py-2 rounded-xl hover:bg-charcoal-50 transition-colors group"

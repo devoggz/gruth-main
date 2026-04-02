@@ -6,7 +6,7 @@
 import type { RawScrapedPrice } from "./types";
 
 const SOURCE_NAME = "BuildersKenya Price Guide";
-const SOURCE_URL  = "https://www.builderskenya.com/price-guide/cement";
+const SOURCE_URL = "https://www.builderskenya.com/price-guide/cement";
 
 // Pattern: "Bamburi Cement 50kg ... KES 750" or "KSh 750" or "Ksh750"
 const PRICE_LINE_PATTERN =
@@ -25,11 +25,11 @@ function parseKes(raw: string): number {
  * Extend this map as new materials are encountered.
  */
 const UNIT_MAP: Record<string, string> = {
-  "50kg":    "per bag",
-  "cement":  "per bag",
-  "ballast": "per tonne",
-  "blocks":  "per piece",
-  "lintel":  "per piece",
+  "50kg": "per bag",
+  cement: "per bag",
+  ballast: "per tonne",
+  blocks: "per piece",
+  lintel: "per piece",
 };
 
 function inferUnit(name: string): string {
@@ -79,8 +79,8 @@ export async function scrapeCementPrices(): Promise<RawScrapedPrice[]> {
     results.push({
       materialName: rawName,
       priceKes,
-      sourceName:   SOURCE_NAME,
-      sourceUrl:    SOURCE_URL,
+      sourceName: SOURCE_NAME,
+      sourceUrl: SOURCE_URL,
       scrapedAt,
     });
   }
@@ -91,7 +91,7 @@ export async function scrapeCementPrices(): Promise<RawScrapedPrice[]> {
   // leave the DB stale.
   if (results.length === 0) {
     console.warn("[scrapeCement] No prices parsed — using baseline fallback");
-    return CEMENT_BASELINE_PRICES.map(p => ({ ...p, scrapedAt }));
+    return CEMENT_BASELINE_PRICES.map((p) => ({ ...p, scrapedAt }));
   }
 
   return results;
@@ -102,11 +102,60 @@ export async function scrapeCementPrices(): Promise<RawScrapedPrice[]> {
 // Used only when the scrape target is unavailable.
 
 const CEMENT_BASELINE_PRICES: Omit<RawScrapedPrice, "scrapedAt">[] = [
-  { materialName: "Bamburi Cement 50kg",          priceKes: 730,  priceLow: 700,  priceHigh: 770,  sourceName: "GRUTH Field Survey", sourceUrl: "https://gruth.ke" },
-  { materialName: "Savannah Cement 50kg",         priceKes: 680,  priceLow: 650,  priceHigh: 720,  sourceName: "GRUTH Field Survey", sourceUrl: "https://gruth.ke" },
-  { materialName: "East African Portland Cement", priceKes: 750,  priceLow: 720,  priceHigh: 790,  sourceName: "GRUTH Field Survey", sourceUrl: "https://gruth.ke" },
-  { materialName: "Ballast (20mm)",               priceKes: 3200, priceLow: 2800, priceHigh: 3600, sourceName: "GRUTH Field Survey", sourceUrl: "https://gruth.ke" },
-  { materialName: "Concrete Blocks 6 inch",       priceKes: 75,   priceLow: 65,   priceHigh: 85,   sourceName: "GRUTH Field Survey", sourceUrl: "https://gruth.ke" },
-  { materialName: "Concrete Blocks 9 inch",       priceKes: 95,   priceLow: 85,   priceHigh: 110,  sourceName: "GRUTH Field Survey", sourceUrl: "https://gruth.ke" },
-  { materialName: "Precast Lintels (1.5m)",       priceKes: 350,  priceLow: 300,  priceHigh: 400,  sourceName: "GRUTH Field Survey", sourceUrl: "https://gruth.ke" },
+  {
+    materialName: "Bamburi Cement 50kg",
+    priceKes: 730,
+    priceLow: 700,
+    priceHigh: 770,
+    sourceName: "GRUTH Field Survey",
+    sourceUrl: "https://gruth.ke",
+  },
+  {
+    materialName: "Savannah Cement 50kg",
+    priceKes: 680,
+    priceLow: 650,
+    priceHigh: 720,
+    sourceName: "GRUTH Field Survey",
+    sourceUrl: "https://gruth.ke",
+  },
+  {
+    materialName: "East African Portland Cement",
+    priceKes: 750,
+    priceLow: 720,
+    priceHigh: 790,
+    sourceName: "GRUTH Field Survey",
+    sourceUrl: "https://gruth.ke",
+  },
+  {
+    materialName: "Ballast (20mm)",
+    priceKes: 3200,
+    priceLow: 2800,
+    priceHigh: 3600,
+    sourceName: "GRUTH Field Survey",
+    sourceUrl: "https://gruth.ke",
+  },
+  {
+    materialName: "Concrete Blocks 6 inch",
+    priceKes: 75,
+    priceLow: 65,
+    priceHigh: 85,
+    sourceName: "GRUTH Field Survey",
+    sourceUrl: "https://gruth.ke",
+  },
+  {
+    materialName: "Concrete Blocks 9 inch",
+    priceKes: 95,
+    priceLow: 85,
+    priceHigh: 110,
+    sourceName: "GRUTH Field Survey",
+    sourceUrl: "https://gruth.ke",
+  },
+  {
+    materialName: "Precast Lintels (1.5m)",
+    priceKes: 350,
+    priceLow: 300,
+    priceHigh: 400,
+    sourceName: "GRUTH Field Survey",
+    sourceUrl: "https://gruth.ke",
+  },
 ];

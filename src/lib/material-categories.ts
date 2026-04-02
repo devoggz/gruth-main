@@ -94,17 +94,17 @@ export const MATERIAL_CATEGORIES: MaterialCategory[] = [
 ];
 
 /** Ordered category names — use this for filtering and rendering */
-export const CATEGORY_NAMES = MATERIAL_CATEGORIES.map(c => c.name);
+export const CATEGORY_NAMES = MATERIAL_CATEGORIES.map((c) => c.name);
 
 /** Set of all valid category name strings for fast O(1) lookup */
 export const CATEGORY_NAME_SET = new Set(CATEGORY_NAMES);
 
 /** Lookup a category definition by its slug */
 export function getCategoryBySlug(slug: string): MaterialCategory | undefined {
-  return MATERIAL_CATEGORIES.find(c => c.slug === slug);
+  return MATERIAL_CATEGORIES.find((c) => c.slug === slug);
 }
 
 /** Lookup a category definition by its display name */
 export function getCategoryByName(name: string): MaterialCategory | undefined {
-  return MATERIAL_CATEGORIES.find(c => c.name === name);
+  return MATERIAL_CATEGORIES.find((c) => c.name === name);
 }

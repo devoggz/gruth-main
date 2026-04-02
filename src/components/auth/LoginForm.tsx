@@ -118,7 +118,7 @@ function LoginFormInner() {
               <div className="flex items-center justify-between mb-1.5">
                 <label className="label !mb-0">Password</label>
                 <Link
-                    prefetch={true}
+                  prefetch={true}
                   href="/forgot-password"
                   className="text-[11px] text-orange-600 hover:text-orange-700 font-semibold transition-colors"
                 >
@@ -198,9 +198,8 @@ function LoginFormInner() {
           <p className="text-xs text-charcoal-500">
             No account?{" "}
             <Link
-                prefetch={true}
-
-                href="/register"
+              prefetch={true}
+              href="/register"
               className="text-orange-600 font-semibold hover:text-orange-700 transition-colors"
             >
               Create Account

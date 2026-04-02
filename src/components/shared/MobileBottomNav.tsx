@@ -79,7 +79,13 @@ export default function MobileBottomNav({
               {/* Icon with scale animation on active */}
               <span
                 className={`transition-transform duration-200 ${active ? "scale-110" : ""}`}
-                style={{ width: 20, height: 20, display: "flex", alignItems: "center", justifyContent: "center" }}
+                style={{
+                  width: 20,
+                  height: 20,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
               >
                 {icon}
               </span>

@@ -8,7 +8,6 @@ import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardMobileNav from "@/components/dashboard/DashboardMobileNav";
 import PushNotificationSetup from "@/components/shared/PushNotificationSetup";
 
-
 export default async function DashboardLayout({
   children,
 }: {

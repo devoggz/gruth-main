@@ -127,21 +127,24 @@ export async function sendPaymentConfirmationEmail({
   amountKes,
   channel,
 }: {
-  to:          string;
-  name:        string;
+  to: string;
+  name: string;
   serviceType: string;
-  reference:   string;
-  amountKes:   number;
-  channel:     string;
+  reference: string;
+  amountKes: number;
+  channel: string;
 }) {
-  const firstName     = name.split(" ")[0];
-  const channelLabel  = channel === "mobile_money" ? "M-Pesa"
-                      : channel === "apple_pay"    ? "Apple Pay"
-                      : "Card";
-  const dashboardUrl  = `${APP_URL}/dashboard`;
+  const firstName = name.split(" ")[0];
+  const channelLabel =
+    channel === "mobile_money"
+      ? "M-Pesa"
+      : channel === "apple_pay"
+        ? "Apple Pay"
+        : "Card";
+  const dashboardUrl = `${APP_URL}/dashboard`;
 
   await resend.emails.send({
-    from:    FROM,
+    from: FROM,
     to,
     subject: `Payment confirmed — your GRUTH verification is submitted`,
     html: `<!DOCTYPE html>
@@ -169,15 +172,19 @@ export async function sendPaymentConfirmationEmail({
             </p>
             <table cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:28px;border:1px solid #f3f4f6;border-radius:10px;overflow:hidden;">
               ${[
-                ["Service",          serviceType],
-                ["Amount paid",      `KES ${amountKes.toLocaleString()}`],
-                ["Payment method",   channelLabel],
-                ["Reference",        reference],
-              ].map(([k, v]) => `
+                ["Service", serviceType],
+                ["Amount paid", `KES ${amountKes.toLocaleString()}`],
+                ["Payment method", channelLabel],
+                ["Reference", reference],
+              ]
+                .map(
+                  ([k, v]) => `
               <tr>
                 <td style="padding:12px 16px;font-size:13px;color:#9ca3af;background:#f9f9f7;border-bottom:1px solid #f3f4f6;width:140px;">${k}</td>
                 <td style="padding:12px 16px;font-size:13px;color:#121210;font-weight:500;border-bottom:1px solid #f3f4f6;">${v}</td>
-              </tr>`).join("")}
+              </tr>`,
+                )
+                .join("")}
             </table>
             <table cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
               <tr>

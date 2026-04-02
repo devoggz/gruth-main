@@ -724,66 +724,70 @@ export function MarketPricesClient({
             </div>
           ) : (
             <div className="space-y-4">
-              {// Sort categories in canonical order defined in material-categories.ts
-              [...Object.entries(grouped)].sort(([a], [b]) => {
-                const ai = CATEGORY_NAMES.indexOf(a);
-                const bi = CATEGORY_NAMES.indexOf(b);
-                // Unknown categories (index === -1) go to the end
-                return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
-              }).map(([category, rows]) => (
-                <div
-                  key={category}
-                  className="bg-white border border-charcoal-100 rounded-2xl overflow-hidden"
-                >
-                  <div className="px-4 sm:px-5 py-3 bg-charcoal-50 border-b border-charcoal-100 flex items-center justify-between">
-                    <h3 className="font-display font-semibold text-charcoal-900 text-sm">
-                      {category}
-                    </h3>
-                    <span className="text-[11px] text-charcoal-400 font-medium">
-                      {rows.length} {rows.length === 1 ? "item" : "items"}
-                    </span>
-                  </div>
+              {
+                // Sort categories in canonical order defined in material-categories.ts
+                [...Object.entries(grouped)]
+                  .sort(([a], [b]) => {
+                    const ai = CATEGORY_NAMES.indexOf(a);
+                    const bi = CATEGORY_NAMES.indexOf(b);
+                    // Unknown categories (index === -1) go to the end
+                    return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+                  })
+                  .map(([category, rows]) => (
+                    <div
+                      key={category}
+                      className="bg-white border border-charcoal-100 rounded-2xl overflow-hidden"
+                    >
+                      <div className="px-4 sm:px-5 py-3 bg-charcoal-50 border-b border-charcoal-100 flex items-center justify-between">
+                        <h3 className="font-display font-semibold text-charcoal-900 text-sm">
+                          {category}
+                        </h3>
+                        <span className="text-[11px] text-charcoal-400 font-medium">
+                          {rows.length} {rows.length === 1 ? "item" : "items"}
+                        </span>
+                      </div>
 
-                  {/* Desktop table */}
-                  <div className="hidden sm:block overflow-x-auto">
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="border-b border-charcoal-100">
-                          {[
-                            "Material",
-                            "Unit",
-                            "Price (KES)",
-                            "Trend",
-                            "Source",
-                            "Updated",
-                          ].map((h, i) => (
-                            <th
-                              key={h}
-                              className={`px-4 py-2.5 text-[10px] font-bold text-charcoal-400 uppercase tracking-widest ${
-                                i === 2 ? "text-right" : "text-left"
-                              } ${i >= 4 ? "hidden lg:table-cell" : ""}`}
-                            >
-                              {h}
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-charcoal-50">
+                      {/* Desktop table */}
+                      <div className="hidden sm:block overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b border-charcoal-100">
+                              {[
+                                "Material",
+                                "Unit",
+                                "Price (KES)",
+                                "Trend",
+                                "Source",
+                                "Updated",
+                              ].map((h, i) => (
+                                <th
+                                  key={h}
+                                  className={`px-4 py-2.5 text-[10px] font-bold text-charcoal-400 uppercase tracking-widest ${
+                                    i === 2 ? "text-right" : "text-left"
+                                  } ${i >= 4 ? "hidden lg:table-cell" : ""}`}
+                                >
+                                  {h}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-charcoal-50">
+                            {rows.map((row) => (
+                              <PriceRowItem key={row.id} row={row} />
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      {/* Mobile list */}
+                      <div className="sm:hidden divide-y divide-charcoal-100">
                         {rows.map((row) => (
-                          <PriceRowItem key={row.id} row={row} />
+                          <MobilePriceCard key={row.id} row={row} />
                         ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  {/* Mobile list */}
-                  <div className="sm:hidden divide-y divide-charcoal-100">
-                    {rows.map((row) => (
-                      <MobilePriceCard key={row.id} row={row} />
-                    ))}
-                  </div>
-                </div>
-              ))}
+                      </div>
+                    </div>
+                  ))
+              }
             </div>
           )}
         </>

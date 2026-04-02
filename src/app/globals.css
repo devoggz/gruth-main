@@ -8,9 +8,12 @@
    (e.g. during SSR hydration gap) — keep them as safe fallbacks only. */
 
 :root {
-  --font-display: "Georgia", serif;       /* fallback only — overridden by next/font */
-  --font-body:    "system-ui", sans-serif; /* fallback only — overridden by next/font */
-  --font-mono:    "Courier New", monospace; /* fallback only — overridden by next/font */
+  --font-display:
+    "Georgia", serif; /* fallback only — overridden by next/font */
+  --font-body:
+    "system-ui", sans-serif; /* fallback only — overridden by next/font */
+  --font-mono:
+    "Courier New", monospace; /* fallback only — overridden by next/font */
 }
 
 /* ─── Base reset — prevent all layout shift sources ────────────────────────── */
@@ -409,10 +412,10 @@
   *,
   *::before,
   *::after {
-    animation-duration:        0.01ms !important;
-    animation-iteration-count: 1      !important;
-    transition-duration:       0.01ms !important;
-    scroll-behavior:           auto   !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -423,9 +426,9 @@
   .backdrop-blur-md,
   .backdrop-blur-lg,
   .backdrop-blur-xl {
-    backdrop-filter:         none !important;
+    backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background-color:        rgba(10, 9, 8, 0.75) !important;
+    background-color: rgba(10, 9, 8, 0.75) !important;
   }
 }
 
@@ -437,8 +440,8 @@
 
 /* GPU-accelerate hero image for smoother paint on mobile */
 .hero-img {
-  will-change:   transform;
-  transform:     translateZ(0);
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 /* Prevent the animate-pulse dot in the hero badge from

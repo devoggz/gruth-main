@@ -10,6 +10,8 @@ import {
   getProjectTypeLabel,
 } from "@/lib/utils";
 
+export const revalidate = 3600;
+
 export default async function AdminProjectsPage() {
   const session = await auth();
   if ((session?.user as any)?.role !== "ADMIN") redirect("/dashboard");
@@ -150,6 +152,7 @@ export default async function AdminProjectsPage() {
                     </td>
                     <td className="px-5 py-4">
                       <Link
+                        prefetch={true}
                         href={`/dashboard/projects/${project.id}`}
                         className="opacity-0 group-hover:opacity-100 transition-opacity text-xs font-semibold text-orange-500 hover:text-orange-600"
                       >

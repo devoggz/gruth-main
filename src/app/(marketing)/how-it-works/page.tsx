@@ -5,8 +5,10 @@ import Link from "next/link";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 
-
-const QuoteCalculator   = dynamic(() => import("@/components/home/QuoteCalculator"),       { ssr: true });   
+const QuoteCalculator = dynamic(
+  () => import("@/components/home/QuoteCalculator"),
+  { ssr: true },
+);
 
 const steps = [
   {
@@ -208,31 +210,31 @@ export default function HowItWorksPage() {
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Step tabs */}
-          <div
-            className="flex gap-2 sm:gap-3 mb-10 overflow-x-auto pb-2"
-            style={{ scrollbarWidth: "none" }}
-          >
-            {steps.map((s, i) => (
-              <button
-                key={s.number}
-                onClick={() => setActiveStep(i)}
-                className={[
-                  "flex-shrink-0 flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200",
-                  activeStep === i
-                    ? "bg-charcoal-950 text-white shadow-lg"
-                    : "bg-charcoal-50 text-charcoal-500 hover:bg-charcoal-100 hover:text-charcoal-800",
-                ].join(" ")}
-              >
-                <span
-                  className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 transition-colors ${activeStep === i ? "bg-orange-500 text-white" : "bg-charcoal-200 text-charcoal-500"}`}
-                >
-                  {i + 1}
-                </span>
-                <span className="hidden sm:inline">{s.title}</span>
-                <span className="sm:hidden font-mono text-xs">{s.number}</span>
-              </button>
-            ))}
-          </div>
+          {/*<div*/}
+          {/*  className="flex gap-2 sm:gap-3 mb-10 overflow-x-auto pb-2"*/}
+          {/*  style={{ scrollbarWidth: "none" }}*/}
+          {/*>*/}
+          {/*  {steps.map((s, i) => (*/}
+          {/*    <button*/}
+          {/*      key={s.number}*/}
+          {/*      onClick={() => setActiveStep(i)}*/}
+          {/*      className={[*/}
+          {/*        "flex-shrink-0 flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200",*/}
+          {/*        activeStep === i*/}
+          {/*          ? "bg-charcoal-950 text-white shadow-lg"*/}
+          {/*          : "bg-charcoal-50 text-charcoal-500 hover:bg-charcoal-100 hover:text-charcoal-800",*/}
+          {/*      ].join(" ")}*/}
+          {/*    >*/}
+          {/*      <span*/}
+          {/*        className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 transition-colors ${activeStep === i ? "bg-orange-500 text-white" : "bg-charcoal-200 text-charcoal-500"}`}*/}
+          {/*      >*/}
+          {/*        {i + 1}*/}
+          {/*      </span>*/}
+          {/*      <span className="hidden sm:inline">{s.title}</span>*/}
+          {/*      <span className="sm:hidden font-mono text-xs">{s.number}</span>*/}
+          {/*    </button>*/}
+          {/*  ))}*/}
+          {/*</div>*/}
 
           {/* Detail panel */}
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 lg:gap-8">
@@ -335,6 +337,7 @@ export default function HowItWorksPage() {
                   </button>
                 ) : (
                   <Link
+                    prefetch={true}
                     href="/request-verification"
                     className="inline-flex items-center gap-2 text-sm font-semibold bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl transition-colors"
                   >
@@ -356,7 +359,7 @@ export default function HowItWorksPage() {
             </div>
 
             {/* Right — step list sidebar */}
-            <div className="flex flex-col gap-2">
+            <div className="sm:hidden lg:block flex flex-col gap-2">
               {steps.map((s, i) => {
                 const isActive = i === activeStep;
                 const isDone = i < activeStep;
@@ -433,20 +436,13 @@ export default function HowItWorksPage() {
                   </button>
                 );
               })}
-
-
-  
             </div>
           </div>
         </div>
         <div className="pt-16">
-
-        <QuoteCalculator />
+          <QuoteCalculator />
         </div>
-
       </section>
-
-      
 
       {/* ── FAQs ───────────────────────────────────────────────────────────── */}
       <section className="py-20 bg-white">
@@ -493,6 +489,7 @@ export default function HowItWorksPage() {
               </svg>
             </Link>
             <Link
+              prefetch={true}
               href="/services"
               className="inline-flex items-center justify-center gap-2 text-charcoal-400 hover:text-white border border-white/10 hover:border-white/30 text-sm font-medium px-7 py-3.5 rounded-xl transition-all"
             >

@@ -41,8 +41,8 @@ const nextConfig = {
       // Uploadthing
       { protocol: "https", hostname: "uploadthing.com" },
     ],
-    deviceSizes:  [390, 640, 750, 828, 1080, 1200, 1920],
-    imageSizes:   [16, 32, 48, 64, 96, 128, 256],
+    deviceSizes: [390, 640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
     minimumCacheTTL: 86400, // 24h CDN cache for optimised images
   },
 
@@ -51,40 +51,62 @@ const nextConfig = {
       {
         source: "/(.*)",
         headers: [
-          { key: "X-Content-Type-Options",    value: "nosniff"                       },
-          { key: "X-Frame-Options",           value: "DENY"                          },
-          { key: "Referrer-Policy",           value: "strict-origin-when-cross-origin" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           // HSTS — 1 year, include subdomains, preload-ready
-          { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains; preload" },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains; preload",
+          },
           // CSP
-          { key: "Content-Security-Policy",   value: CSP                             },
+          { key: "Content-Security-Policy", value: CSP },
           // Disable FLoC / interest cohort
-          { key: "Permissions-Policy",        value: "camera=(), microphone=(), geolocation=(self), interest-cohort=()" },
+          {
+            key: "Permissions-Policy",
+            value:
+              "camera=(), microphone=(), geolocation=(self), interest-cohort=()",
+          },
           // Prevent IE from sniffing MIME
-          { key: "X-DNS-Prefetch-Control",    value: "on"                            },
+          { key: "X-DNS-Prefetch-Control", value: "on" },
         ],
       },
       {
         // Long-cache immutable static assets
         source: "/images/(.*)",
-        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
       },
       {
         source: "/icons/(.*)",
-        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
       },
       {
         // Service worker must not be cached
         source: "/sw.js",
-        headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }],
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
+        ],
       },
       {
         // API responses: no store
         source: "/api/(.*)",
         headers: [
-          { key: "Cache-Control",   value: "no-store, no-cache, must-revalidate" },
-          { key: "Pragma",          value: "no-cache"                             },
-          { key: "X-Robots-Tag",    value: "noindex"                              },
+          {
+            key: "Cache-Control",
+            value: "no-store, no-cache, must-revalidate",
+          },
+          { key: "Pragma", value: "no-cache" },
+          { key: "X-Robots-Tag", value: "noindex" },
         ],
       },
     ];

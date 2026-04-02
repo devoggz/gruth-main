@@ -13,22 +13,19 @@ export default function HeroSectionAlter() {
   return (
     <section className="relative py-16 overflow-hidden">
       <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: `linear-gradient(to right,#f97316 1px,transparent 1px),linear-gradient(to bottom,#f97316 1px,transparent 1px)`,
-            backgroundSize: "60px 60px",
-            opacity: 0.06,
-            maskImage:
-                "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
-            WebkitMaskImage:
-                "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
-          }}
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right,#f97316 1px,transparent 1px),linear-gradient(to bottom,#f97316 1px,transparent 1px)`,
+          backgroundSize: "60px 60px",
+          opacity: 0.06,
+          maskImage:
+            "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+        }}
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <div
-          className="relative w-full rounded-2xl overflow-hidden h-fit"
-        >
-
+        <div className="relative w-full rounded-2xl overflow-hidden h-fit">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://l954sx9dfs.ufs.sh/f/pgwsuECRjuZYbl6qz6s6XfCH4Q3Mz8bhvFZ0Em5ncsaDxIlB"
@@ -93,8 +90,8 @@ export default function HeroSectionAlter() {
                 className="text-white/60 text-base sm:text-lg leading-relaxed mb-8 max-w-md"
                 style={{ animation: "hero-fade-up 0.65s 0.16s ease both" }}
               >
-                We physically verify land, property, businesses, and people on your behalf, so distance never means doubt
-                again.
+                We physically verify land, property, businesses, and people on
+                your behalf, so distance never means doubt again.
               </p>
 
               <div
@@ -149,8 +146,6 @@ export default function HeroSectionAlter() {
               </div>
             ))}
           </div>
-
-
         </div>
       </div>
 

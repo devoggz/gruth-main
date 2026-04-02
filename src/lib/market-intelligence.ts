@@ -17,7 +17,7 @@ export interface PriceSnapshot {
 
 export interface PriceWithRange {
   priceKes: number;
-  priceLow:  number | null;
+  priceLow: number | null;
   priceHigh: number | null;
 }
 
@@ -30,7 +30,7 @@ export interface OverpricingResult {
 }
 
 export interface ConfidenceResult {
-  score: number;       // 0–100
+  score: number; // 0–100
   label: "High" | "Medium" | "Low";
   reason: string;
 }
@@ -54,7 +54,7 @@ export function detectTrend(
 ): Trend {
   if (previousKes <= 0) return "STABLE";
   const changePct = ((currentKes - previousKes) / previousKes) * 100;
-  if (changePct > thresholdPct)  return "UP";
+  if (changePct > thresholdPct) return "UP";
   if (changePct < -thresholdPct) return "DOWN";
   return "STABLE";
 }
@@ -68,16 +68,16 @@ export function detectTrendFromSeries(snapshots: PriceSnapshot[]): Trend {
   if (snapshots.length < 2) return "STABLE";
 
   const sorted = [...snapshots].sort(
-    (a, b) => a.recordedAt.getTime() - b.recordedAt.getTime()
+    (a, b) => a.recordedAt.getTime() - b.recordedAt.getTime(),
   );
 
   // Simple linear regression on (time_index, price)
   const n = sorted.length;
   const xs = sorted.map((_, i) => i);
-  const ys = sorted.map(s => s.priceKes);
+  const ys = sorted.map((s) => s.priceKes);
 
-  const sumX  = xs.reduce((a, b) => a + b, 0);
-  const sumY  = ys.reduce((a, b) => a + b, 0);
+  const sumX = xs.reduce((a, b) => a + b, 0);
+  const sumY = ys.reduce((a, b) => a + b, 0);
   const sumXY = xs.reduce((acc, x, i) => acc + x * ys[i], 0);
   const sumX2 = xs.reduce((acc, x) => acc + x * x, 0);
 
@@ -87,14 +87,14 @@ export function detectTrendFromSeries(snapshots: PriceSnapshot[]): Trend {
   const avgPrice = sumY / n;
   const normSlope = avgPrice > 0 ? (slope / avgPrice) * 100 : 0;
 
-  if (normSlope > 1.5)  return "UP";
+  if (normSlope > 1.5) return "UP";
   if (normSlope < -1.5) return "DOWN";
   return "STABLE";
 }
 
 // ─── Overpricing detection ────────────────────────────────────────────────────
 
-const OVERPRICING_THRESHOLD = 0.30; // 30% above high range = red flag
+const OVERPRICING_THRESHOLD = 0.3; // 30% above high range = red flag
 
 /**
  * Checks if a quoted or invoiced price is significantly above market.
@@ -118,7 +118,11 @@ export function detectOverpricing(
   const percentageOver = ((quotedPrice - ceiling) / ceiling) * 100;
 
   if (percentageOver < threshold * 100) {
-    return { isOverpriced: false, percentageOver: Math.round(percentageOver), flag: null };
+    return {
+      isOverpriced: false,
+      percentageOver: Math.round(percentageOver),
+      flag: null,
+    };
   }
 
   return {
@@ -152,9 +156,9 @@ export function scanForOverpricing(
  *  - How recent the data is
  */
 export function scoreConfidence(params: {
-  sourceCount:  number;
-  hasRange:     boolean;
-  updatedAt:    Date;
+  sourceCount: number;
+  hasRange: boolean;
+  updatedAt: Date;
 }): ConfidenceResult {
   const { sourceCount, hasRange, updatedAt } = params;
   let score = 0;
@@ -168,7 +172,7 @@ export function scoreConfidence(params: {
   // Recency (0–25 points)
   const ageMs = Date.now() - updatedAt.getTime();
   const ageDays = ageMs / (1000 * 60 * 60 * 24);
-  if (ageDays < 7)  score += 25;
+  if (ageDays < 7) score += 25;
   else if (ageDays < 14) score += 15;
   else if (ageDays < 30) score += 8;
   else if (ageDays < 60) score += 3;
@@ -180,8 +184,8 @@ export function scoreConfidence(params: {
     score >= 70
       ? `${sourceCount} source${sourceCount !== 1 ? "s" : ""}, range verified, recently updated`
       : score >= 40
-      ? "Limited sources or stale data"
-      : "Single source, no range, or outdated";
+        ? "Limited sources or stale data"
+        : "Single source, no range, or outdated";
 
   return { score: Math.min(score, 100), label, reason };
 }

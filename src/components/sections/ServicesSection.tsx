@@ -33,16 +33,16 @@ export default function ServicesSection() {
   return (
     <section className="py-24 overflow-x-hidden">
       <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: `linear-gradient(to right,#f97316 1px,transparent 1px),linear-gradient(to bottom,#f97316 1px,transparent 1px)`,
-            backgroundSize: "60px 60px",
-            opacity: 0.06,
-            maskImage:
-                "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
-            WebkitMaskImage:
-                "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
-          }}
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right,#f97316 1px,transparent 1px),linear-gradient(to bottom,#f97316 1px,transparent 1px)`,
+          backgroundSize: "60px 60px",
+          opacity: 0.06,
+          maskImage:
+            "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+        }}
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -59,7 +59,7 @@ export default function ServicesSection() {
             </h2>
           </div>
           <Link
-prefetch={true}
+            prefetch={true}
             href="/services"
             className="self-start sm:self-auto inline-flex items-center gap-1.5 text-sm font-semibold text-charcoal-600 hover:text-charcoal-950 transition-colors whitespace-nowrap"
           >
@@ -181,7 +181,7 @@ function ServiceCard({
             {description}
           </p>
           <Link
-prefetch={true}
+            prefetch={true}
             href={`/services#${id}`}
             className="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 text-[11px] font-bold uppercase tracking-widest transition-colors w-fit"
           >

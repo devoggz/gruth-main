@@ -49,8 +49,10 @@ export default async function ProjectsPage() {
           </p>
         </div>
         <Link
-prefetch={true}
- href="/request-verification" className="btn-primary text-sm">
+          prefetch={true}
+          href="/request-verification"
+          className="btn-primary text-sm"
+        >
           + New Request
         </Link>
       </div>
@@ -65,9 +67,10 @@ prefetch={true}
             Submit a verification request to get started.
           </p>
           <Link
-prefetch={true}
-
- href="/request-verification" className="btn-primary">
+            prefetch={true}
+            href="/request-verification"
+            className="btn-primary"
+          >
             Request Verification
           </Link>
         </div>
@@ -86,7 +89,7 @@ prefetch={true}
 
             return (
               <Link
-prefetch={true}
+                prefetch={true}
                 key={project.id}
                 href={`/dashboard/projects/${project.id}`}
                 className="card block hover:border-orange-200 transition-all group overflow-hidden"

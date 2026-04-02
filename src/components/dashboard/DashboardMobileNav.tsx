@@ -19,22 +19,22 @@ const NAV_ITEMS: Omit<NavItem, "badge">[] = [
     label: "Alerts",
     href: "/dashboard/notifications",
     icon: (
-        <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-          <path d="M13.73 21a2 2 0 01-3.46 0" />
-        </svg>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+        <path d="M13.73 21a2 2 0 01-3.46 0" />
+      </svg>
     ),
   },
-  
+
   {
     label: "Projects",
     href: "/dashboard/projects",
@@ -54,8 +54,7 @@ const NAV_ITEMS: Omit<NavItem, "badge">[] = [
     ),
   },
 
-
-{
+  {
     label: "Home",
     href: "/dashboard",
     exact: true,
@@ -173,7 +172,7 @@ export default function DashboardMobileNav({
             const active = isActive(item);
             return (
               <Link
-prefetch={true}
+                prefetch={true}
                 key={item.href}
                 href={item.href}
                 className={`relative flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-150 ${
@@ -243,9 +242,7 @@ prefetch={true}
 
             {/* Logo header */}
             <div className="flex items-center gap-2.5 px-6 py-4 border-b border-charcoal-800">
-              <div className="w-7 h-7 bg-orange-500 rounded-lg flex items-center justify-center flex-shrink-0">
-            
-              </div>
+              <div className="w-7 h-7 bg-orange-500 rounded-lg flex items-center justify-center flex-shrink-0"></div>
               <span className="font-display font-semibold text-white text-base tracking-tight">
                 GRUTH
               </span>
@@ -257,7 +254,7 @@ prefetch={true}
                 const active = isActive(item as NavItem);
                 return (
                   <Link
-prefetch={true}
+                    prefetch={true}
                     key={item.href}
                     href={item.href}
                     onClick={() => setOpen(false)}

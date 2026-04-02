@@ -147,7 +147,10 @@ export default function InspectorFieldReport({
           setUploadProgress("idle");
           return;
         }
-        uploadedMedia = result.map((f) => ({ url: f.serverData?.url ?? f.url, name: f.name }));
+        uploadedMedia = result.map((f) => ({
+          url: f.serverData?.url ?? f.url,
+          name: f.name,
+        }));
         setUploadProgress("done");
       }
 
