@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES } from "@/app/constants/services";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "Services | GRUTH — Ground Verification",
   description:
