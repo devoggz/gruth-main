@@ -167,7 +167,7 @@ export default function DashboardMobileNav({
     <>
       {/* ── Bottom tab bar ─────────────────────────────────────────────────── */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-charcoal-950 border-t border-charcoal-800 pb-safe">
-        <div className="flex items-stretch h-22">
+        <div className="flex items-stretch h-[20px]">
           {items.map((item) => {
             const active = isActive(item);
             return (
