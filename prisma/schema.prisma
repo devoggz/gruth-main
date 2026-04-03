@@ -467,6 +467,8 @@ model CountyMaterialPrice {
   priceLow   Float?             // ← added: lower bound of verified price range
   priceHigh  Float?             // ← added: upper bound of verified price range
   trend      PriceTrend         @default(STABLE)
+  verified   Boolean            @default(false)  // true = admin-reviewed, false = scraper/unverified submission
+  dataSource String             @default("scraper") // "scraper" | "admin" | "supplier"
   notes      String?
   scrapedUrl String?
   scrapedAt  DateTime?
@@ -481,6 +483,7 @@ model CountyMaterialPrice {
   @@index([countyId])
   @@index([materialId])
   @@index([updatedAt])
+  @@index([countyId, verified])   // fast public API filter: only show verified prices
   @@map("county_material_prices")
 }
 

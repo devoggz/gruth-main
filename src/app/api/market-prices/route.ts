@@ -42,7 +42,12 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   }
 
   const prices = await prisma.countyMaterialPrice.findMany({
-    where: { countyId },
+    where: {
+      countyId,
+      // Only return verified prices in the public API.
+      // Supplier submissions (verified: false) are hidden until admin approves.
+      verified: true,
+    },
     include: {
       material: true,
       source: true,
