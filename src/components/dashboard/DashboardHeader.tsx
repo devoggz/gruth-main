@@ -18,7 +18,7 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
       <div className="md:hidden flex items-center gap-2">
         <Link href="/" className="flex items-center gap-2.5 group">
           <Image
-            src="/images/icon.svg"
+            src="/images/logo-tt.svg"
             alt="logo"
             width={32}
             height={32}
