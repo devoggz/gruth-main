@@ -28,7 +28,7 @@ export default function HeroSection() {
     <section className="relative w-full h-screen min-h-[600px] max-h-[940px] overflow-hidden">
       {/* Background image — full bleed */}
       <Image
-        src="/images/hero3.jpg"
+        src="/images/lady.jpeg"
         alt="Construction site in Kenya"
         fill // fills the container
         priority // LCP — fetch immediately
