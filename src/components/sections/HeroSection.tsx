@@ -28,7 +28,7 @@ export default function HeroSection() {
     <section className="relative w-full h-screen min-h-[600px] max-h-[940px] overflow-hidden">
       {/* Background image — full bleed */}
       <Image
-        src="/images/lady.jpeg"
+        src="/images/nairobi.avif"
         alt="Construction site in Kenya"
         fill // fills the container
         priority // LCP — fetch immediately
@@ -72,11 +72,11 @@ export default function HeroSection() {
             className="font-display text-6xl lg:text-7xl font-bold text-white leading-[1.05] mb-5 tracking-tight"
             style={{ animation: "hero-fade-up 0.65s 0.08s ease both" }}
           >
-            See exactly
+            Find out exactly
             <br />
-            what&rsquo;s happening
+            how your money is being
             <br />
-            <span className="text-orange-400 italic">back home.</span>
+            <span className="text-orange-400 italic">used back home.</span>
           </h1>
 
           <p
